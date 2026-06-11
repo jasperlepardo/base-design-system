@@ -1,0 +1,72 @@
+/**
+ * theme.css — Tailwind v4 @theme mapping.
+ *
+ * Maps the semantic CSS vars (emitted by the token build into :root and
+ * [data-theme="…"]) into Tailwind's token namespaces, so they generate
+ * utilities (bg-canvas, text-heading, border-line, rounded-md, …) that
+ * automatically re-theme when `data-theme` flips. Tailwind's built-in palette
+ * (bg-blue-500, …) stays available alongside these.
+ *
+ * Exported separately so consumers can `@import
+ * "@jasperlepardo/base-design-system/theme"` to get the same scale.
+ */
+@theme {
+  /* Surfaces → bg-* utilities */
+  --color-canvas: var(--background-default);
+  --color-canvas-subtle: var(--background-subtle);
+  --color-canvas-muted: var(--background-muted);
+  --color-surface: var(--surface-default);
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-sunken: var(--surface-sunken);
+
+  /* Text → text-* utilities */
+  --color-heading: var(--text-heading);
+  --color-body: var(--text-body);
+  --color-muted: var(--text-muted);
+  --color-inverse: var(--text-inverse);
+  --color-link: var(--text-link);
+
+  /* Borders → border-* utilities */
+  --color-line: var(--border-default);
+  --color-line-subtle: var(--border-subtle);
+  --color-line-strong: var(--border-strong);
+  --color-focus: var(--border-focus);
+
+  /* Intents → bg-/text-/border- utilities */
+  --color-brand: var(--brand-default);
+  --color-brand-hover: var(--brand-hover);
+  --color-brand-active: var(--brand-active);
+  --color-brand-subtle: var(--brand-subtle);
+  --color-brand-subtle-fg: var(--brand-subtle-fg);
+  --color-on-brand: var(--brand-on);
+
+  --color-success: var(--success-default);
+  --color-success-subtle: var(--success-subtle);
+  --color-success-subtle-fg: var(--success-subtle-fg);
+  --color-on-success: var(--success-on);
+
+  --color-warning: var(--warning-default);
+  --color-warning-subtle: var(--warning-subtle);
+  --color-warning-subtle-fg: var(--warning-subtle-fg);
+  --color-on-warning: var(--warning-on);
+
+  --color-danger: var(--danger-default);
+  --color-danger-subtle: var(--danger-subtle);
+  --color-danger-subtle-fg: var(--danger-subtle-fg);
+  --color-on-danger: var(--danger-on);
+
+  --color-info: var(--info-default);
+  --color-info-subtle: var(--info-subtle);
+  --color-info-subtle-fg: var(--info-subtle-fg);
+  --color-on-info: var(--info-on);
+
+  /* Radius → rounded-* utilities */
+  --radius-sm: var(--radius-sm);
+  --radius-md: var(--radius-md);
+  --radius-lg: var(--radius-lg);
+  --radius-xl: var(--radius-xl);
+
+  /* Fonts → font-* utilities */
+  --font-sans: var(--font-family-body);
+  --font-mono: var(--font-family-mono);
+}

@@ -1,0 +1,115 @@
+import {
+  useId,
+  type InputHTMLAttributes,
+  type ReactNode,
+  type LabelHTMLAttributes,
+} from 'react';
+import { cn } from '../../lib/cn';
+
+/* ---------------------------------------------------------------- TextField */
+
+export interface TextFieldProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
+  size?: 'sm' | 'md' | 'lg';
+  invalid?: boolean;
+}
+
+const FIELD_SIZE: Record<NonNullable<TextFieldProps['size']>, string> = {
+  sm: 'h-8 px-2.5 text-sm',
+  md: 'h-10 px-3 text-base',
+  lg: 'h-12 px-3.5 text-lg',
+};
+
+/** TextField — a themed text input. Use standalone or inside <FormField>. */
+export function TextField({ size = 'md', invalid, className, ...rest }: TextFieldProps) {
+  return (
+    <input
+      className={cn(
+        'block w-full rounded-md border bg-surface text-body placeholder:text-muted',
+        'transition-colors outline-none',
+        'focus-visible:border-focus focus-visible:ring-2 focus-visible:ring-focus/40',
+        'disabled:opacity-50 disabled:cursor-not-allowed',
+        invalid ? 'border-danger' : 'border-line',
+        FIELD_SIZE[size],
+        className,
+      )}
+      aria-invalid={invalid || undefined}
+      {...rest}
+    />
+  );
+}
+
+/* ----------------------------------------------------------------- FormLabel */
+
+export interface FormLabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
+  required?: boolean;
+  children?: ReactNode;
+}
+
+export function FormLabel({ required, className, children, ...rest }: FormLabelProps) {
+  return (
+    <label className={cn('text-sm font-medium text-heading', className)} {...rest}>
+      {children}
+      {required ? <span className="text-danger"> *</span> : null}
+    </label>
+  );
+}
+
+/* ----------------------------------------------------------------- FormField */
+
+export interface FormFieldProps {
+  label?: ReactNode;
+  hint?: ReactNode;
+  error?: ReactNode;
+  required?: boolean;
+  className?: string;
+  /** Render-prop receiving the wired a11y props for the control. */
+  children: (controlProps: {
+    id: string;
+    'aria-describedby'?: string;
+    'aria-invalid'?: boolean;
+    invalid?: boolean;
+  }) => ReactNode;
+}
+
+/**
+ * FormField — composes a label, control, and hint/error text, wiring `id`,
+ * `aria-describedby`, and `aria-invalid` for you via a render prop.
+ */
+export function FormField({
+  label,
+  hint,
+  error,
+  required,
+  className,
+  children,
+}: FormFieldProps) {
+  const id = useId();
+  const hintId = `${id}-hint`;
+  const errorId = `${id}-error`;
+  const describedBy = cn(hint ? hintId : undefined, error ? errorId : undefined) || undefined;
+
+  return (
+    <div className={cn('flex flex-col gap-1.5', className)}>
+      {label ? (
+        <FormLabel htmlFor={id} required={required}>
+          {label}
+        </FormLabel>
+      ) : null}
+      {children({
+        id,
+        'aria-describedby': describedBy,
+        'aria-invalid': error ? true : undefined,
+        invalid: !!error,
+      })}
+      {error ? (
+        <p id={errorId} className="text-sm text-danger">
+          {error}
+        </p>
+      ) : hint ? (
+        <p id={hintId} className="text-sm text-muted">
+          {hint}
+        </p>
+      ) : null}
+    </div>
+  );
+}
