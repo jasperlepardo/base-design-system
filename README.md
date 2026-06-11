@@ -129,12 +129,26 @@ aliases. Push the manifest into a Figma file via the Figma plugin / MCP
 
 ## Publishing
 
-- **Storybook** auto-deploys to **GitHub Pages** on push to `main`
-  (`.github/workflows/storybook.yml`). Enable Pages → "GitHub Actions" once.
-- **GitHub Packages** publishes on a published GitHub Release
-  (`.github/workflows/publish.yml`) using the built-in `GITHUB_TOKEN` — no extra
-  secret needed. Cut a release with `npm run release:patch` (bumps, tags, pushes)
-  then publish a GitHub Release from the tag.
+`main` is protected (PRs + passing CI required), so releases go through a PR.
+
+1. **Cut a release** (from a clean `main`):
+
+   ```bash
+   npm run release:patch   # or release:minor / release:major
+   ```
+
+   This bumps the version on a `release/vX.Y.Z` branch and opens a PR
+   (`scripts/release.mjs`).
+
+2. **Merge the PR** once CI passes. The **Release** workflow
+   (`.github/workflows/release.yml`) then publishes `@jasperlepardo/base-design-system`
+   to **GitHub Packages**, tags `vX.Y.Z`, and creates the GitHub Release — all with
+   the built-in `GITHUB_TOKEN` (no extra secret).
+
+- **Storybook** auto-deploys to **GitHub Pages** on every push to `main`
+  (`.github/workflows/storybook.yml`).
+- **Publish (manual)** (`.github/workflows/publish.yml`) is a `workflow_dispatch`
+  escape hatch to re-publish the current version.
 
 ## License
 
