@@ -5,7 +5,7 @@ import reactHooks from 'eslint-plugin-react-hooks';
 import storybook from 'eslint-plugin-storybook';
 
 export default tseslint.config(
-  { ignores: ['dist', 'src/styles/tokens', 'src/tokens/generated', 'storybook-static'] },
+  { ignores: ['dist', 'src/styles/tokens', 'src/tokens/generated', 'storybook-static', 'figma'] },
   {
     extends: [js.configs.recommended, ...tseslint.configs.recommended],
     files: ['**/*.{ts,tsx}'],

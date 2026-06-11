@@ -47,15 +47,15 @@ export function Button({
   return (
     <button
       type={type}
-      className={cn('base-btn', className)}
+      className={cn('jspr-btn', className)}
       data-intent={intent}
       data-style={variant}
       data-size={size}
       {...rest}
     >
-      {leadingIcon ? <span className="base-btn__icon">{leadingIcon}</span> : null}
-      {children != null ? <span className="base-btn__content">{children}</span> : null}
-      {trailingIcon ? <span className="base-btn__icon">{trailingIcon}</span> : null}
+      {leadingIcon ? <span className="jspr-btn__icon">{leadingIcon}</span> : null}
+      {children != null ? <span className="jspr-btn__content">{children}</span> : null}
+      {trailingIcon ? <span className="jspr-btn__icon">{trailingIcon}</span> : null}
     </button>
   );
 }
