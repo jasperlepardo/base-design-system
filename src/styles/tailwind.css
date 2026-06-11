@@ -7,6 +7,8 @@
 @import "./tokens/base.css";
 @import "./tokens/theme-light.css";
 @import "./tokens/theme-dark.css";
+/* Unset data-theme → follow the OS (explicit data-theme still wins). */
+@import "./tokens/theme-auto-dark.css";
 
 /* Tailwind v4 @theme mappings (semantic vars → utilities). */
 @import "./theme.css";
@@ -21,7 +23,7 @@ body {
 
 /* Inline-SVG icons sized by <Icon>; mono icons use currentColor so they
    follow text color. */
-.base-icon {
+.jspr-icon {
   display: inline-flex;
   flex: none;
   line-height: 0;

@@ -26,7 +26,7 @@ export function Icon({
 }: IconProps) {
   return (
     <svg
-      className={cn('base-icon', className)}
+      className={cn('jspr-icon', className)}
       width={size}
       height={size}
       viewBox={viewBox}

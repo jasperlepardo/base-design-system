@@ -45,12 +45,40 @@ rebuild**.
 
 ## Themes
 
-`light` (default, also seeds `:root`) and `dark`, selected via the
-`data-theme` attribute. Colors differ per theme; spacing, radius, and type are
-shared (`tokens/semantics/shared.json`).
+`light` and `dark`, selected via the `data-theme` attribute on `<html>`. Colors
+differ per theme; spacing, radius, and type are shared
+(`tokens/semantics/shared.json`).
+
+- `data-theme="light"` / `"dark"` — explicit, always wins.
+- **No attribute → follows the OS** via `@media (prefers-color-scheme: dark)`
+  (the `:root:not([data-theme])` rule in `theme-auto-dark.css`).
 
 ```html
-<html data-theme="dark">
+<html data-theme="dark">   <!-- force dark; omit the attribute to follow the OS -->
+```
+
+### Toggling at runtime
+
+The package exports a tiny, framework-light theme controller. `system` mode
+just removes the attribute (so the OS media query takes over); `light`/`dark`
+set it. The choice persists to `localStorage`.
+
+```tsx
+import { useTheme, setThemeMode } from '@jasperlepardo/base-design-system';
+
+// imperatively
+setThemeMode('dark'); // 'light' | 'dark' | 'system'
+
+// or in React — [mode, setMode, resolved]
+const [mode, setMode, resolved] = useTheme();
+```
+
+To avoid a flash of the wrong theme on load, inline `themeScript` in `<head>`
+**before** the stylesheet:
+
+```tsx
+import { themeScript } from '@jasperlepardo/base-design-system';
+// <head><script dangerouslySetInnerHTML={{ __html: themeScript }} /></head>
 ```
 
 ## Install & use

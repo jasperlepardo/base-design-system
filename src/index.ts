@@ -33,4 +33,15 @@ export type {
 export { cn } from './lib/cn';
 export type { ClassValue } from './lib/cn';
 
+export {
+  getThemeMode,
+  setThemeMode,
+  initTheme,
+  resolveTheme,
+  useTheme,
+  themeScript,
+  THEME_STORAGE_KEY,
+} from './lib/theme';
+export type { ThemeMode } from './lib/theme';
+
 export * from './tokens';
