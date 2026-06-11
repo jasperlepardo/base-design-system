@@ -55,6 +55,16 @@ shared (`tokens/semantics/shared.json`).
 
 ## Install & use
 
+Published to **GitHub Packages**. Consumers add a scoped registry line to their
+`.npmrc` (the scope is hosted on GitHub, so installs need a GitHub token with
+`read:packages`):
+
+```ini
+# .npmrc
+@jasperlepardo:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
+```
+
 ```bash
 npm install @jasperlepardo/base-design-system
 ```
@@ -121,8 +131,10 @@ aliases. Push the manifest into a Figma file via the Figma plugin / MCP
 
 - **Storybook** auto-deploys to **GitHub Pages** on push to `main`
   (`.github/workflows/storybook.yml`). Enable Pages → "GitHub Actions" once.
-- **npm** publishes on a published GitHub Release
-  (`.github/workflows/publish.yml`); add an `NPM_TOKEN` secret.
+- **GitHub Packages** publishes on a published GitHub Release
+  (`.github/workflows/publish.yml`) using the built-in `GITHUB_TOKEN` — no extra
+  secret needed. Cut a release with `npm run release:patch` (bumps, tags, pushes)
+  then publish a GitHub Release from the tag.
 
 ## License
 

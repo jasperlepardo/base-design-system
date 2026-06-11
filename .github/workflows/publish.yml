@@ -1,4 +1,4 @@
-name: Publish to npm
+name: Publish to GitHub Packages
 
 on:
   release:
@@ -10,17 +10,17 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      id-token: write # npm provenance
+      packages: write
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
-          registry-url: https://registry.npmjs.org
+          registry-url: https://npm.pkg.github.com
       - run: npm ci
       - run: npm run build
-      # Requires an NPM_TOKEN secret with publish rights to the @jasperlepardo scope.
-      - run: npm publish --access public --provenance
+      - run: npm publish
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          # GITHUB_TOKEN has packages:write here; consumed by .npmrc via NODE_AUTH_TOKEN.
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
