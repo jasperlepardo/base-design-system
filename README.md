@@ -8,9 +8,8 @@ Dictionary** + **Tailwind CSS v4**, are documented in **Storybook**, and are
 **mirrored into Figma** as variables (code is the source of truth).
 
 ```
-Tailwind palette ──gen──▶ tokens/raw.json ─┐
-tokens/scale.json ─────────────────────────┤
-tokens/primitives.json ────────────────────┼─Style Dictionary─▶ src/styles/tokens/*.css  (CSS vars)
+Tailwind theme ──gen──▶ tokens/raw.json ────┐  (colors + spacing/radius/type/shadows)
+tokens/primitives.json ─────────────────────┼─Style Dictionary─▶ src/styles/tokens/*.css  (CSS vars)
 tokens/semantics/{shared,light,dark}.json ──┘                 └─▶ src/tokens/generated/*.ts (typed)
 tokens/components/button.json ──build-components──▶ src/styles/components/button.css + manifest
                                                   └─sync-figma──▶ figma/variables.json (Figma mirror)
@@ -18,16 +17,15 @@ tokens/components/button.json ──build-components──▶ src/styles/compone
 
 ## Token architecture
 
-| Tier          | File(s)                            | Role                                                              |
-| ------------- | ---------------------------------- | ----------------------------------------------------------------- |
-| **Raw**       | `tokens/raw.json` (generated)      | Tailwind's full palette as literal oklch values.                  |
-|               | `tokens/scale.json`                | Non-color raw foundations: spacing, radius, type, font families.  |
-| **Primitive** | `tokens/primitives.json`           | Named scales (`brand`, `neutral`, `success`, …) that alias Raw.   |
-| **Semantic**  | `tokens/semantics/*.json`          | Purpose tokens (`background-default`, `text-heading`, …) that alias Primitives and **resolve per theme**. |
-| **Component** | `tokens/components/button.json`    | Per-component values keyed by `intent/style/size`, aliasing semantics. |
+| Tier          | File(s)                         | Role                                                                                                      |
+| ------------- | ------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| **Raw**       | `tokens/raw.json` (generated)   | All of Tailwind's theme: palette (oklch) plus spacing, radius, type, and shadows.                         |
+| **Primitive** | `tokens/primitives.json`        | Named scales (`brand`, `neutral`, `success`, …) that alias Raw.                                           |
+| **Semantic**  | `tokens/semantics/*.json`       | Purpose tokens (`background-default`, `text-heading`, …) that alias Primitives and **resolve per theme**. |
+| **Component** | `tokens/components/button.json` | Per-component values keyed by `intent/style/size`, aliasing semantics.                                    |
 
 `tokens/raw.json` is **generated** from the installed `tailwindcss` package by
-`scripts/gen-raw-from-tailwind.mjs` — so "raw" is literally Tailwind's colors.
+`scripts/gen-raw-from-tailwind.mjs` — so "raw" is literally Tailwind's own theme.
 It is git-ignored and rebuilt by `npm run tokens`.
 
 ### CSS variable naming
@@ -54,7 +52,9 @@ differ per theme; spacing, radius, and type are shared
   (the `:root:not([data-theme])` rule in `theme-auto-dark.css`).
 
 ```html
-<html data-theme="dark">   <!-- force dark; omit the attribute to follow the OS -->
+<html data-theme="dark">
+  <!-- force dark; omit the attribute to follow the OS -->
+</html>
 ```
 
 ### Toggling at runtime
@@ -122,7 +122,7 @@ Tailwind users can also import just the theme to get the semantic utility scale
 (`bg-canvas`, `text-heading`, `border-line`, `bg-brand`, …):
 
 ```css
-@import "@jasperlepardo/base-design-system/theme";
+@import '@jasperlepardo/base-design-system/theme';
 ```
 
 ## Components
@@ -132,28 +132,74 @@ primitives (`TextField`, `FormField`, `FormLabel`). `Button` is **component-toke
 driven** — `intent`/`variant`/`size` become `data-*` attributes that select
 generated CSS rules. The rest use the semantic Tailwind utilities directly.
 
-## Figma sync (code → Figma)
+## Customizing as a consumer (`jspr`)
 
-```bash
-npm run figma:sync   # → figma/variables.json
+Downstream projects don't fork — they **extend**. Add a `jspr.config.js` and run the
+bundled `jspr` CLI to regenerate your own token CSS / `@theme`, TS manifests, and a
+full Figma library (variables + components). Your repo stays the source of truth.
+
+```js
+// jspr.config.js
+export default {
+  // Where generated files land in your repo.
+  out: { css: 'src/design/css', ts: 'src/design/generated', figma: '.figma' },
+
+  // Remap color roles to any Tailwind family — the whole 50–950 ramp follows.
+  roles: {
+    danger: 'pink', // shorthand: the danger ramp now follows pink
+    brand: { base: 'violet', 600: '{indigo.600}' }, // ramp + per-shade override
+  },
+
+  // Optionally retarget which primitive shade a semantic uses, per theme.
+  semantics: { dark: { danger: { default: 400 } } },
+
+  // Override scale/raw, or point at your own component token files.
+  radius: { md: 'lg' },
+  components: { dir: 'tokens/components' },
+};
 ```
 
-Builds a Figma-ready variable manifest (collections **Raw**, **Primitive**, and
-**Semantic** with **Light**/**Dark** modes), converting Tailwind's oklch colors
-to Figma `{ r, g, b, a }` and turning cross-tier references into variable
-aliases. Push the manifest into a Figma file via the Figma plugin / MCP
-(`use_figma`). Code remains the source of truth; Figma is the generated mirror.
+```bash
+npx jspr gen            # tokens + Figma (default: all)
+npx jspr gen tokens     # just the @theme CSS + TS manifests
+npx jspr gen figma      # variables.json + push scripts + component scripts
+```
+
+Overrides are layered (most specific wins): `roles` → `semantics` → `scale` / `raw`
+→ component files, deep-merged over the base tokens into **one resolved tree** that
+drives both the CSS and Figma. With no `jspr.config`, the CLI reproduces this repo's
+own output unchanged.
+
+## Figma (code ↔ design)
+
+**Code → Figma.** `npx jspr gen figma` (or `npm run figma:sync` for variables only)
+emits a Figma-ready manifest and runnable scripts under your Figma out dir:
+
+- `variables.json` + `push/*.js` — collections **Raw**, **Primitive**, **Semantic**
+  (Light/Dark modes), Tailwind oklch → `{ r, g, b, a }`, cross-tier refs as variable
+  aliases. Push via the Figma plugin / MCP (`use_figma`), or headlessly with
+  `jspr gen figma --push variables` (REST — **Figma Enterprise only**).
+- `components/<name>/*.js` — `use_figma` scripts that build component sets with
+  variants bound to the semantic variables (large matrices auto-split to ≤30 per
+  set). Run these **after** the variables exist.
+
+**Figma → code.** `jspr pull figma` reverse-maps a designer's variable edits back
+into `jspr.config.js` (`--write` to apply, then re-run `jspr gen`). It reads via the
+`use_figma` plugin (any plan) or REST (Enterprise). Code stays the source of truth —
+a pull is a _proposed_ config edit you review via git diff.
 
 ## Scripts
 
-| Command                  | Does                                                       |
-| ------------------------ | ---------------------------------------------------------- |
-| `npm run tokens`         | Generate raw → build token CSS/TS → build component tokens |
-| `npm run dev`            | Start Storybook on :6006                                   |
-| `npm run build`          | Type-check + build the library to `dist/`                  |
-| `npm run build-storybook`| Build the static Storybook site                            |
-| `npm run figma:sync`     | Emit the Figma variable manifest                           |
-| `npm run lint` / `typecheck` / `format` | Quality gates                               |
+| Command                                 | Does                                                       |
+| --------------------------------------- | ---------------------------------------------------------- |
+| `npm run tokens`                        | Generate raw → build token CSS/TS → build component tokens |
+| `npm run dev`                           | Start Storybook on :6006                                   |
+| `npm run build`                         | Type-check + build the library to `dist/`                  |
+| `npm run build-storybook`               | Build the static Storybook site                            |
+| `npm run figma:sync`                    | Emit the Figma variable manifest                           |
+| `npm run figma:push`                    | Push variables via REST (Figma Enterprise)                 |
+| `npx jspr gen` / `pull figma`           | Consumer generate / Figma→config pull (see above)          |
+| `npm run lint` / `typecheck` / `format` | Quality gates                                              |
 
 ## Publishing
 
