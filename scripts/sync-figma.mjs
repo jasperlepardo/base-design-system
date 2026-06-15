@@ -1,35 +1,32 @@
 /**
  * sync-figma.mjs — code → Figma, on-demand.
  *
- * Transforms the token graph (tokens/*.json) into a Figma-ready variable
- * manifest at figma/variables.json:
+ * Transforms the resolved token graph (ctx.paths.tokensDir) into a Figma-ready
+ * variable manifest at <outFigma>/variables.json:
  *
  *   Collection "Raw"        mode: Value          — Tailwind colors + scales (literals)
  *   Collection "Primitive"  mode: Value          — aliases into Raw
  *   Collection "Semantic"   modes: Light, Dark    — aliases into Primitive, per mode
  *
  * Colors are converted from Tailwind's oklch to Figma { r, g, b, a } floats.
- * Cross-tier references become Figma variable aliases (by name).
+ * Cross-tier references become Figma variable aliases (by name). The raw tier
+ * now carries spacing/radius/type/shadows too (from gen-raw-from-tailwind), so
+ * this reads raw.json alone — the old tokens/scale.json is gone.
  *
- * The manifest is portable: push it into a Figma file via the Figma MCP /
- * plugin (`use_figma`) — code stays the source of truth, Figma is the mirror.
- *
- * Run: npm run figma:sync
+ * Run: npm run figma:sync  (or `jspr gen figma`)
  */
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
-import { resolve, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { resolve, dirname, join } from 'node:path';
 import { cssColorToFigma } from './lib/color.mjs';
+import { loadConfig, materializeTokens } from './lib/config.mjs';
+import { run as genRaw } from './gen-raw-from-tailwind.mjs';
 
-const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const read = (p) => JSON.parse(readFileSync(resolve(root, p), 'utf8'));
-
-// Walk a token tree, yielding { name, type, value } leaves (tier prefix dropped).
+// Walk a token tree, yielding { name, type, value, path } leaves (tier dropped from name).
 function flatten(node, path = []) {
   const out = [];
   for (const [k, v] of Object.entries(node)) {
     if (v && typeof v === 'object' && 'value' in v && 'type' in v) {
-      out.push({ name: [...path, k].join('/'), type: v.type, value: v.value });
+      out.push({ name: [...path, k].join('/'), type: v.type, value: v.value, path: [...path, k] });
     } else if (v && typeof v === 'object') {
       out.push(...flatten(v, [...path, k]));
     }
@@ -48,18 +45,14 @@ function aliasOf(ref) {
   return { alias: { collection: TIER_OF[tier], name: rest.join('/') } };
 }
 
-// Resolve a raw literal to a Figma value by type.
 function literal(type, value) {
   if (type === 'color') return { color: cssColorToFigma(value) };
   if (type === 'fontFamily') return { string: String(value) };
   return { number: parseFloat(value) }; // dimension / fontWeight
 }
 
-function toFigmaValue(type, value) {
-  return aliasOf(value) ?? literal(type, value);
-}
+const toFigmaValue = (type, value) => aliasOf(value) ?? literal(type, value);
 
-// --- Raw + Primitive: single "Value" mode ---
 function singleModeCollection(name, leaves) {
   return {
     name,
@@ -72,41 +65,57 @@ function singleModeCollection(name, leaves) {
   };
 }
 
-const rawLeaves = [...flatten(read('tokens/raw.json').raw, []), ...flatten(read('tokens/scale.json').raw, [])];
-const primitiveLeaves = flatten(read('tokens/primitives.json').primitive, []);
+export async function run(ctx) {
+  const { tokensDir, outFigma } = ctx.paths;
+  const read = (p) => JSON.parse(readFileSync(p, 'utf8'));
 
-// --- Semantic: Light + Dark modes (shared tokens identical in both) ---
-const shared = flatten(read('tokens/semantics/shared.json').semantic, []);
-const light = flatten(read('tokens/semantics/light.json').semantic, []);
-const dark = flatten(read('tokens/semantics/dark.json').semantic, []);
+  const rawLeaves = flatten(read(join(tokensDir, 'raw.json')).raw, []);
+  const primitiveLeaves = flatten(read(join(tokensDir, 'primitives.json')).primitive, []);
 
-const byName = new Map();
-const register = (leaf, mode) => {
-  const entry =
-    byName.get(leaf.name) ??
-    byName.set(leaf.name, { name: leaf.name, type: figmaType(leaf.type), valuesByMode: {} }).get(leaf.name);
-  entry.valuesByMode[mode] = toFigmaValue(leaf.type, leaf.value);
-};
-for (const l of shared) {
-  register(l, 'Light');
-  register(l, 'Dark');
+  // Semantic: Light + Dark modes (shared tokens identical in both).
+  const shared = flatten(read(join(tokensDir, 'semantics', 'shared.json')).semantic, []);
+  const light = flatten(read(join(tokensDir, 'semantics', 'light.json')).semantic, []);
+  const dark = flatten(read(join(tokensDir, 'semantics', 'dark.json')).semantic, []);
+
+  const byName = new Map();
+  const register = (leaf, mode) => {
+    const entry =
+      byName.get(leaf.name) ??
+      byName
+        .set(leaf.name, { name: leaf.name, type: figmaType(leaf.type), valuesByMode: {} })
+        .get(leaf.name);
+    entry.valuesByMode[mode] = toFigmaValue(leaf.type, leaf.value);
+  };
+  for (const l of shared) {
+    register(l, 'Light');
+    register(l, 'Dark');
+  }
+  for (const l of light) register(l, 'Light');
+  for (const l of dark) register(l, 'Dark');
+
+  const manifest = {
+    $schema: 'base-design-system/figma-variables@1',
+    collections: [
+      singleModeCollection('Raw', rawLeaves),
+      singleModeCollection('Primitive', primitiveLeaves),
+      { name: 'Semantic', modes: ['Light', 'Dark'], variables: [...byName.values()] },
+    ],
+  };
+
+  const dest = join(outFigma, 'variables.json');
+  mkdirSync(dirname(dest), { recursive: true });
+  writeFileSync(dest, JSON.stringify(manifest, null, 2) + '\n');
+
+  const counts = manifest.collections.map((c) => `${c.name} (${c.variables.length})`).join(', ');
+  console.log(`✓ ${resolve(dest)} — ${counts}`);
+  console.log(
+    '  Push into Figma via the Figma plugin / MCP (use_figma). Code stays the source of truth.',
+  );
 }
-for (const l of light) register(l, 'Light');
-for (const l of dark) register(l, 'Dark');
 
-const manifest = {
-  $schema: 'base-design-system/figma-variables@1',
-  collections: [
-    singleModeCollection('Raw', rawLeaves),
-    singleModeCollection('Primitive', primitiveLeaves),
-    { name: 'Semantic', modes: ['Light', 'Dark'], variables: [...byName.values()] },
-  ],
-};
-
-const dest = resolve(root, 'figma/variables.json');
-mkdirSync(dirname(dest), { recursive: true });
-writeFileSync(dest, JSON.stringify(manifest, null, 2) + '\n');
-
-const counts = manifest.collections.map((c) => `${c.name} (${c.variables.length})`).join(', ');
-console.log(`✓ figma/variables.json — ${counts}`);
-console.log('  Push into Figma via the Figma plugin / MCP (use_figma). Code stays the source of truth.');
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const ctx = await loadConfig();
+  await genRaw(ctx);
+  materializeTokens(ctx);
+  await run(ctx);
+}

@@ -15,8 +15,14 @@
     "**/*.css"
   ],
   "files": [
-    "dist"
+    "dist",
+    "bin",
+    "scripts",
+    "tokens"
   ],
+  "bin": {
+    "jspr": "bin/jspr.mjs"
+  },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -34,6 +40,7 @@
     "components:build": "node scripts/build-components.mjs",
     "tokens": "npm run tokens:raw && npm run tokens:build && npm run components:build",
     "figma:sync": "node scripts/sync-figma.mjs",
+    "figma:push": "node scripts/push-figma-rest.mjs",
     "prestorybook": "npm run tokens",
     "prebuild-storybook": "npm run tokens",
     "prebuild": "npm run tokens",

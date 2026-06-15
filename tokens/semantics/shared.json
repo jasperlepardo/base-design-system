@@ -29,14 +29,14 @@
       "mono": { "value": "{raw.font-family.mono}", "type": "fontFamily" }
     },
     "font-weight": {
-      "body": { "value": "{raw.font-weight.regular}", "type": "fontWeight" },
+      "body": { "value": "{raw.font-weight.normal}", "type": "fontWeight" },
       "emphasis": { "value": "{raw.font-weight.medium}", "type": "fontWeight" },
       "heading": { "value": "{raw.font-weight.semibold}", "type": "fontWeight" }
     },
     "font-size": {
       "xs": { "value": "{raw.font-size.xs}", "type": "dimension" },
       "sm": { "value": "{raw.font-size.sm}", "type": "dimension" },
-      "md": { "value": "{raw.font-size.md}", "type": "dimension" },
+      "md": { "value": "{raw.font-size.base}", "type": "dimension" },
       "lg": { "value": "{raw.font-size.lg}", "type": "dimension" },
       "xl": { "value": "{raw.font-size.xl}", "type": "dimension" },
       "2xl": { "value": "{raw.font-size.2xl}", "type": "dimension" },
@@ -46,7 +46,7 @@
     "line-height": {
       "xs": { "value": "{raw.line-height.xs}", "type": "dimension" },
       "sm": { "value": "{raw.line-height.sm}", "type": "dimension" },
-      "md": { "value": "{raw.line-height.md}", "type": "dimension" },
+      "md": { "value": "{raw.line-height.base}", "type": "dimension" },
       "lg": { "value": "{raw.line-height.lg}", "type": "dimension" },
       "xl": { "value": "{raw.line-height.xl}", "type": "dimension" },
       "2xl": { "value": "{raw.line-height.2xl}", "type": "dimension" },

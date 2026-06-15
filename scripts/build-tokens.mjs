@@ -1,32 +1,24 @@
 /**
  * build-tokens.mjs — Style Dictionary v4 multi-theme build.
  *
- * Produces, from tokens/:
- *   src/styles/tokens/base.css          :root  -> --raw-*, --p-*
- *   src/styles/tokens/theme-light.css   :root + [data-theme="light"] -> semantic vars
- *   src/styles/tokens/theme-dark.css    [data-theme="dark"]          -> semantic vars
- *   src/tokens/generated/base.tokens.ts      typed token list (raw + primitive)
- *   src/tokens/generated/semantic.tokens.ts  typed token list (light semantics)
+ * Produces, from the resolved token tree (ctx.paths.tokensDir):
+ *   <outTokensCss>/base.css          :root  -> --raw-*, --p-*
+ *   <outTokensCss>/theme-light.css   :root + [data-theme="light"] -> semantic vars
+ *   <outTokensCss>/theme-dark.css    [data-theme="dark"]          -> semantic vars
+ *   <outTokensCss>/theme-auto-dark.css  @media prefers-color-scheme
+ *   <outTs>/base.tokens.ts           typed token list (raw + primitive)
+ *   <outTs>/semantic.tokens.ts       typed token list (light semantics)
  *
- * Semantic vars are emitted with `outputReferences: true`, so they resolve to
- * `var(--p-...)` (NOT baked literals). The raw/primitive vars live in :root
- * (base.css), so switching `data-theme` re-points the cascade with no rebuild.
+ * Semantic vars use `outputReferences: true`, so they resolve to `var(--p-...)`.
+ * Switching `data-theme` re-points the cascade with no rebuild.
  *
- * CSS var naming: raw -> --raw-*, primitive -> --p-*, semantic -> unprefixed
- * (--background-default, --text-heading, --space-md) so Tailwind @theme maps
- * cleanly.
- *
- * Run: npm run tokens:build  (gen-raw-from-tailwind runs first via `npm run tokens`)
+ * Run: npm run tokens:build  (or `jspr gen tokens`)
  */
 import { readFileSync, writeFileSync } from 'node:fs';
+import { join } from 'node:path';
 import StyleDictionary from 'style-dictionary';
-
-const BASE = ['tokens/raw.json', 'tokens/scale.json', 'tokens/primitives.json'];
-const SHARED_SEMANTIC = ['tokens/semantics/shared.json'];
-const THEMES = [
-  { name: 'light', file: 'tokens/semantics/light.json', default: true },
-  { name: 'dark', file: 'tokens/semantics/dark.json', default: false },
-];
+import { loadConfig, materializeTokens } from './lib/config.mjs';
+import { run as genRaw } from './gen-raw-from-tailwind.mjs';
 
 StyleDictionary.registerTransform({
   name: 'base/name',
@@ -36,8 +28,7 @@ StyleDictionary.registerTransform({
     const tier = p.shift();
     if (tier === 'raw') return ['raw', ...p].join('-');
     if (tier === 'primitive') return ['p', ...p].join('-');
-    // semantic: unprefixed for clean Tailwind mapping.
-    return p.join('-');
+    return p.join('-'); // semantic: unprefixed for clean Tailwind mapping
   },
 });
 
@@ -81,79 +72,92 @@ async function build(config) {
   await sd.buildAllPlatforms();
 }
 
-// 1) Base: raw + primitive -> :root
-await build({
-  source: BASE,
-  platforms: {
-    css: {
-      transforms: TRANSFORMS,
-      buildPath: 'src/styles/tokens/',
-      files: [
-        {
-          destination: 'base.css',
-          format: 'css/variables',
-          options: { selector: ':root', outputReferences: true },
-        },
-      ],
-    },
-    ts: {
-      transforms: TRANSFORMS,
-      buildPath: 'src/tokens/generated/',
-      files: [{ destination: 'base.tokens.ts', format: 'base/ts-tokens' }],
-    },
-  },
-});
+export async function run(ctx) {
+  const { tokensDir, outTokensCss, outTs } = ctx.paths;
+  const cssPath = outTokensCss.endsWith('/') ? outTokensCss : outTokensCss + '/';
+  const tsPath = outTs.endsWith('/') ? outTs : outTs + '/';
 
-// 2) Per-theme: base (for reference resolution) + shared + that theme's
-//    semantics, emitting ONLY semantic vars under the theme selector.
-for (const theme of THEMES) {
+  const BASE = [join(tokensDir, 'raw.json'), join(tokensDir, 'primitives.json')];
+  const SHARED_SEMANTIC = [join(tokensDir, 'semantics', 'shared.json')];
+  const THEMES = [
+    { name: 'light', file: join(tokensDir, 'semantics', 'light.json'), default: true },
+    { name: 'dark', file: join(tokensDir, 'semantics', 'dark.json'), default: false },
+  ];
+
+  // 1) Base: raw + primitive -> :root
   await build({
-    source: [...BASE, ...SHARED_SEMANTIC, theme.file],
+    source: BASE,
     platforms: {
       css: {
         transforms: TRANSFORMS,
-        buildPath: 'src/styles/tokens/',
+        buildPath: cssPath,
         files: [
           {
-            destination: `theme-${theme.name}.css`,
+            destination: 'base.css',
             format: 'css/variables',
-            filter: onlySemantic,
-            options: {
-              // The default theme also populates :root so semantic vars resolve
-              // even before a data-theme is set on the document.
-              selector: theme.default
-                ? `:root, [data-theme="${theme.name}"]`
-                : `[data-theme="${theme.name}"]`,
-              outputReferences: true,
-            },
+            options: { selector: ':root', outputReferences: true },
           },
         ],
       },
-      ...(theme.default && {
-        ts: {
-          transforms: TRANSFORMS,
-          buildPath: 'src/tokens/generated/',
-          files: [
-            { destination: 'semantic.tokens.ts', format: 'base/ts-tokens', filter: onlySemantic },
-          ],
-        },
-      }),
+      ts: {
+        transforms: TRANSFORMS,
+        buildPath: tsPath,
+        files: [{ destination: 'base.tokens.ts', format: 'base/ts-tokens' }],
+      },
     },
   });
-}
 
-// Auto dark mode: re-emit the dark theme's semantic vars under
-// `@media (prefers-color-scheme: dark) { :root:not([data-theme]) { … } }`, so a
-// document with NO data-theme follows the OS. An explicit data-theme always
-// wins (the :not() means this rule can't match once the attribute is set).
-{
-  const darkCss = readFileSync('src/styles/tokens/theme-dark.css', 'utf8');
+  // 2) Per-theme: base (for reference resolution) + shared + that theme's semantics.
+  for (const theme of THEMES) {
+    await build({
+      source: [...BASE, ...SHARED_SEMANTIC, theme.file],
+      platforms: {
+        css: {
+          transforms: TRANSFORMS,
+          buildPath: cssPath,
+          files: [
+            {
+              destination: `theme-${theme.name}.css`,
+              format: 'css/variables',
+              filter: onlySemantic,
+              options: {
+                selector: theme.default
+                  ? `:root, [data-theme="${theme.name}"]`
+                  : `[data-theme="${theme.name}"]`,
+                outputReferences: true,
+              },
+            },
+          ],
+        },
+        ...(theme.default && {
+          ts: {
+            transforms: TRANSFORMS,
+            buildPath: tsPath,
+            files: [
+              { destination: 'semantic.tokens.ts', format: 'base/ts-tokens', filter: onlySemantic },
+            ],
+          },
+        }),
+      },
+    });
+  }
+
+  // Auto dark mode: re-emit dark semantics under prefers-color-scheme for an
+  // unset data-theme; an explicit data-theme always wins (:not([data-theme])).
+  const darkCss = readFileSync(join(outTokensCss, 'theme-dark.css'), 'utf8');
   const body = darkCss.slice(darkCss.indexOf('{') + 1, darkCss.lastIndexOf('}')).trimEnd();
   const auto =
     `/* Generated by scripts/build-tokens.mjs — do not edit.\n` +
     `   Unset data-theme follows the OS; an explicit data-theme overrides this. */\n` +
     `@media (prefers-color-scheme: dark) {\n  :root:not([data-theme]) {${body}\n  }\n}\n`;
-  writeFileSync('src/styles/tokens/theme-auto-dark.css', auto);
+  writeFileSync(join(outTokensCss, 'theme-auto-dark.css'), auto);
+
+  console.log(`✓ tokens built → ${outTokensCss}, ${outTs}`);
 }
 
-console.log('✓ tokens built → src/styles/tokens/, src/tokens/generated/');
+if (import.meta.url === `file://${process.argv[1]}`) {
+  const ctx = await loadConfig();
+  await genRaw(ctx);
+  materializeTokens(ctx);
+  await run(ctx);
+}
