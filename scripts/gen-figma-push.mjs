@@ -18,12 +18,8 @@
  * Run: node scripts/gen-figma-push.mjs   (after `npm run figma:sync`)
  */
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
-import { resolve, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
-
-const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const manifest = JSON.parse(readFileSync(resolve(root, 'figma/variables.json'), 'utf8'));
-const byName = Object.fromEntries(manifest.collections.map((c) => [c.name, c]));
+import { resolve, join } from 'node:path';
+import { loadConfig } from './lib/config.mjs';
 
 // Encode one figma value (literal or alias) into the compact form.
 function enc(val) {
@@ -149,28 +145,41 @@ function script(dataLiteral, collectionName, modeNames, aliasCols) {
   return `const DATA = ${dataLiteral};\n` + RUNTIME(collectionName, modeNames, aliasCols);
 }
 
-const outDir = resolve(root, 'figma/push');
-mkdirSync(outDir, { recursive: true });
-const sz = (s) => `${(s.length / 1024).toFixed(1)}KB`;
-const write = (file, content, n) => {
-  writeFileSync(resolve(outDir, file), content);
-  console.log(`✓ figma/push/${file} (${sz(content)}, ${n} vars)`);
-};
+export async function run(ctx) {
+  const manifest = JSON.parse(readFileSync(join(ctx.paths.outFigma, 'variables.json'), 'utf8'));
+  const byName = Object.fromEntries(manifest.collections.map((c) => [c.name, c]));
 
-// Raw — chunked.
-const rawEntries = singleEntries(byName.Raw.variables);
-const CHUNK = 200;
-for (let i = 0, p = 1; i < rawEntries.length; i += CHUNK, p++) {
-  const chunk = rawEntries.slice(i, i + CHUNK);
-  write(`raw-${p}.js`, script(JSON.stringify(chunk), 'Raw', ['Value'], []), chunk.length);
+  const outDir = join(ctx.paths.outFigma, 'push');
+  mkdirSync(outDir, { recursive: true });
+  const sz = (s) => `${(s.length / 1024).toFixed(1)}KB`;
+  const write = (file, content, n) => {
+    writeFileSync(resolve(outDir, file), content);
+    console.log(`✓ ${join(outDir, file)} (${sz(content)}, ${n} vars)`);
+  };
+
+  // Raw — chunked.
+  const rawEntries = singleEntries(byName.Raw.variables);
+  const CHUNK = 200;
+  for (let i = 0, p = 1; i < rawEntries.length; i += CHUNK, p++) {
+    const chunk = rawEntries.slice(i, i + CHUNK);
+    write(`raw-${p}.js`, script(JSON.stringify(chunk), 'Raw', ['Value'], []), chunk.length);
+  }
+  // Primitive — aliases into Raw.
+  const primEntries = singleEntries(byName.Primitive.variables);
+  write(
+    'primitive.js',
+    script(JSON.stringify(primEntries), 'Primitive', ['Value'], ['Raw']),
+    primEntries.length,
+  );
+  // Semantic — Light/Dark, aliases into Primitive (+ Raw for shared dims).
+  const semEntries = semanticEntries(byName.Semantic.variables, byName.Semantic.modes);
+  write(
+    'semantic.js',
+    script(JSON.stringify(semEntries), 'Semantic', byName.Semantic.modes, ['Raw', 'Primitive']),
+    semEntries.length,
+  );
 }
-// Primitive — aliases into Raw.
-const primEntries = singleEntries(byName.Primitive.variables);
-write('primitive.js', script(JSON.stringify(primEntries), 'Primitive', ['Value'], ['Raw']), primEntries.length);
-// Semantic — Light/Dark, aliases into Primitive (+ Raw for shared dims).
-const semEntries = semanticEntries(byName.Semantic.variables, byName.Semantic.modes);
-write(
-  'semantic.js',
-  script(JSON.stringify(semEntries), 'Semantic', byName.Semantic.modes, ['Raw', 'Primitive']),
-  semEntries.length,
-);
+
+if (import.meta.url === `file://${process.argv[1]}`) {
+  await run(await loadConfig());
+}

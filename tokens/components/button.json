@@ -1,4 +1,13 @@
 {
+  "$component": {
+    "name": "Button",
+    "className": "jspr-btn",
+    "element": "button",
+    "colorAxes": ["intent", "style"],
+    "sizeAxis": "size",
+    "states": ["rest", "hover"],
+    "slots": { "icon": "instanceSwap" }
+  },
   "colors": {
     "brand/solid": {
       "rest": { "bg": "--brand-default", "text": "--brand-on", "border": "transparent" },

@@ -1,29 +1,27 @@
 /**
- * gen-raw-from-tailwind.mjs — derive the RAW color tier from Tailwind's own
- * default palette, so "raw" is literally Tailwind's colors.
+ * gen-raw-from-tailwind.mjs — derive the entire RAW tier from Tailwind's own
+ * default theme, so "raw" is literally Tailwind: colors, spacing, radius,
+ * typography (font family/size/weight, line-height, tracking) and shadows.
  *
- * Tailwind v4 ships its palette as CSS custom properties in the package's
- * `theme.css` (e.g. `--color-red-500: oklch(...)`). We parse those and emit
- * tokens/raw.json as a Style-Dictionary tree:
+ * Tailwind v4 ships its theme as CSS custom properties in the package's
+ * `theme.css`. We parse those and emit raw.json as a Style-Dictionary tree.
+ * Tailwind is resolved from the CONSUMER's repo (their palette), falling back to
+ * this package's own install for the dev flow. Output path comes from the ctx.
  *
- *   { "raw": { "color": { "red": { "500": { "value": "oklch(...)", "type": "color" } } } } }
- *
- * Run: npm run tokens:raw  (runs automatically before tokens:build)
+ * Run: npm run tokens:raw  (or `jspr gen tokens`)
  */
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
-import { dirname, resolve } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { dirname, join } from 'node:path';
+import { loadConfig } from './lib/config.mjs';
 
-const require = createRequire(import.meta.url);
-const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-
-// Locate Tailwind's theme.css (where the default palette lives in v4).
-function findThemeCss() {
-  const pkgJson = require.resolve('tailwindcss/package.json');
-  const pkgDir = dirname(pkgJson);
+// Locate Tailwind's theme.css (where the default theme lives in v4), resolving
+// from the consumer cwd first so their installed Tailwind wins.
+function findThemeCss(cwd) {
+  const require = createRequire(join(cwd, 'package.json'));
+  const pkgDir = dirname(require.resolve('tailwindcss/package.json'));
   for (const candidate of ['theme.css', 'dist/theme.css', 'lib/theme.css']) {
-    const p = resolve(pkgDir, candidate);
+    const p = join(pkgDir, candidate);
     try {
       readFileSync(p, 'utf8');
       return p;
@@ -36,35 +34,111 @@ function findThemeCss() {
   );
 }
 
-const css = readFileSync(findThemeCss(), 'utf8');
+const clean = (v) => v.replace(/\s+/g, ' ').trim();
+const dim = (value) => ({ value, type: 'dimension' });
+const node = (value, type) => ({ value, type });
 
-// Match `--color-<family>-<shade>: <value>;` and `--color-<black|white>: <value>;`
-const shaded = /--color-([a-z]+)-(\d+):\s*([^;]+);/g;
-const flat = /--color-(black|white):\s*([^;]+);/g;
+export async function run(ctx) {
+  const css = readFileSync(findThemeCss(ctx.cwd), 'utf8');
 
-const color = {};
-let m;
-while ((m = shaded.exec(css))) {
-  const [, family, shade, value] = m;
-  (color[family] ??= {})[shade] = { value: value.trim(), type: 'color' };
+  // Pull every `--<prefix>-<key>: <value>;` declaration into { key: value }.
+  // Anchored + `m` flag so e.g. `--shadow-` can't match inside `--text-shadow-`.
+  function collect(prefix, keyPattern = '[a-z0-9]+') {
+    const re = new RegExp(`^\\s*--${prefix}-(${keyPattern}):\\s*([^;]+);`, 'gm');
+    const out = {};
+    let m;
+    while ((m = re.exec(css))) out[m[1]] = clean(m[2]);
+    return out;
+  }
+
+  /* ---- color (all families + black/white) ---- */
+  const color = {};
+  {
+    const shaded = /^\s*--color-([a-z]+)-(\d+):\s*([^;]+);/gm;
+    const flat = /^\s*--color-(black|white):\s*([^;]+);/gm;
+    let m;
+    while ((m = shaded.exec(css))) (color[m[1]] ??= {})[m[2]] = node(clean(m[3]), 'color');
+    while ((m = flat.exec(css))) color[m[1]] = node(clean(m[2]), 'color');
+  }
+  const familyCount = Object.keys(color).length;
+  if (familyCount === 0)
+    throw new Error('Parsed 0 colors from Tailwind theme.css — the format may have changed.');
+
+  /* ---- spacing (v4 ships a single --spacing multiplier; materialise steps) ---- */
+  const SPACING_STEPS = [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64,
+    72, 80, 96,
+  ];
+  const spacing = { 0: dim('0px'), px: dim('1px') };
+  {
+    const baseMatch = css.match(/^\s*--spacing:\s*([^;]+);/m);
+    const baseRem = baseMatch ? parseFloat(baseMatch[1]) : 0.25;
+    for (const step of SPACING_STEPS) spacing[step] = dim(`${+(step * baseRem).toFixed(4)}rem`);
+  }
+
+  /* ---- radius (+ none/full, which Tailwind expresses as utilities) ---- */
+  const radius = { none: dim('0px') };
+  for (const [k, v] of Object.entries(collect('radius'))) radius[k] = dim(v);
+  radius.full = dim('calc(infinity * 1px)');
+
+  /* ---- border width (Tailwind has no theme vars — these are its utilities) ---- */
+  const borderWidth = { 0: dim('0px'), 1: dim('1px'), 2: dim('2px'), 4: dim('4px'), 8: dim('8px') };
+
+  /* ---- typography ---- */
+  const fontFamily = Object.fromEntries(
+    Object.entries(collect('font', 'sans|serif|mono')).map(([k, v]) => [k, node(v, 'fontFamily')]),
+  );
+  const fontWeight = Object.fromEntries(
+    Object.entries(collect('font-weight', '[a-z]+')).map(([k, v]) => [k, node(v, 'fontWeight')]),
+  );
+  const fontSize = Object.fromEntries(Object.entries(collect('text')).map(([k, v]) => [k, dim(v)]));
+  const lineHeight = {};
+  {
+    const re = /^\s*--text-([a-z0-9]+)--line-height:\s*([^;]+);/gm;
+    let m;
+    while ((m = re.exec(css))) lineHeight[m[1]] = dim(clean(m[2]));
+  }
+  const leading = Object.fromEntries(
+    Object.entries(collect('leading', '[a-z]+')).map(([k, v]) => [k, dim(v)]),
+  );
+  const tracking = Object.fromEntries(
+    Object.entries(collect('tracking', '[a-z]+')).map(([k, v]) => [k, dim(v)]),
+  );
+
+  /* ---- shadows ---- */
+  const shadow = Object.fromEntries(
+    Object.entries(collect('shadow')).map(([k, v]) => [k, node(v, 'shadow')]),
+  );
+
+  const out = {
+    raw: {
+      color,
+      spacing,
+      radius,
+      'border-width': borderWidth,
+      'font-family': fontFamily,
+      'font-size': fontSize,
+      'font-weight': fontWeight,
+      'line-height': lineHeight,
+      leading,
+      tracking,
+      shadow,
+    },
+  };
+
+  const dest = ctx.paths.rawJsonPath;
+  mkdirSync(dirname(dest), { recursive: true });
+  writeFileSync(dest, JSON.stringify(out, null, 2) + '\n');
+
+  const count = (o) =>
+    Object.values(o).reduce((n, v) => n + (v.value ? 1 : Object.keys(v).length), 0);
+  console.log(
+    `✓ raw.json — from Tailwind: ${count(color)} colors (${familyCount} families), ` +
+      `${count(spacing)} spacing, ${count(radius)} radius, ${count(fontSize)} font-size, ` +
+      `${count(lineHeight)} line-height, ${count(fontWeight)} font-weight, ${count(shadow)} shadow`,
+  );
 }
-while ((m = flat.exec(css))) {
-  const [, name, value] = m;
-  color[name] = { value: value.trim(), type: 'color' };
+
+if (import.meta.url === `file://${process.argv[1]}`) {
+  run(await loadConfig());
 }
-
-const familyCount = Object.keys(color).length;
-if (familyCount === 0) {
-  throw new Error('Parsed 0 colors from Tailwind theme.css — the format may have changed.');
-}
-
-const out = { raw: { color } };
-const dest = resolve(root, 'tokens/raw.json');
-mkdirSync(dirname(dest), { recursive: true });
-writeFileSync(dest, JSON.stringify(out, null, 2) + '\n');
-
-const total = Object.values(color).reduce(
-  (n, v) => n + (v.value ? 1 : Object.keys(v).length),
-  0,
-);
-console.log(`✓ tokens/raw.json — ${total} Tailwind colors across ${familyCount} families`);
