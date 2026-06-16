@@ -127,10 +127,50 @@ Tailwind users can also import just the theme to get the semantic utility scale
 
 ## Components
 
-`Button`, `Text`, `Icon`, `Link`, `Badge`, `Card`, `Alert`, and the field
-primitives (`TextField`, `FormField`, `FormLabel`). `Button` is **component-token
-driven** — `intent`/`variant`/`size` become `data-*` attributes that select
-generated CSS rules. The rest use the semantic Tailwind utilities directly.
+Import any component from the package root — the CSS is injected on import. Every
+component re-themes across light/dark and is documented in **Storybook**
+(`npm run dev`).
+
+**Actions**
+
+- `Button` — `intent`/`variant`/`size` → `data-*` attributes selecting generated CSS.
+- `IconButton` — the square, icon-only counterpart of Button (same color matrix).
+- `ButtonGroup` — row/stacked action cluster with optional equal-width `fill`.
+- `Link` — themed anchor.
+
+**Forms & fields** — all spread native props and wire through `FormField`
+(`id` / `aria-describedby` / `aria-invalid`):
+
+- `FormField` / `FormLabel` — label + hint/error + a11y wiring (render prop).
+- `TextField`, `Textarea`, `Select` (native), `Checkbox`, `Radio`.
+- `OTP` — one-time-passcode input (auto-advance, paste-to-fill).
+- `Combobox` — searchable single-select.
+- `MultiSelect` — multi-value with removable chips.
+- `Autocomplete` — free-text with suggestions.
+- `DatePicker` — keyboard-navigable calendar popover.
+
+**Layout**
+
+- `Page` — full-height shell (sticky child `<nav>`, pinned child `<footer>`).
+- `Section` / `Section.Container` / `Row` / `Column` — full-bleed regions over a 12-col grid.
+- `Form` (+ `Form.Section` / `Form.Header` / `Form.Group` / `Form.Fieldset`) — vertical form layout.
+- `Footer` (+ `Footer.Container`).
+
+**Display**
+
+- `Text`, `Icon`, `Badge`, `Card`, `Alert`, `Image`.
+- `List` (+ `List.Section` / `List.Header` / `List.Group` / `List.Item` and the
+  `List.Leading` / `List.Content` / `List.Title` / `List.Value` / `List.Trailing` slots).
+
+**Overlay foundation**
+
+- `Dropdown` / `DropdownItem` plus the `useDropdown` (open/close, outside-click,
+  Escape) and `useListbox` (WAI-ARIA keyboard model) hooks — the popover/listbox
+  primitives the combobox family (Combobox, MultiSelect, Autocomplete) is built on.
+
+`Button` and `IconButton` are **component-token driven** (generated `.jspr-*` CSS
+from `tokens/components/*.json`); the rest use semantic Tailwind utilities (with a
+little committed CSS for layout pieces like Page/ButtonGroup/List/Dropdown).
 
 ## Customizing as a consumer (`jspr`)
 
