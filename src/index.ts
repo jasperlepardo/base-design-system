@@ -124,6 +124,9 @@ export type {
   AutocompleteSuggestion,
 } from './components/Autocomplete/Autocomplete';
 
+export { DatePicker } from './components/DatePicker/DatePicker';
+export type { DatePickerProps } from './components/DatePicker/DatePicker';
+
 export { useDropdown } from './lib/useDropdown';
 export { useListbox } from './lib/useListbox';
 export type { UseListboxOptions, UseListboxResult } from './lib/useListbox';
