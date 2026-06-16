@@ -70,15 +70,15 @@
   flex: none;
 }
 
-.jspr-alert__action {
+/* Actions render the themed <Link>; override its tone color with the Alert's
+   intent color (compound selector beats Link's single-class tone utility). */
+.jspr-alert .jspr-alert__action {
   color: var(--alert-icon);
   font-weight: var(--font-weight-emphasis);
   cursor: pointer;
-  text-underline-offset: 2px;
 }
-.jspr-alert__action:hover,
-.jspr-alert__action:focus-visible {
-  text-decoration: underline;
+.jspr-alert .jspr-alert__action:hover {
+  color: var(--alert-icon);
 }
 
 .jspr-alert__close {

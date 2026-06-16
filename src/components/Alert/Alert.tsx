@@ -7,6 +7,7 @@ import {
 } from 'react';
 import { cn } from '../../lib/cn';
 import { Icon } from '../Icon/Icon';
+import { Link } from '../Link/Link';
 import './alert.css'; // structure
 import '../../styles/components/alert.css'; // generated colors (--alert-* per intent/style)
 
@@ -161,14 +162,14 @@ export interface AlertActionProps extends AnchorHTMLAttributes<HTMLAnchorElement
 }
 
 /**
- * Default Alert action — a link-styled control that inherits the Alert's intent
- * color (`--alert-icon`). Pass `href` for navigation or `onClick` for an action.
+ * Default Alert action — the themed `Link` colored by the Alert's intent
+ * (`--alert-icon`). Pass `href` for navigation or `onClick` for an action.
  */
 function AlertAction({ className, children, ...rest }: AlertActionProps) {
   return (
-    <a className={cn('jspr-alert__action', className)} {...rest}>
+    <Link className={cn('jspr-alert__action', className)} {...rest}>
       {children}
-    </a>
+    </Link>
   );
 }
 
