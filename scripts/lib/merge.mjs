@@ -66,15 +66,29 @@ const asLeaf = (value, type) => (isLeaf(value) ? value : { value, type });
  */
 export function compileRoles(basePrimitiveColor = {}, roles = {}) {
   const color = {};
+  // Map one shade onto `family`, but PRESERVE non-standard anchor shades from
+  // the base ramp — e.g. neutral's `0` → {raw.color.white} and `1000` →
+  // {raw.color.black}, which Tailwind families don't define. A shade is only
+  // remapped when the base value is itself a {raw.color.<fam>.<shade>} ramp ref
+  // for that shade; anything else (anchors, hand-set literals) is kept as-is,
+  // so a family shorthand like `neutral: 'slate'` "just works".
+  const mapShade = (family, shade, baseLeaf) => {
+    const baseVal = baseLeaf && baseLeaf.value;
+    const isRampRef =
+      typeof baseVal === 'string' &&
+      new RegExp(`^\\{raw\\.color\\.[a-z0-9-]+\\.${shade}\\}$`).test(baseVal);
+    return isRampRef || !baseLeaf
+      ? { value: `{raw.color.${family}.${shade}}`, type: 'color' }
+      : baseLeaf;
+  };
   for (const [role, spec] of Object.entries(roles)) {
-    const shadeKeys = Object.keys(basePrimitiveColor[role] ?? {});
+    const base = basePrimitiveColor[role] ?? {};
+    const shadeKeys = Object.keys(base);
     const out = {};
     if (typeof spec === 'string') {
-      for (const s of shadeKeys) out[s] = { value: `{raw.color.${spec}.${s}}`, type: 'color' };
+      for (const s of shadeKeys) out[s] = mapShade(spec, s, base[s]);
     } else if (isPlainObject(spec)) {
-      if (spec.base)
-        for (const s of shadeKeys)
-          out[s] = { value: `{raw.color.${spec.base}.${s}}`, type: 'color' };
+      if (spec.base) for (const s of shadeKeys) out[s] = mapShade(spec.base, s, base[s]);
       for (const [k, v] of Object.entries(spec)) {
         if (k === 'base') continue;
         out[k] = { value: expandColorRef(v), type: 'color' };
