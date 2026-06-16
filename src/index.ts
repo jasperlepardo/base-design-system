@@ -118,6 +118,12 @@ export type { ComboboxProps, ComboboxOption } from './components/Combobox/Combob
 export { MultiSelect } from './components/MultiSelect/MultiSelect';
 export type { MultiSelectProps, MultiSelectOption } from './components/MultiSelect/MultiSelect';
 
+export { Autocomplete } from './components/Autocomplete/Autocomplete';
+export type {
+  AutocompleteProps,
+  AutocompleteSuggestion,
+} from './components/Autocomplete/Autocomplete';
+
 export { useDropdown } from './lib/useDropdown';
 export { useListbox } from './lib/useListbox';
 export type { UseListboxOptions, UseListboxResult } from './lib/useListbox';
