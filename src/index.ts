@@ -106,6 +106,9 @@ export type {
 export { Image, imageRatios } from './components/Image/Image';
 export type { ImageProps, ImageRatio } from './components/Image/Image';
 
+export { OTP } from './components/OTP/OTP';
+export type { OTPProps } from './components/OTP/OTP';
+
 export { List, ListGroup, ListItem, listVariants } from './components/List/List';
 export type {
   ListProps,
