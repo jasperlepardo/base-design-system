@@ -16,8 +16,8 @@ export type { TextProps, TextVariant, TextWeight, TextTone } from './components/
 export { Icon } from './components/Icon/Icon';
 export type { IconProps } from './components/Icon/Icon';
 
-export { Link, linkTones } from './components/Link/Link';
-export type { LinkProps, LinkTone } from './components/Link/Link';
+export { Link, linkIntents } from './components/Link/Link';
+export type { LinkProps, LinkIntent } from './components/Link/Link';
 
 export { Badge, badgeIntents, badgeStyles, badgeSizes } from './components/Badge/Badge';
 export type { BadgeProps, BadgeIntent, BadgeStyle, BadgeSize } from './components/Badge/Badge';
