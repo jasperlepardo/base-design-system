@@ -140,7 +140,12 @@ function buildOne(name, file, valid) {
       const v = byState[state];
       if (!v) continue;
       const suffix = meta.stateSelectors[state] ?? '';
-      css += `${sel}${suffix} {\n  --${px}-bg: ${ref(v.bg)};\n  --${px}-text: ${ref(v.text)};\n  --${px}-border: ${ref(v.border)};\n}\n`;
+      // Emit every color key present (bg/text/border for Button; bg/border/icon/
+      // heading/body for Alert, …) as a --<prefix>-<key> custom property.
+      const decls = Object.entries(v)
+        .map(([k, val]) => `  --${px}-${k}: ${ref(val)};`)
+        .join('\n');
+      css += `${sel}${suffix} {\n${decls}\n}\n`;
     }
     css += `\n`;
   }

@@ -7,46 +7,17 @@ import {
 } from 'react';
 import { cn } from '../../lib/cn';
 import { Icon } from '../Icon/Icon';
+import './alert.css'; // structure
+import '../../styles/components/alert.css'; // generated colors (--alert-* per intent/style)
 
-// Mirrors the Figma Alert variant axes (node 8919:4545): Intent × Style × isHorizontal.
+// Mirrors the Figma Alert (node 8919:4545): Intent × Style × isHorizontal. Colors
+// come from tokens/components/alert.json (→ --alert-bg / -border / -icon /
+// -heading / -body, the same shape as Figma's Alert/* component variables).
 export const alertIntents = ['default', 'primary', 'success', 'warning', 'danger'] as const;
 export type AlertIntent = (typeof alertIntents)[number];
 
 export const alertStyles = ['solid', 'outline', 'transparent'] as const;
 export type AlertStyle = (typeof alertStyles)[number];
-
-type Parts = { root: string; icon: string };
-
-// [intent][style] → container + icon utility classes (literal strings so Tailwind
-// detects them). Every class maps to a semantic token, so alerts re-theme and
-// honor consumer role remaps.
-const VARIANT: Record<AlertIntent, Record<AlertStyle, Parts>> = {
-  default: {
-    solid: { root: 'bg-heading text-inverse', icon: 'text-inverse' },
-    outline: { root: 'bg-canvas-muted text-body border border-line-strong', icon: 'text-heading' },
-    transparent: { root: 'bg-canvas-muted text-body', icon: 'text-heading' },
-  },
-  primary: {
-    solid: { root: 'bg-primary text-on-primary', icon: 'text-on-primary' },
-    outline: { root: 'bg-primary-subtle text-body border border-primary', icon: 'text-primary' },
-    transparent: { root: 'bg-primary-subtle text-body', icon: 'text-primary' },
-  },
-  success: {
-    solid: { root: 'bg-success text-on-success', icon: 'text-on-success' },
-    outline: { root: 'bg-success-subtle text-body border border-success', icon: 'text-success' },
-    transparent: { root: 'bg-success-subtle text-body', icon: 'text-success' },
-  },
-  warning: {
-    solid: { root: 'bg-warning text-on-warning', icon: 'text-on-warning' },
-    outline: { root: 'bg-warning-subtle text-body border border-warning', icon: 'text-warning' },
-    transparent: { root: 'bg-warning-subtle text-body', icon: 'text-warning' },
-  },
-  danger: {
-    solid: { root: 'bg-danger text-on-danger', icon: 'text-on-danger' },
-    outline: { root: 'bg-danger-subtle text-body border border-danger', icon: 'text-danger' },
-    transparent: { root: 'bg-danger-subtle text-body', icon: 'text-danger' },
-  },
-};
 
 // Default status glyph per intent.
 const DEFAULT_ICON: Record<AlertIntent, ReactNode> = {
@@ -82,17 +53,7 @@ const DEFAULT_ICON: Record<AlertIntent, ReactNode> = {
   ),
 };
 
-interface AlertCtx {
-  intent: AlertIntent;
-  variant: AlertStyle;
-  horizontal: boolean;
-}
-const AlertContext = createContext<AlertCtx>({
-  intent: 'default',
-  variant: 'solid',
-  horizontal: false,
-});
-const useAlert = () => useContext(AlertContext);
+const AlertContext = createContext<{ intent: AlertIntent }>({ intent: 'default' });
 
 /* --------------------------------------------------------------- Alert.Root */
 
@@ -104,7 +65,7 @@ export interface AlertRootProps extends Omit<HTMLAttributes<HTMLDivElement>, 'ti
   horizontal?: boolean;
 }
 
-/** Root box + flex row; shares `intent`/`variant`/`horizontal` with descendants. */
+/** Root box; shares `intent` with descendants and selects colors via data-attrs. */
 function AlertRoot({
   intent = 'default',
   variant = 'solid',
@@ -113,18 +74,17 @@ function AlertRoot({
   children,
   ...rest
 }: AlertRootProps) {
-  const parts = VARIANT[intent][variant];
   return (
-    <AlertContext.Provider value={{ intent, variant, horizontal }}>
-      <div role="alert" className={cn('rounded-md', parts.root, className)} {...rest}>
-        <div
-          className={cn(
-            'flex gap-3 p-4 text-sm/[20px]',
-            horizontal ? 'items-center' : 'items-start',
-          )}
-        >
-          {children}
-        </div>
+    <AlertContext.Provider value={{ intent }}>
+      <div
+        role="alert"
+        className={cn('jspr-alert', className)}
+        data-intent={intent}
+        data-style={variant}
+        data-horizontal={horizontal || undefined}
+        {...rest}
+      >
+        <div className="jspr-alert__container">{children}</div>
       </div>
     </AlertContext.Provider>
   );
@@ -138,15 +98,11 @@ export interface AlertIconProps {
   className?: string;
 }
 
-/** Leading status glyph (colored by the Root's intent/variant). */
+/** Leading status glyph (colored by the Root's intent/style via --alert-icon). */
 function AlertIcon({ children, className }: AlertIconProps) {
-  const { intent, variant, horizontal } = useAlert();
+  const { intent } = useContext(AlertContext);
   return (
-    <span
-      className={cn('flex-none', VARIANT[intent][variant].icon, !horizontal && 'pt-0.5', className)}
-    >
-      {children ?? DEFAULT_ICON[intent]}
-    </span>
+    <span className={cn('jspr-alert__icon', className)}>{children ?? DEFAULT_ICON[intent]}</span>
   );
 }
 
@@ -158,37 +114,25 @@ export interface AlertSlotProps extends HTMLAttributes<HTMLDivElement> {
 
 /** Content column: groups the text block and the actions (row when horizontal). */
 function AlertContent({ className, children, ...rest }: AlertSlotProps) {
-  const { horizontal } = useAlert();
   return (
-    <div
-      className={cn(
-        'flex min-w-0 flex-1 gap-3',
-        horizontal ? 'flex-row items-center' : 'flex-col',
-        className,
-      )}
-      {...rest}
-    >
+    <div className={cn('jspr-alert__main', className)} {...rest}>
       {children}
     </div>
   );
 }
 
-/** Text group: title + body, tightly spaced; takes the remaining width. */
+/** Text group: title + body. */
 function AlertText({ className, children, ...rest }: AlertSlotProps) {
   return (
-    <div className={cn('flex min-w-0 flex-1 flex-col gap-1', className)} {...rest}>
+    <div className={cn('jspr-alert__text', className)} {...rest}>
       {children}
     </div>
   );
 }
 
 function AlertTitle({ className, children, ...rest }: AlertSlotProps) {
-  const { variant } = useAlert();
   return (
-    <div
-      className={cn('font-semibold', variant !== 'solid' && 'text-heading', className)}
-      {...rest}
-    >
+    <div className={cn('jspr-alert__title', className)} {...rest}>
       {children}
     </div>
   );
@@ -196,19 +140,15 @@ function AlertTitle({ className, children, ...rest }: AlertSlotProps) {
 
 function AlertBody({ className, children, ...rest }: AlertSlotProps) {
   return (
-    <div className={cn(className)} {...rest}>
+    <div className={cn('jspr-alert__message', className)} {...rest}>
       {children}
     </div>
   );
 }
 
 function AlertActions({ className, children, ...rest }: AlertSlotProps) {
-  const { horizontal } = useAlert();
   return (
-    <div
-      className={cn('flex flex-wrap items-center gap-2', horizontal && 'flex-none', className)}
-      {...rest}
-    >
+    <div className={cn('jspr-alert__actions', className)} {...rest}>
       {children}
     </div>
   );
@@ -221,21 +161,12 @@ export interface AlertActionProps extends AnchorHTMLAttributes<HTMLAnchorElement
 }
 
 /**
- * Default Alert action — a semibold link-styled control that inherits the Alert's
- * intent color. Pass `href` for navigation or `onClick` for an action.
+ * Default Alert action — a link-styled control that inherits the Alert's intent
+ * color (`--alert-icon`). Pass `href` for navigation or `onClick` for an action.
  */
 function AlertAction({ className, children, ...rest }: AlertActionProps) {
-  const { intent, variant } = useAlert();
-  const color = variant === 'solid' ? '' : VARIANT[intent][variant].icon;
   return (
-    <a
-      className={cn(
-        'cursor-pointer font-semibold underline-offset-2 hover:underline focus-visible:underline',
-        color,
-        className,
-      )}
-      {...rest}
-    >
+    <a className={cn('jspr-alert__action', className)} {...rest}>
       {children}
     </a>
   );
@@ -251,19 +182,12 @@ export interface AlertCloseProps {
 }
 
 function AlertClose({ onClick, label = 'Dismiss', className }: AlertCloseProps) {
-  const { intent, variant, horizontal } = useAlert();
   return (
     <button
       type="button"
       aria-label={label}
       onClick={onClick}
-      className={cn(
-        'flex flex-none rounded-sm opacity-70 transition-opacity hover:opacity-100',
-        'focus-visible:opacity-100 focus-visible:outline-2 focus-visible:outline-current',
-        VARIANT[intent][variant].icon,
-        !horizontal && 'self-start',
-        className,
-      )}
+      className={cn('jspr-alert__close', className)}
     >
       <Icon size={16}>
         <path d="M18 6 6 18M6 6l12 12" />
@@ -295,11 +219,11 @@ export interface AlertProps extends Omit<HTMLAttributes<HTMLDivElement>, 'title'
 
 /**
  * Alert — a contextual status banner. `intent` × `variant` (solid/outline/
- * transparent) set the themed colors; `horizontal` switches the inline layout;
- * `actions` and `onClose` (dismiss ×) are optional, with a per-intent status icon
- * by default. Mirrors the Figma Alert. This is a convenience wrapper over the
- * compound parts — use `Alert.Root` / `Alert.Icon` / `Alert.Title` / `Alert.Body`
- * / `Alert.Actions` (+ `Alert.Action`) / `Alert.Close` directly for custom layouts.
+ * transparent) drive themed colors via `--alert-*` tokens; `horizontal` switches
+ * the inline layout; `actions` and `onClose` (dismiss ×) are optional, with a
+ * per-intent status icon by default. Mirrors the Figma Alert. This is a
+ * convenience wrapper over the compound parts (`Alert.Root` / `Alert.Icon` /
+ * `Alert.Title` / `Alert.Body` / `Alert.Actions` + `Alert.Action` / `Alert.Close`).
  */
 export function Alert({
   intent = 'default',
