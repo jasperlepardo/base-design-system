@@ -1,0 +1,17 @@
+/* Page — full-height app shell. A vertical flex column with an isolated stacking
+   context so a child <nav> sticks to the top and a child <footer> pins to the
+   bottom on short pages. */
+.jspr-page {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  isolation: isolate;
+}
+.jspr-page > nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.jspr-page > footer {
+  margin-top: auto;
+}
