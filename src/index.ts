@@ -25,8 +25,17 @@ export type { BadgeProps, BadgeIntent, BadgeStyle, BadgeSize } from './component
 export { Card } from './components/Card/Card';
 export type { CardProps, CardSlotProps } from './components/Card/Card';
 
-export { Alert, alertIntents } from './components/Alert/Alert';
-export type { AlertProps, AlertIntent } from './components/Alert/Alert';
+export { Alert, alertIntents, alertStyles } from './components/Alert/Alert';
+export type {
+  AlertProps,
+  AlertIntent,
+  AlertStyle,
+  AlertRootProps,
+  AlertIconProps,
+  AlertSlotProps,
+  AlertActionProps,
+  AlertCloseProps,
+} from './components/Alert/Alert';
 
 export {
   IconButton,

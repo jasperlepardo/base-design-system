@@ -1,25 +1,23 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { Alert, alertIntents } from './Alert';
-import { Icon } from '../Icon/Icon';
-
-const InfoIcon = (
-  <Icon size={20}>
-    <circle cx="12" cy="12" r="9" />
-    <path d="M12 11v5M12 8h.01" />
-  </Icon>
-);
+import { Alert, alertIntents, alertStyles } from './Alert';
+import { Button } from '../Button/Button';
 
 const meta = {
   title: 'Components/Alert',
   component: Alert,
   tags: ['autodocs'],
   args: {
-    intent: 'info',
+    intent: 'primary',
+    variant: 'outline',
+    horizontal: false,
     title: 'Heads up',
     children: 'This is an informational message driven by semantic tokens.',
-    icon: InfoIcon,
   },
-  argTypes: { intent: { control: 'inline-radio', options: alertIntents } },
+  argTypes: {
+    intent: { control: 'inline-radio', options: alertIntents },
+    variant: { control: 'inline-radio', options: alertStyles },
+    horizontal: { control: 'boolean' },
+  },
 } satisfies Meta<typeof Alert>;
 
 export default meta;
@@ -27,14 +25,72 @@ type Story = StoryObj<typeof meta>;
 
 export const Playground: Story = {};
 
-export const AllIntents: Story = {
+export const Matrix: Story = {
   render: () => (
-    <div className="flex flex-col gap-3" style={{ maxWidth: 480 }}>
-      {alertIntents.map((intent) => (
-        <Alert key={intent} intent={intent} icon={InfoIcon} title={`${intent} alert`}>
-          A short description of what happened.
-        </Alert>
+    <div className="flex flex-col gap-6" style={{ maxWidth: 1100 }}>
+      {alertStyles.map((variant) => (
+        <div key={variant} className="grid grid-cols-1 gap-3 md:grid-cols-3">
+          {alertIntents.map((intent) => (
+            <Alert key={intent} intent={intent} variant={variant} title={`${intent} / ${variant}`}>
+              A short description of what happened.
+            </Alert>
+          ))}
+        </div>
       ))}
+    </div>
+  ),
+};
+
+export const WithActionsAndDismiss: Story = {
+  render: () => (
+    <div className="flex flex-col gap-4" style={{ maxWidth: 560 }}>
+      <Alert
+        intent="warning"
+        variant="outline"
+        title="Unsaved changes"
+        onClose={() => {}}
+        actions={
+          <>
+            <Alert.Action href="#">Save</Alert.Action>
+            <Alert.Action href="#">Discard</Alert.Action>
+          </>
+        }
+      >
+        You have unsaved changes that will be lost.
+      </Alert>
+
+      <Alert
+        intent="success"
+        variant="solid"
+        horizontal
+        title="Payment received"
+        onClose={() => {}}
+      >
+        Your transaction completed successfully.
+      </Alert>
+    </div>
+  ),
+};
+
+/** Compound parts for a custom layout (a Button action instead of the default link). */
+export const Compound: Story = {
+  render: () => (
+    <div style={{ maxWidth: 560 }}>
+      <Alert.Root intent="danger" variant="outline">
+        <Alert.Icon />
+        <Alert.Content>
+          <Alert.Text>
+            <Alert.Title>Couldn’t save your changes</Alert.Title>
+            <Alert.Body>Check your connection and try again.</Alert.Body>
+          </Alert.Text>
+          <Alert.Actions>
+            <Button intent="danger" variant="soft" size="sm">
+              Retry
+            </Button>
+          </Alert.Actions>
+        </Alert.Content>
+        <Alert.Close onClick={() => {}} />
+      </Alert.Root>
     </div>
   ),
 };
