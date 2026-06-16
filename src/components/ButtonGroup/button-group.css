@@ -1,0 +1,36 @@
+/* ButtonGroup — layout for a 1–3 action cluster. Token-driven gap; the row↔stacked
+   switch, alignment, and equal-width fill are selected by data-attributes. */
+.jspr-button-group {
+  display: flex;
+  gap: var(--space-md);
+}
+.jspr-button-group[data-orientation='horizontal'] {
+  flex-direction: row;
+  align-items: center;
+}
+.jspr-button-group[data-orientation='stacked'] {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* Alignment applies to the horizontal row (and only when not filling). */
+.jspr-button-group[data-orientation='horizontal']:not([data-fill])[data-align='start'] {
+  justify-content: flex-start;
+}
+.jspr-button-group[data-orientation='horizontal']:not([data-fill])[data-align='center'] {
+  justify-content: center;
+}
+.jspr-button-group[data-orientation='horizontal']:not([data-fill])[data-align='end'] {
+  justify-content: flex-end;
+}
+.jspr-button-group[data-orientation='horizontal']:not([data-fill])[data-align='between'] {
+  justify-content: space-between;
+}
+
+/* Equal-width buttons. */
+.jspr-button-group[data-fill] > * {
+  flex: 1 1 0%;
+}
+.jspr-button-group[data-orientation='stacked'] > * {
+  width: 100%;
+}
