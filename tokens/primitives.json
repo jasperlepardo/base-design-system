@@ -53,47 +53,47 @@
           "type": "color"
         },
         "50": {
-          "value": "{raw.color.slate.50}",
+          "value": "{raw.color.neutral.50}",
           "type": "color"
         },
         "100": {
-          "value": "{raw.color.slate.100}",
+          "value": "{raw.color.neutral.100}",
           "type": "color"
         },
         "200": {
-          "value": "{raw.color.slate.200}",
+          "value": "{raw.color.neutral.200}",
           "type": "color"
         },
         "300": {
-          "value": "{raw.color.slate.300}",
+          "value": "{raw.color.neutral.300}",
           "type": "color"
         },
         "400": {
-          "value": "{raw.color.slate.400}",
+          "value": "{raw.color.neutral.400}",
           "type": "color"
         },
         "500": {
-          "value": "{raw.color.slate.500}",
+          "value": "{raw.color.neutral.500}",
           "type": "color"
         },
         "600": {
-          "value": "{raw.color.slate.600}",
+          "value": "{raw.color.neutral.600}",
           "type": "color"
         },
         "700": {
-          "value": "{raw.color.slate.700}",
+          "value": "{raw.color.neutral.700}",
           "type": "color"
         },
         "800": {
-          "value": "{raw.color.slate.800}",
+          "value": "{raw.color.neutral.800}",
           "type": "color"
         },
         "900": {
-          "value": "{raw.color.slate.900}",
+          "value": "{raw.color.neutral.900}",
           "type": "color"
         },
         "950": {
-          "value": "{raw.color.slate.950}",
+          "value": "{raw.color.neutral.950}",
           "type": "color"
         },
         "1000": {
