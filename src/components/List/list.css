@@ -1,0 +1,122 @@
+/* List — structural rows (no color intent matrix); spacing + divider/title/content
+   reference semantic tokens, so it re-themes. Three layouts come from List.Item's
+   `variant`: inline (title left / value right), stacked (bold title over value),
+   stacked-value (label over bold value). */
+
+.jspr-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg);
+}
+
+/* Section = header over group. */
+.jspr-list__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+}
+.jspr-list__header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+.jspr-list__heading {
+  color: var(--text-heading);
+  font-weight: var(--font-weight-heading);
+}
+.jspr-list__subheading {
+  color: var(--text-muted);
+}
+
+/* Group = the <ul> of rows. */
+.jspr-list__group {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.jspr-list__item {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Row. Interactive rows (button/anchor) get hover + focus affordances. */
+.jspr-list__row {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: var(--space-sm);
+  padding-block: var(--space-sm);
+  margin: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+}
+.jspr-list__row[data-interactive] {
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  padding-inline: var(--space-sm);
+  transition: background-color 120ms ease;
+}
+.jspr-list__row[data-interactive]:hover {
+  background-color: var(--background-subtle);
+}
+.jspr-list__row[data-interactive]:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+
+/* Slots. */
+.jspr-list__media {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  color: var(--text-body);
+}
+.jspr-list__content {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  gap: var(--space-sm);
+}
+.jspr-list__content[data-variant='inline'] {
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.jspr-list__content[data-variant='stacked'],
+.jspr-list__content[data-variant='stacked-value'] {
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+.jspr-list__title {
+  color: var(--text-heading);
+}
+.jspr-list__value {
+  color: var(--text-body);
+}
+.jspr-list__content[data-variant='inline'] .jspr-list__value,
+.jspr-list__content[data-variant='stacked-value'] .jspr-list__value {
+  font-weight: var(--font-weight-emphasis);
+}
+.jspr-list__content[data-variant='stacked'] .jspr-list__title {
+  font-weight: var(--font-weight-emphasis);
+}
+
+/* Per-item Divider (always rendered; shown only when the group/item asks). */
+.jspr-list__divider {
+  display: none;
+}
+.jspr-list__group[data-divider] > .jspr-list__item:not(:last-child) > .jspr-list__divider {
+  display: block;
+}
+.jspr-list__item[data-divider='true'] > .jspr-list__divider {
+  display: block;
+}
+.jspr-list__item[data-divider='false'] > .jspr-list__divider {
+  display: none;
+}
