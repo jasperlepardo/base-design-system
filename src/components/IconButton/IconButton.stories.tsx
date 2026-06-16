@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { IconButton, iconButtonIntents, iconButtonStyles } from './IconButton';
+import { IconButton, iconButtonIntents, iconButtonStyles, iconButtonSizes } from './IconButton';
 import { Icon } from '../Icon/Icon';
 
 const CloseGlyph = (
@@ -12,11 +12,17 @@ const meta = {
   title: 'Components/IconButton',
   component: IconButton,
   tags: ['autodocs'],
-  args: { label: 'Close', intent: 'primary', variant: 'solid', size: 'md', children: CloseGlyph },
+  args: {
+    label: 'Close',
+    intent: 'primary',
+    variant: 'solid',
+    size: 'default',
+    children: CloseGlyph,
+  },
   argTypes: {
     intent: { control: 'inline-radio', options: iconButtonIntents },
     variant: { control: 'inline-radio', options: iconButtonStyles },
-    size: { control: 'inline-radio', options: ['sm', 'md', 'lg'] },
+    size: { control: 'inline-radio', options: iconButtonSizes },
   },
 } satisfies Meta<typeof IconButton>;
 

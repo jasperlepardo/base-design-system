@@ -8,7 +8,8 @@ import {
   type ButtonStyle,
   type ButtonSize,
 } from '../../tokens/generated/button.manifest';
-import '../../styles/components/button.css';
+import '../../styles/components/button.css'; // generated colors + sizing vars
+import './button.css'; // structure
 
 export { buttonIntents, buttonStyles, buttonSizes };
 export type { ButtonIntent, ButtonStyle, ButtonSize };
@@ -36,7 +37,7 @@ export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement
 export function Button({
   intent = 'primary',
   variant = 'solid',
-  size = 'md',
+  size = 'default',
   type = 'button',
   className,
   leadingIcon,

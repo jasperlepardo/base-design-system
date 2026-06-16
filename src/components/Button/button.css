@@ -1,0 +1,47 @@
+/* Button structure. Colors + sizing come from the generated component CSS
+   (src/styles/components/button.css → --btn-* per [data-intent][data-style] and
+   [data-size], from tokens/components/button.json). Mirrors the Figma Button:
+   padding-based sizing, 4px radius, semibold 16/24 label, 24px icons, with a
+   content wrapper between the optional leading/trailing icons. */
+.jspr-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  gap: var(--btn-gap);
+  padding: var(--btn-padding);
+  border: var(--border-width-default) solid var(--btn-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--btn-bg);
+  color: var(--btn-text);
+  font-family: var(--font-family-body), system-ui, sans-serif;
+  font-weight: var(--font-weight-heading);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-md);
+  cursor: pointer;
+  white-space: nowrap;
+  text-decoration: none;
+  transition:
+    background-color 120ms ease,
+    border-color 120ms ease,
+    color 120ms ease;
+}
+.jspr-btn:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+}
+.jspr-btn:disabled,
+.jspr-btn[aria-disabled='true'] {
+  cursor: not-allowed;
+}
+.jspr-btn__content {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--btn-content-gap);
+  padding: var(--btn-content-pad-y) var(--btn-content-pad-x);
+}
+.jspr-btn__icon {
+  display: inline-flex;
+  flex: none;
+  color: var(--btn-icon);
+}

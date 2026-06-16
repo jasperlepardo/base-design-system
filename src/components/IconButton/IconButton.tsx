@@ -37,7 +37,7 @@ export function IconButton({
   label,
   intent = 'primary',
   variant = 'solid',
-  size = 'md',
+  size = 'default',
   type = 'button',
   disabled,
   className,
