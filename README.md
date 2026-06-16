@@ -158,7 +158,12 @@ component re-themes across light/dark and is documented in **Storybook**
 
 **Display**
 
-- `Text`, `Icon`, `Badge`, `Card`, `Alert`, `Image`.
+- `Text`, `Icon`, `Badge`, `Card`, `Image`.
+- `Alert` — status banner: `intent` (default/primary/success/warning/danger) ×
+  `variant` (solid/outline/transparent) × `horizontal`, with `actions`, `onClose`
+  dismiss, and a per-intent status icon. Compound API: `Alert.Root` / `Alert.Icon`
+  / `Alert.Content` / `Alert.Text` / `Alert.Title` / `Alert.Body` / `Alert.Actions`
+  (+ `Alert.Action`) / `Alert.Close`, plus the `<Alert>` convenience wrapper.
 - `List` (+ `List.Section` / `List.Header` / `List.Group` / `List.Item` and the
   `List.Leading` / `List.Content` / `List.Title` / `List.Value` / `List.Trailing` slots).
 
@@ -168,9 +173,10 @@ component re-themes across light/dark and is documented in **Storybook**
   Escape) and `useListbox` (WAI-ARIA keyboard model) hooks — the popover/listbox
   primitives the combobox family (Combobox, MultiSelect, Autocomplete) is built on.
 
-`Button` and `IconButton` are **component-token driven** (generated `.jspr-*` CSS
-from `tokens/components/*.json`); the rest use semantic Tailwind utilities (with a
-little committed CSS for layout pieces like Page/ButtonGroup/List/Dropdown).
+`Button`, `IconButton`, and `Alert` are **component-token driven** (generated
+`.jspr-*` CSS from `tokens/components/*.json`); the rest use semantic Tailwind
+utilities (with a little committed CSS for layout pieces like
+Page/ButtonGroup/List/Dropdown/Alert).
 
 ## Customizing as a consumer (`jspr`)
 
