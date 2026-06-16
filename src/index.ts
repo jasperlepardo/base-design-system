@@ -115,6 +115,9 @@ export type { DropdownProps, DropdownItemProps } from './components/Dropdown/Dro
 export { Combobox } from './components/Combobox/Combobox';
 export type { ComboboxProps, ComboboxOption } from './components/Combobox/Combobox';
 
+export { MultiSelect } from './components/MultiSelect/MultiSelect';
+export type { MultiSelectProps, MultiSelectOption } from './components/MultiSelect/MultiSelect';
+
 export { useDropdown } from './lib/useDropdown';
 export { useListbox } from './lib/useListbox';
 export type { UseListboxOptions, UseListboxResult } from './lib/useListbox';
