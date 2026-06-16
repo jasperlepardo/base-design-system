@@ -112,6 +112,9 @@ export type { OTPProps } from './components/OTP/OTP';
 export { Dropdown, DropdownItem } from './components/Dropdown/Dropdown';
 export type { DropdownProps, DropdownItemProps } from './components/Dropdown/Dropdown';
 
+export { Combobox } from './components/Combobox/Combobox';
+export type { ComboboxProps, ComboboxOption } from './components/Combobox/Combobox';
+
 export { useDropdown } from './lib/useDropdown';
 export { useListbox } from './lib/useListbox';
 export type { UseListboxOptions, UseListboxResult } from './lib/useListbox';
