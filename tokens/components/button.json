@@ -3,107 +3,307 @@
     "name": "Button",
     "className": "jspr-btn",
     "element": "button",
-    "colorAxes": ["intent", "style"],
+    "colorAxes": [
+      "intent",
+      "style"
+    ],
     "sizeAxis": "size",
-    "states": ["rest", "hover"],
-    "slots": { "icon": "instanceSwap" }
+    "states": [
+      "rest",
+      "hover"
+    ],
+    "slots": {
+      "icon": "instanceSwap"
+    }
   },
   "colors": {
-    "brand/solid": {
-      "rest": { "bg": "--brand-default", "text": "--brand-on", "border": "transparent" },
-      "hover": { "bg": "--brand-hover", "text": "--brand-on", "border": "transparent" }
+    "primary/solid": {
+      "rest": {
+        "bg": "--primary-default",
+        "text": "--primary-on",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--primary-hover",
+        "text": "--primary-on",
+        "border": "transparent"
+      }
     },
-    "brand/soft": {
-      "rest": { "bg": "--brand-subtle", "text": "--brand-subtle-fg", "border": "transparent" },
-      "hover": { "bg": "--brand-subtle", "text": "--brand-subtle-fg", "border": "transparent" }
+    "primary/soft": {
+      "rest": {
+        "bg": "--primary-subtle",
+        "text": "--primary-subtle-fg",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--primary-subtle",
+        "text": "--primary-subtle-fg",
+        "border": "transparent"
+      }
     },
-    "brand/outline": {
-      "rest": { "bg": "transparent", "text": "--brand-default", "border": "--brand-default" },
-      "hover": { "bg": "--brand-subtle", "text": "--brand-subtle-fg", "border": "--brand-default" }
+    "primary/outline": {
+      "rest": {
+        "bg": "transparent",
+        "text": "--primary-default",
+        "border": "--primary-default"
+      },
+      "hover": {
+        "bg": "--primary-subtle",
+        "text": "--primary-subtle-fg",
+        "border": "--primary-default"
+      }
     },
-    "brand/ghost": {
-      "rest": { "bg": "transparent", "text": "--brand-default", "border": "transparent" },
-      "hover": { "bg": "--brand-subtle", "text": "--brand-subtle-fg", "border": "transparent" }
+    "primary/ghost": {
+      "rest": {
+        "bg": "transparent",
+        "text": "--primary-default",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--primary-subtle",
+        "text": "--primary-subtle-fg",
+        "border": "transparent"
+      }
     },
-    "neutral/solid": {
-      "rest": { "bg": "--text-heading", "text": "--text-inverse", "border": "transparent" },
-      "hover": { "bg": "--text-body", "text": "--text-inverse", "border": "transparent" }
+    "default/solid": {
+      "rest": {
+        "bg": "--text-heading",
+        "text": "--text-inverse",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--text-body",
+        "text": "--text-inverse",
+        "border": "transparent"
+      }
     },
-    "neutral/soft": {
-      "rest": { "bg": "--background-muted", "text": "--text-heading", "border": "transparent" },
-      "hover": { "bg": "--background-muted", "text": "--text-heading", "border": "transparent" }
+    "default/soft": {
+      "rest": {
+        "bg": "--background-muted",
+        "text": "--text-heading",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--background-muted",
+        "text": "--text-heading",
+        "border": "transparent"
+      }
     },
-    "neutral/outline": {
-      "rest": { "bg": "transparent", "text": "--text-body", "border": "--border-default" },
-      "hover": { "bg": "--background-subtle", "text": "--text-heading", "border": "--border-strong" }
+    "default/outline": {
+      "rest": {
+        "bg": "transparent",
+        "text": "--text-body",
+        "border": "--border-default"
+      },
+      "hover": {
+        "bg": "--background-subtle",
+        "text": "--text-heading",
+        "border": "--border-strong"
+      }
     },
-    "neutral/ghost": {
-      "rest": { "bg": "transparent", "text": "--text-body", "border": "transparent" },
-      "hover": { "bg": "--background-subtle", "text": "--text-heading", "border": "transparent" }
+    "default/ghost": {
+      "rest": {
+        "bg": "transparent",
+        "text": "--text-body",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--background-subtle",
+        "text": "--text-heading",
+        "border": "transparent"
+      }
     },
     "danger/solid": {
-      "rest": { "bg": "--danger-default", "text": "--danger-on", "border": "transparent" },
-      "hover": { "bg": "--danger-default", "text": "--danger-on", "border": "transparent" }
+      "rest": {
+        "bg": "--danger-default",
+        "text": "--danger-on",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--danger-hover",
+        "text": "--danger-on",
+        "border": "transparent"
+      }
     },
     "danger/soft": {
-      "rest": { "bg": "--danger-subtle", "text": "--danger-subtle-fg", "border": "transparent" },
-      "hover": { "bg": "--danger-subtle", "text": "--danger-subtle-fg", "border": "transparent" }
+      "rest": {
+        "bg": "--danger-subtle",
+        "text": "--danger-subtle-fg",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--danger-subtle",
+        "text": "--danger-subtle-fg",
+        "border": "transparent"
+      }
     },
     "danger/outline": {
-      "rest": { "bg": "transparent", "text": "--danger-default", "border": "--danger-default" },
-      "hover": { "bg": "--danger-subtle", "text": "--danger-subtle-fg", "border": "--danger-default" }
+      "rest": {
+        "bg": "transparent",
+        "text": "--danger-default",
+        "border": "--danger-default"
+      },
+      "hover": {
+        "bg": "--danger-subtle",
+        "text": "--danger-subtle-fg",
+        "border": "--danger-default"
+      }
     },
     "danger/ghost": {
-      "rest": { "bg": "transparent", "text": "--danger-default", "border": "transparent" },
-      "hover": { "bg": "--danger-subtle", "text": "--danger-subtle-fg", "border": "transparent" }
+      "rest": {
+        "bg": "transparent",
+        "text": "--danger-default",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--danger-subtle",
+        "text": "--danger-subtle-fg",
+        "border": "transparent"
+      }
     },
     "success/solid": {
-      "rest": { "bg": "--success-default", "text": "--success-on", "border": "transparent" },
-      "hover": { "bg": "--success-default", "text": "--success-on", "border": "transparent" }
+      "rest": {
+        "bg": "--success-default",
+        "text": "--success-on",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--success-hover",
+        "text": "--success-on",
+        "border": "transparent"
+      }
     },
     "success/soft": {
-      "rest": { "bg": "--success-subtle", "text": "--success-subtle-fg", "border": "transparent" },
-      "hover": { "bg": "--success-subtle", "text": "--success-subtle-fg", "border": "transparent" }
+      "rest": {
+        "bg": "--success-subtle",
+        "text": "--success-subtle-fg",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--success-subtle",
+        "text": "--success-subtle-fg",
+        "border": "transparent"
+      }
     },
     "success/outline": {
-      "rest": { "bg": "transparent", "text": "--success-default", "border": "--success-default" },
-      "hover": { "bg": "--success-subtle", "text": "--success-subtle-fg", "border": "--success-default" }
+      "rest": {
+        "bg": "transparent",
+        "text": "--success-default",
+        "border": "--success-default"
+      },
+      "hover": {
+        "bg": "--success-subtle",
+        "text": "--success-subtle-fg",
+        "border": "--success-default"
+      }
     },
     "success/ghost": {
-      "rest": { "bg": "transparent", "text": "--success-default", "border": "transparent" },
-      "hover": { "bg": "--success-subtle", "text": "--success-subtle-fg", "border": "transparent" }
+      "rest": {
+        "bg": "transparent",
+        "text": "--success-default",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--success-subtle",
+        "text": "--success-subtle-fg",
+        "border": "transparent"
+      }
     },
     "warning/solid": {
-      "rest": { "bg": "--warning-default", "text": "--warning-on", "border": "transparent" },
-      "hover": { "bg": "--warning-default", "text": "--warning-on", "border": "transparent" }
+      "rest": {
+        "bg": "--warning-default",
+        "text": "--warning-on",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--warning-hover",
+        "text": "--warning-on",
+        "border": "transparent"
+      }
     },
     "warning/soft": {
-      "rest": { "bg": "--warning-subtle", "text": "--warning-subtle-fg", "border": "transparent" },
-      "hover": { "bg": "--warning-subtle", "text": "--warning-subtle-fg", "border": "transparent" }
+      "rest": {
+        "bg": "--warning-subtle",
+        "text": "--warning-subtle-fg",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--warning-subtle",
+        "text": "--warning-subtle-fg",
+        "border": "transparent"
+      }
     },
     "warning/outline": {
-      "rest": { "bg": "transparent", "text": "--warning-default", "border": "--warning-default" },
-      "hover": { "bg": "--warning-subtle", "text": "--warning-subtle-fg", "border": "--warning-default" }
+      "rest": {
+        "bg": "transparent",
+        "text": "--warning-default",
+        "border": "--warning-default"
+      },
+      "hover": {
+        "bg": "--warning-subtle",
+        "text": "--warning-subtle-fg",
+        "border": "--warning-default"
+      }
     },
     "warning/ghost": {
-      "rest": { "bg": "transparent", "text": "--warning-default", "border": "transparent" },
-      "hover": { "bg": "--warning-subtle", "text": "--warning-subtle-fg", "border": "transparent" }
+      "rest": {
+        "bg": "transparent",
+        "text": "--warning-default",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--warning-subtle",
+        "text": "--warning-subtle-fg",
+        "border": "transparent"
+      }
     },
     "info/solid": {
-      "rest": { "bg": "--info-default", "text": "--info-on", "border": "transparent" },
-      "hover": { "bg": "--info-default", "text": "--info-on", "border": "transparent" }
+      "rest": {
+        "bg": "--info-default",
+        "text": "--info-on",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--info-hover",
+        "text": "--info-on",
+        "border": "transparent"
+      }
     },
     "info/soft": {
-      "rest": { "bg": "--info-subtle", "text": "--info-subtle-fg", "border": "transparent" },
-      "hover": { "bg": "--info-subtle", "text": "--info-subtle-fg", "border": "transparent" }
+      "rest": {
+        "bg": "--info-subtle",
+        "text": "--info-subtle-fg",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--info-subtle",
+        "text": "--info-subtle-fg",
+        "border": "transparent"
+      }
     },
     "info/outline": {
-      "rest": { "bg": "transparent", "text": "--info-default", "border": "--info-default" },
-      "hover": { "bg": "--info-subtle", "text": "--info-subtle-fg", "border": "--info-default" }
+      "rest": {
+        "bg": "transparent",
+        "text": "--info-default",
+        "border": "--info-default"
+      },
+      "hover": {
+        "bg": "--info-subtle",
+        "text": "--info-subtle-fg",
+        "border": "--info-default"
+      }
     },
     "info/ghost": {
-      "rest": { "bg": "transparent", "text": "--info-default", "border": "transparent" },
-      "hover": { "bg": "--info-subtle", "text": "--info-subtle-fg", "border": "transparent" }
+      "rest": {
+        "bg": "transparent",
+        "text": "--info-default",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--info-subtle",
+        "text": "--info-subtle-fg",
+        "border": "transparent"
+      }
     }
   },
   "sizing": {

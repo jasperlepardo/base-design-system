@@ -11,7 +11,7 @@ type Story = StoryObj;
 
 const colorTokens = semanticTokens.filter((t) => t.type === 'color');
 
-// Group by the first path segment (background, text, brand, …).
+// Group by the first path segment (background, text, primary, …).
 function groupByCategory(tokens: DesignToken[]) {
   const groups: Record<string, DesignToken[]> = {};
   for (const t of tokens) {

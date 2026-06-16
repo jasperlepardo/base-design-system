@@ -5,7 +5,7 @@ const meta = {
   title: 'Components/Badge',
   component: Badge,
   tags: ['autodocs'],
-  args: { children: 'Badge', intent: 'brand', variant: 'soft', size: 'md' },
+  args: { children: 'Badge', intent: 'primary', variant: 'soft', size: 'md' },
   argTypes: {
     intent: { control: 'inline-radio', options: badgeIntents },
     variant: { control: 'inline-radio', options: badgeStyles },

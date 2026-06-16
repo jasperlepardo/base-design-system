@@ -13,7 +13,7 @@ export const textVariants = [
 export type TextVariant = (typeof textVariants)[number];
 
 export type TextWeight = 'regular' | 'medium' | 'semibold' | 'bold';
-export type TextTone = 'default' | 'heading' | 'muted' | 'brand' | 'danger' | 'success';
+export type TextTone = 'default' | 'heading' | 'muted' | 'primary' | 'danger' | 'success';
 
 const VARIANT_CLASS: Record<TextVariant, string> = {
   display: 'text-4xl/[40px] font-semibold text-heading',
@@ -46,7 +46,7 @@ const TONE_CLASS: Record<TextTone, string> = {
   default: '',
   heading: 'text-heading',
   muted: 'text-muted',
-  brand: 'text-brand',
+  primary: 'text-primary',
   danger: 'text-danger',
   success: 'text-success',
 };

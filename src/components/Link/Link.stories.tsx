@@ -5,9 +5,9 @@ const meta = {
   title: 'Components/Link',
   component: Link,
   tags: ['autodocs'],
-  args: { children: 'Read the docs', href: '#', tone: 'brand' },
+  args: { children: 'Read the docs', href: '#', tone: 'primary' },
   argTypes: {
-    tone: { control: 'inline-radio', options: ['brand', 'neutral'] },
+    tone: { control: 'inline-radio', options: ['primary', 'default'] },
     underline: { control: 'inline-radio', options: ['hover', 'always'] },
   },
 } satisfies Meta<typeof Link>;
