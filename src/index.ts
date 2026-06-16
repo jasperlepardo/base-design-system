@@ -127,6 +127,9 @@ export type {
 export { DatePicker } from './components/DatePicker/DatePicker';
 export type { DatePickerProps } from './components/DatePicker/DatePicker';
 
+export { Footer } from './components/Footer/Footer';
+export type { FooterProps, FooterContainerProps } from './components/Footer/Footer';
+
 export { useDropdown } from './lib/useDropdown';
 export { useListbox } from './lib/useListbox';
 export type { UseListboxOptions, UseListboxResult } from './lib/useListbox';
