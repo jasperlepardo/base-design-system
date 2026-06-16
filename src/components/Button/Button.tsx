@@ -34,7 +34,7 @@ export interface ButtonProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement
  * real :hover / :focus-visible / :disabled states.
  */
 export function Button({
-  intent = 'brand',
+  intent = 'primary',
   variant = 'solid',
   size = 'md',
   type = 'button',

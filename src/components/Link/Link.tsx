@@ -1,12 +1,12 @@
 import type { AnchorHTMLAttributes, ReactNode } from 'react';
 import { cn } from '../../lib/cn';
 
-export const linkTones = ['brand', 'neutral'] as const;
+export const linkTones = ['primary', 'default'] as const;
 export type LinkTone = (typeof linkTones)[number];
 
 const TONE_CLASS: Record<LinkTone, string> = {
-  brand: 'text-link hover:text-brand-hover',
-  neutral: 'text-body hover:text-heading',
+  primary: 'text-link hover:text-primary-hover',
+  default: 'text-body hover:text-heading',
 };
 
 export interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
@@ -18,7 +18,7 @@ export interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
 
 /** Link — themed anchor with focus-visible ring. */
 export function Link({
-  tone = 'brand',
+  tone = 'primary',
   underline = 'hover',
   className,
   children,

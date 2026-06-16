@@ -33,12 +33,12 @@
   --color-focus: var(--border-focus);
 
   /* Intents → bg-/text-/border- utilities */
-  --color-brand: var(--brand-default);
-  --color-brand-hover: var(--brand-hover);
-  --color-brand-active: var(--brand-active);
-  --color-brand-subtle: var(--brand-subtle);
-  --color-brand-subtle-fg: var(--brand-subtle-fg);
-  --color-on-brand: var(--brand-on);
+  --color-primary: var(--primary-default);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-active: var(--primary-active);
+  --color-primary-subtle: var(--primary-subtle);
+  --color-primary-subtle-fg: var(--primary-subtle-fg);
+  --color-on-primary: var(--primary-on);
 
   --color-success: var(--success-default);
   --color-success-subtle: var(--success-subtle);

@@ -12,7 +12,7 @@ const meta = {
   title: 'Components/Button',
   component: Button,
   tags: ['autodocs'],
-  args: { children: 'Button', intent: 'brand', variant: 'solid', size: 'md' },
+  args: { children: 'Button', intent: 'primary', variant: 'solid', size: 'md' },
   argTypes: {
     intent: { control: 'inline-radio', options: buttonIntents },
     variant: { control: 'inline-radio', options: buttonStyles },

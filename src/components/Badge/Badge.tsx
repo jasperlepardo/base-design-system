@@ -1,7 +1,7 @@
 import type { HTMLAttributes, ReactNode } from 'react';
 import { cn } from '../../lib/cn';
 
-export const badgeIntents = ['brand', 'neutral', 'success', 'warning', 'danger', 'info'] as const;
+export const badgeIntents = ['primary', 'default', 'success', 'warning', 'danger', 'info'] as const;
 export type BadgeIntent = (typeof badgeIntents)[number];
 
 export const badgeStyles = ['solid', 'soft', 'outline'] as const;
@@ -12,12 +12,12 @@ export type BadgeSize = (typeof badgeSizes)[number];
 
 // [intent][style] → utility classes. Every class maps to a themed token.
 const STYLE_CLASS: Record<BadgeIntent, Record<BadgeStyle, string>> = {
-  brand: {
-    solid: 'bg-brand text-on-brand',
-    soft: 'bg-brand-subtle text-brand-subtle-fg',
-    outline: 'text-brand border border-brand',
+  primary: {
+    solid: 'bg-primary text-on-primary',
+    soft: 'bg-primary-subtle text-primary-subtle-fg',
+    outline: 'text-primary border border-primary',
   },
-  neutral: {
+  default: {
     solid: 'bg-heading text-inverse',
     soft: 'bg-canvas-muted text-heading',
     outline: 'text-body border border-line-strong',
@@ -58,7 +58,7 @@ export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
 
 /** Badge — small status label across intents/styles/sizes. */
 export function Badge({
-  intent = 'neutral',
+  intent = 'default',
   variant = 'soft',
   size = 'md',
   className,
