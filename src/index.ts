@@ -106,6 +106,19 @@ export type {
 export { Image, imageRatios } from './components/Image/Image';
 export type { ImageProps, ImageRatio } from './components/Image/Image';
 
+export { List, ListGroup, ListItem, listVariants } from './components/List/List';
+export type {
+  ListProps,
+  ListGroupProps,
+  ListItemProps,
+  ListContentProps,
+  ListSlotProps,
+  ListSectionProps,
+  ListHeaderProps,
+  ListVariant,
+  ListHeadingLevel,
+} from './components/List/List';
+
 export { cn } from './lib/cn';
 export type { ClassValue } from './lib/cn';
 
