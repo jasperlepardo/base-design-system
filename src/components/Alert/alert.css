@@ -12,10 +12,10 @@
 .jspr-alert__container {
   display: flex;
   align-items: flex-start;
-  gap: var(--space-md);
-  padding: var(--space-md);
-  font-size: var(--font-size-sm);
-  line-height: var(--line-height-sm);
+  gap: var(--space-xs); /* icon ↔ content: 8px (Figma Alert/gap) */
+  padding: var(--space-md); /* effective ~16px (Figma root+container padding) */
+  font-size: var(--font-size-md); /* text-base 16px */
+  line-height: var(--line-height-md); /* 24px */
 }
 .jspr-alert[data-horizontal] .jspr-alert__container {
   align-items: center;
@@ -37,7 +37,7 @@
   min-width: 0;
   flex: 1 1 auto;
   flex-direction: column;
-  gap: var(--space-sm);
+  gap: var(--space-xs); /* text block ↔ actions: 8px */
 }
 .jspr-alert[data-horizontal] .jspr-alert__main {
   flex-direction: row;
@@ -54,7 +54,7 @@
 
 .jspr-alert__title {
   color: var(--alert-heading);
-  font-weight: var(--font-weight-emphasis);
+  font-weight: var(--font-weight-heading);
 }
 .jspr-alert__message {
   color: var(--alert-body);
@@ -64,7 +64,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-sm);
+  gap: var(--space-xs); /* button group: 8px */
 }
 .jspr-alert[data-horizontal] .jspr-alert__actions {
   flex: none;

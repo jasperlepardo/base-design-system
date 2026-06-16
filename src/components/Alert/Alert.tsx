@@ -23,31 +23,31 @@ export type AlertStyle = (typeof alertStyles)[number];
 // Default status glyph per intent.
 const DEFAULT_ICON: Record<AlertIntent, ReactNode> = {
   default: (
-    <Icon size={20}>
+    <Icon size={24}>
       <circle cx="12" cy="12" r="9" />
       <path d="M12 16v-4M12 8h.01" />
     </Icon>
   ),
   primary: (
-    <Icon size={20}>
+    <Icon size={24}>
       <circle cx="12" cy="12" r="9" />
       <path d="M12 16v-4M12 8h.01" />
     </Icon>
   ),
   success: (
-    <Icon size={20}>
+    <Icon size={24}>
       <circle cx="12" cy="12" r="9" />
       <path d="m8.5 12 2.5 2.5 4.5-5" />
     </Icon>
   ),
   warning: (
-    <Icon size={20}>
+    <Icon size={24}>
       <path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z" />
       <path d="M12 9v4M12 17h.01" />
     </Icon>
   ),
   danger: (
-    <Icon size={20}>
+    <Icon size={24}>
       <circle cx="12" cy="12" r="9" />
       <path d="m15 9-6 6M9 9l6 6" />
     </Icon>
@@ -190,7 +190,7 @@ function AlertClose({ onClick, label = 'Dismiss', className }: AlertCloseProps) 
       onClick={onClick}
       className={cn('jspr-alert__close', className)}
     >
-      <Icon size={16}>
+      <Icon size={24}>
         <path d="M18 6 6 18M6 6l12 12" />
       </Icon>
     </button>

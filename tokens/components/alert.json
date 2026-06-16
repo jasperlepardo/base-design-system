@@ -13,16 +13,16 @@
   "colors": {
     "default/solid": {
       "rest": {
-        "bg": "--text-heading",
+        "bg": "--background-muted",
         "border": "transparent",
-        "icon": "--text-inverse",
-        "heading": "--text-inverse",
-        "body": "--text-inverse"
+        "icon": "--text-heading",
+        "heading": "--text-heading",
+        "body": "--text-body"
       }
     },
     "default/outline": {
       "rest": {
-        "bg": "--background-muted",
+        "bg": "--background-subtle",
         "border": "--border-strong",
         "icon": "--text-heading",
         "heading": "--text-heading",
@@ -31,7 +31,7 @@
     },
     "default/transparent": {
       "rest": {
-        "bg": "--background-muted",
+        "bg": "--background-subtle",
         "border": "transparent",
         "icon": "--text-heading",
         "heading": "--text-heading",
