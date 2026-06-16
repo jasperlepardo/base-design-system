@@ -1,0 +1,99 @@
+/* Alert structure. Colors come from the generated component CSS
+   (src/styles/components/alert.css → --alert-bg / -border / -icon / -heading /
+   -body, set per [data-intent][data-style] from tokens/components/alert.json),
+   mirroring Figma's Alert/* component variables. Spacing uses semantic tokens. */
+
+.jspr-alert {
+  border-radius: var(--radius-md);
+  background-color: var(--alert-bg);
+  border: var(--border-width-default) solid var(--alert-border);
+}
+
+.jspr-alert__container {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-xs); /* icon ↔ content: 8px (Figma Alert/gap) */
+  padding: var(--space-md); /* effective ~16px (Figma root+container padding) */
+  font-size: var(--font-size-md); /* text-base 16px */
+  line-height: var(--line-height-md); /* 24px */
+}
+.jspr-alert[data-horizontal] .jspr-alert__container {
+  align-items: center;
+}
+
+.jspr-alert__icon {
+  display: flex;
+  flex: none;
+  padding-top: 2px;
+  color: var(--alert-icon);
+}
+.jspr-alert[data-horizontal] .jspr-alert__icon {
+  padding-top: 0;
+}
+
+/* Content column: text block + actions (row when horizontal). */
+.jspr-alert__main {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--space-xs); /* text block ↔ actions: 8px */
+}
+.jspr-alert[data-horizontal] .jspr-alert__main {
+  flex-direction: row;
+  align-items: center;
+}
+
+.jspr-alert__text {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--space-2xs);
+}
+
+.jspr-alert__title {
+  color: var(--alert-heading);
+  font-weight: var(--font-weight-heading);
+}
+.jspr-alert__message {
+  color: var(--alert-body);
+}
+
+.jspr-alert__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-xs); /* button group: 8px */
+}
+.jspr-alert[data-horizontal] .jspr-alert__actions {
+  flex: none;
+}
+
+/* Actions render the themed <Link>; override its tone color with the Alert's
+   intent color (compound selector beats Link's single-class tone utility). */
+.jspr-alert .jspr-alert__action {
+  color: var(--alert-icon);
+  font-weight: var(--font-weight-emphasis);
+  cursor: pointer;
+}
+.jspr-alert .jspr-alert__action:hover {
+  color: var(--alert-icon);
+}
+
+.jspr-alert__close {
+  display: flex;
+  flex: none;
+  align-self: flex-start;
+  color: var(--alert-icon);
+  opacity: 0.7;
+  border-radius: var(--radius-sm);
+  transition: opacity 120ms ease;
+}
+.jspr-alert[data-horizontal] .jspr-alert__close {
+  align-self: center;
+}
+.jspr-alert__close:hover,
+.jspr-alert__close:focus-visible {
+  opacity: 1;
+}
