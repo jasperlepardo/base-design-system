@@ -3,7 +3,12 @@
 import './styles/tailwind.css';
 
 export { Button, buttonIntents, buttonStyles, buttonSizes } from './components/Button/Button';
-export type { ButtonProps, ButtonIntent, ButtonStyle, ButtonSize } from './components/Button/Button';
+export type {
+  ButtonProps,
+  ButtonIntent,
+  ButtonStyle,
+  ButtonSize,
+} from './components/Button/Button';
 
 export { Text, textVariants } from './components/Text/Text';
 export type { TextProps, TextVariant, TextWeight, TextTone } from './components/Text/Text';
@@ -50,9 +55,21 @@ export type {
   ButtonGroupAlign,
 } from './components/ButtonGroup/ButtonGroup';
 
-export { TextField, FormField, FormLabel } from './components/Field/Field';
+export {
+  TextField,
+  Textarea,
+  Select,
+  Checkbox,
+  Radio,
+  FormField,
+  FormLabel,
+} from './components/Field/Field';
 export type {
   TextFieldProps,
+  TextareaProps,
+  SelectProps,
+  CheckboxProps,
+  RadioProps,
   FormFieldProps,
   FormLabelProps,
 } from './components/Field/Field';

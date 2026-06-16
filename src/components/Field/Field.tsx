@@ -3,6 +3,8 @@ import {
   type InputHTMLAttributes,
   type ReactNode,
   type LabelHTMLAttributes,
+  type TextareaHTMLAttributes,
+  type SelectHTMLAttributes,
 } from 'react';
 import { cn } from '../../lib/cn';
 
@@ -75,14 +77,7 @@ export interface FormFieldProps {
  * FormField — composes a label, control, and hint/error text, wiring `id`,
  * `aria-describedby`, and `aria-invalid` for you via a render prop.
  */
-export function FormField({
-  label,
-  hint,
-  error,
-  required,
-  className,
-  children,
-}: FormFieldProps) {
+export function FormField({ label, hint, error, required, className, children }: FormFieldProps) {
   const id = useId();
   const hintId = `${id}-hint`;
   const errorId = `${id}-error`;
@@ -111,5 +106,107 @@ export function FormField({
         </p>
       ) : null}
     </div>
+  );
+}
+
+/* ----------------------------------------------------------------- Textarea */
+
+export interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
+  invalid?: boolean;
+}
+
+/** Textarea — a themed multi-line input. Use standalone or inside <FormField>. */
+export function Textarea({ invalid, className, rows = 4, ...rest }: TextareaProps) {
+  return (
+    <textarea
+      rows={rows}
+      className={cn(
+        'block w-full rounded-md border bg-surface px-3 py-2 text-base text-body placeholder:text-muted',
+        'transition-colors outline-none',
+        'focus-visible:border-focus focus-visible:ring-2 focus-visible:ring-focus/40',
+        'disabled:cursor-not-allowed disabled:opacity-50',
+        invalid ? 'border-danger' : 'border-line',
+        className,
+      )}
+      aria-invalid={invalid || undefined}
+      {...rest}
+    />
+  );
+}
+
+/* ------------------------------------------------------------------- Select */
+
+export interface SelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'size'> {
+  size?: 'sm' | 'md' | 'lg';
+  invalid?: boolean;
+}
+
+/** Select — a themed native select. Pass <option>s as children. */
+export function Select({ size = 'md', invalid, className, children, ...rest }: SelectProps) {
+  return (
+    <select
+      className={cn(
+        'block w-full rounded-md border bg-surface text-body',
+        'transition-colors outline-none',
+        'focus-visible:border-focus focus-visible:ring-2 focus-visible:ring-focus/40',
+        'disabled:cursor-not-allowed disabled:opacity-50',
+        invalid ? 'border-danger' : 'border-line',
+        FIELD_SIZE[size],
+        className,
+      )}
+      aria-invalid={invalid || undefined}
+      {...rest}
+    >
+      {children}
+    </select>
+  );
+}
+
+/* ----------------------------------------------------------------- Checkbox */
+
+export interface CheckboxProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  'type' | 'size'
+> {
+  /** Inline label rendered after the box. */
+  children?: ReactNode;
+}
+
+/** Checkbox — a native checkbox with an optional inline label. */
+export function Checkbox({ children, className, disabled, ...rest }: CheckboxProps) {
+  return (
+    <label
+      className={cn(
+        'inline-flex items-center gap-2',
+        disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
+        className,
+      )}
+    >
+      <input type="checkbox" disabled={disabled} className="size-4 accent-primary" {...rest} />
+      {children != null ? <span className="text-sm text-body">{children}</span> : null}
+    </label>
+  );
+}
+
+/* -------------------------------------------------------------------- Radio */
+
+export interface RadioProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'type' | 'size'> {
+  /** Inline label rendered after the dot. */
+  children?: ReactNode;
+}
+
+/** Radio — a native radio with an optional inline label. */
+export function Radio({ children, className, disabled, ...rest }: RadioProps) {
+  return (
+    <label
+      className={cn(
+        'inline-flex items-center gap-2',
+        disabled ? 'cursor-not-allowed opacity-50' : 'cursor-pointer',
+        className,
+      )}
+    >
+      <input type="radio" disabled={disabled} className="size-4 accent-primary" {...rest} />
+      {children != null ? <span className="text-sm text-body">{children}</span> : null}
+    </label>
   );
 }
