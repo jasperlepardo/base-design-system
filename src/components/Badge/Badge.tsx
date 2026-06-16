@@ -1,81 +1,93 @@
 import type { HTMLAttributes, ReactNode } from 'react';
 import { cn } from '../../lib/cn';
+import { Icon } from '../Icon/Icon';
+import {
+  badgeIntents,
+  badgeStyles,
+  badgeSizes,
+  type BadgeIntent,
+  type BadgeStyle,
+  type BadgeSize,
+} from '../../tokens/generated/badge.manifest';
+import '../../styles/components/badge.css'; // generated colors + sizing vars
+import './badge.css'; // structure
 
-export const badgeIntents = ['primary', 'default', 'success', 'warning', 'danger', 'info'] as const;
-export type BadgeIntent = (typeof badgeIntents)[number];
+export { badgeIntents, badgeStyles, badgeSizes };
+export type { BadgeIntent, BadgeStyle, BadgeSize };
 
-export const badgeStyles = ['solid', 'soft', 'outline'] as const;
-export type BadgeStyle = (typeof badgeStyles)[number];
-
-export const badgeSizes = ['sm', 'md'] as const;
-export type BadgeSize = (typeof badgeSizes)[number];
-
-// [intent][style] → utility classes. Every class maps to a themed token.
-const STYLE_CLASS: Record<BadgeIntent, Record<BadgeStyle, string>> = {
-  primary: {
-    solid: 'bg-primary text-on-primary',
-    soft: 'bg-primary-subtle text-primary-subtle-fg',
-    outline: 'text-primary border border-primary',
-  },
-  default: {
-    solid: 'bg-heading text-inverse',
-    soft: 'bg-canvas-muted text-heading',
-    outline: 'text-body border border-line-strong',
-  },
-  success: {
-    solid: 'bg-success text-on-success',
-    soft: 'bg-success-subtle text-success-subtle-fg',
-    outline: 'text-success border border-success',
-  },
-  warning: {
-    solid: 'bg-warning text-on-warning',
-    soft: 'bg-warning-subtle text-warning-subtle-fg',
-    outline: 'text-warning border border-warning',
-  },
-  danger: {
-    solid: 'bg-danger text-on-danger',
-    soft: 'bg-danger-subtle text-danger-subtle-fg',
-    outline: 'text-danger border border-danger',
-  },
-  info: {
-    solid: 'bg-info text-on-info',
-    soft: 'bg-info-subtle text-info-subtle-fg',
-    outline: 'text-info border border-info',
-  },
-};
-
-const SIZE_CLASS: Record<BadgeSize, string> = {
-  sm: 'h-5 px-1.5 text-xs gap-1',
-  md: 'h-6 px-2 text-sm gap-1',
-};
-
-export interface BadgeProps extends HTMLAttributes<HTMLSpanElement> {
+export interface BadgeProps extends Omit<HTMLAttributes<HTMLSpanElement>, 'style'> {
+  /** Color intent (maps to the Figma Badge intent). */
   intent?: BadgeIntent;
+  /** Visual style (maps to the Figma Badge style). */
   variant?: BadgeStyle;
+  /** Size (maps to the Figma Badge size). */
   size?: BadgeSize;
+  /** Show the leading status dot (tinted by the intent's icon color). */
+  dot?: boolean;
+  /** Leading icon slot — typically an `<Icon>…</Icon>` (20px). */
+  leadingIcon?: ReactNode;
+  /** Trailing icon slot — typically an `<Icon>…</Icon>` (20px). */
+  trailingIcon?: ReactNode;
+  /** When provided, renders a dismiss (×) button. */
+  onDismiss?: () => void;
+  /** Accessible label for the dismiss button. */
+  dismissLabel?: string;
   children?: ReactNode;
 }
 
-/** Badge — small status label across intents/styles/sizes. */
+/**
+ * Badge — compact status/label pill. `intent`, `variant`, and `size` become
+ * data-attributes that select generated CSS rules; every value resolves through
+ * semantic CSS vars, so the badge re-themes across light/dark for free. The
+ * optional dot, leading/trailing icons, and dismiss button mirror the Figma
+ * Badge slots and all follow the intent's icon color.
+ */
 export function Badge({
   intent = 'default',
-  variant = 'soft',
-  size = 'md',
+  variant = 'solid',
+  size = 'medium',
+  dot = false,
+  leadingIcon,
+  trailingIcon,
+  onDismiss,
+  dismissLabel = 'Dismiss',
   className,
   children,
   ...rest
 }: BadgeProps) {
   return (
     <span
-      className={cn(
-        'inline-flex items-center rounded-full font-medium whitespace-nowrap',
-        STYLE_CLASS[intent][variant],
-        SIZE_CLASS[size],
-        className,
-      )}
+      className={cn('jspr-badge', className)}
+      data-intent={intent}
+      data-style={variant}
+      data-size={size}
       {...rest}
     >
-      {children}
+      {leadingIcon ? <span className="jspr-badge__icon">{leadingIcon}</span> : null}
+
+      <span className="jspr-badge__content">
+        {dot ? (
+          <span className="jspr-badge__dot-wrap">
+            <span className="jspr-badge__dot" />
+          </span>
+        ) : null}
+        {children != null ? <span className="jspr-badge__label">{children}</span> : null}
+      </span>
+
+      {trailingIcon ? <span className="jspr-badge__icon">{trailingIcon}</span> : null}
+
+      {onDismiss ? (
+        <button
+          type="button"
+          className="jspr-badge__dismiss"
+          onClick={onDismiss}
+          aria-label={dismissLabel}
+        >
+          <Icon size={16} aria-hidden>
+            <path d="M18 6 6 18M6 6l12 12" />
+          </Icon>
+        </button>
+      ) : null}
     </span>
   );
 }

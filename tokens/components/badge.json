@@ -1,0 +1,50 @@
+{
+  "$meta": {
+    "source": "Figma — JSPR Components (KcphtYKYgRKoTxKOTXInqc), Badge (177:6516)",
+    "note": "Component tier: Badge. Keyed intent/style (solid/outline/ghost) — 7 intents (default/primary/success/warning/danger/white/black). Badge has no hover/disabled state. solid matches the Button solid colors; outline/ghost follow the Figma Badge look (subtle bg + colored icon/border + dark heading text). `icon` drives the leading dot + leading/trailing icons + dismiss glyph. Sizing keyed by size (extra-small..extra-large) → outer padding only; the label stays 14/20 semibold. Generated CSS: src/styles/components/badge.css via scripts/build-components.mjs; structure lives in src/components/Badge/badge.css."
+  },
+  "$component": {
+    "name": "Badge",
+    "className": "jspr-badge",
+    "prefix": "badge",
+    "element": "span",
+    "colorAxes": ["intent", "style"],
+    "sizeAxis": "size",
+    "states": ["rest"],
+    "stateSelectors": { "rest": "" },
+    "slots": {},
+    "base": {}
+  },
+  "colors": {
+    "default/solid": { "rest": { "bg": "--background-muted", "icon": "--text-heading", "text": "--text-heading", "border": "transparent" } },
+    "primary/solid": { "rest": { "bg": "--primary-default", "icon": "--primary-on", "text": "--primary-on", "border": "transparent" } },
+    "success/solid": { "rest": { "bg": "--success-default", "icon": "--success-on", "text": "--success-on", "border": "transparent" } },
+    "warning/solid": { "rest": { "bg": "--warning-default", "icon": "--warning-on", "text": "--warning-on", "border": "transparent" } },
+    "danger/solid":  { "rest": { "bg": "--danger-default", "icon": "--danger-on", "text": "--danger-on", "border": "transparent" } },
+    "white/solid":   { "rest": { "bg": "--p-color-neutral-0", "icon": "--p-color-neutral-900", "text": "--p-color-neutral-900", "border": "transparent" } },
+    "black/solid":   { "rest": { "bg": "--p-color-neutral-1000", "icon": "--p-color-neutral-0", "text": "--p-color-neutral-0", "border": "transparent" } },
+
+    "default/outline": { "rest": { "bg": "--background-subtle", "icon": "--text-heading", "text": "--text-heading", "border": "--border-default" } },
+    "primary/outline": { "rest": { "bg": "--primary-subtle", "icon": "--primary-default", "text": "--text-heading", "border": "--primary-default" } },
+    "success/outline": { "rest": { "bg": "--success-subtle", "icon": "--success-default", "text": "--text-heading", "border": "--success-default" } },
+    "warning/outline": { "rest": { "bg": "--warning-subtle", "icon": "--warning-default", "text": "--text-heading", "border": "--warning-default" } },
+    "danger/outline":  { "rest": { "bg": "--danger-subtle", "icon": "--danger-default", "text": "--text-heading", "border": "--danger-default" } },
+    "white/outline":   { "rest": { "bg": "transparent", "icon": "--p-color-neutral-0", "text": "--p-color-neutral-0", "border": "--p-color-neutral-0" } },
+    "black/outline":   { "rest": { "bg": "transparent", "icon": "--p-color-neutral-1000", "text": "--p-color-neutral-1000", "border": "--p-color-neutral-1000" } },
+
+    "default/ghost": { "rest": { "bg": "--background-subtle", "icon": "--text-heading", "text": "--text-heading", "border": "transparent" } },
+    "primary/ghost": { "rest": { "bg": "--primary-subtle", "icon": "--primary-default", "text": "--text-heading", "border": "transparent" } },
+    "success/ghost": { "rest": { "bg": "--success-subtle", "icon": "--success-default", "text": "--text-heading", "border": "transparent" } },
+    "warning/ghost": { "rest": { "bg": "--warning-subtle", "icon": "--warning-default", "text": "--text-heading", "border": "transparent" } },
+    "danger/ghost":  { "rest": { "bg": "--danger-subtle", "icon": "--danger-default", "text": "--text-heading", "border": "transparent" } },
+    "white/ghost":   { "rest": { "bg": "transparent", "icon": "--p-color-neutral-0", "text": "--p-color-neutral-0", "border": "transparent" } },
+    "black/ghost":   { "rest": { "bg": "transparent", "icon": "--p-color-neutral-1000", "text": "--p-color-neutral-1000", "border": "transparent" } }
+  },
+  "sizing": {
+    "extra-small": { "pad-x": "--space-sm",  "pad-y": "--space-xs" },
+    "small":       { "pad-x": "--space-md",  "pad-y": "--space-sm" },
+    "medium":      { "pad-x": "--space-lg",  "pad-y": "--space-md" },
+    "large":       { "pad-x": "--space-xl",  "pad-y": "--space-lg" },
+    "extra-large": { "pad-x": "--space-2xl", "pad-y": "--space-xl" }
+  }
+}

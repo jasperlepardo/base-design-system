@@ -21,7 +21,7 @@ export const Default: Story = {
       <Card.Header>
         <div className="flex items-center justify-between">
           <Card.Title>Project Atlas</Card.Title>
-          <Badge intent="success" variant="soft">
+          <Badge intent="success" variant="ghost">
             Active
           </Badge>
         </div>
