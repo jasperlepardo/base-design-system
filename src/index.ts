@@ -23,6 +23,33 @@ export type { CardProps, CardSlotProps } from './components/Card/Card';
 export { Alert, alertIntents } from './components/Alert/Alert';
 export type { AlertProps, AlertIntent } from './components/Alert/Alert';
 
+export {
+  IconButton,
+  iconButtonIntents,
+  iconButtonStyles,
+  iconButtonSizes,
+} from './components/IconButton/IconButton';
+export type {
+  IconButtonProps,
+  IconButtonIntent,
+  IconButtonStyle,
+  IconButtonSize,
+} from './components/IconButton/IconButton';
+
+export { Divider } from './components/Divider/Divider';
+export type { DividerProps } from './components/Divider/Divider';
+
+export {
+  ButtonGroup,
+  buttonGroupOrientations,
+  buttonGroupAligns,
+} from './components/ButtonGroup/ButtonGroup';
+export type {
+  ButtonGroupProps,
+  ButtonGroupOrientation,
+  ButtonGroupAlign,
+} from './components/ButtonGroup/ButtonGroup';
+
 export { TextField, FormField, FormLabel } from './components/Field/Field';
 export type {
   TextFieldProps,

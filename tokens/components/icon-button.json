@@ -1,0 +1,343 @@
+{
+  "$component": {
+    "name": "IconButton",
+    "className": "jspr-icon-btn",
+    "prefix": "icon-btn",
+    "element": "button",
+    "colorAxes": ["intent", "style"],
+    "sizeAxis": "size",
+    "states": ["rest", "hover"],
+    "slots": {},
+    "interactive": true,
+    "base": {
+      "display": "inline-flex",
+      "align-items": "center",
+      "justify-content": "center",
+      "box-sizing": "border-box",
+      "width": "--icon-btn-h",
+      "height": "--icon-btn-h",
+      "border": "var(--border-width-default) solid var(--icon-btn-border)",
+      "border-radius": "--icon-btn-radius",
+      "background-color": "--icon-btn-bg",
+      "color": "--icon-btn-text",
+      "cursor": "pointer",
+      "transition": "background-color 120ms ease, border-color 120ms ease, color 120ms ease"
+    }
+  },
+  "colors": {
+    "primary/solid": {
+      "rest": {
+        "bg": "--primary-default",
+        "text": "--primary-on",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--primary-hover",
+        "text": "--primary-on",
+        "border": "transparent"
+      }
+    },
+    "primary/soft": {
+      "rest": {
+        "bg": "--primary-subtle",
+        "text": "--primary-subtle-fg",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--primary-subtle",
+        "text": "--primary-subtle-fg",
+        "border": "transparent"
+      }
+    },
+    "primary/outline": {
+      "rest": {
+        "bg": "transparent",
+        "text": "--primary-default",
+        "border": "--primary-default"
+      },
+      "hover": {
+        "bg": "--primary-subtle",
+        "text": "--primary-subtle-fg",
+        "border": "--primary-default"
+      }
+    },
+    "primary/ghost": {
+      "rest": {
+        "bg": "transparent",
+        "text": "--primary-default",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--primary-subtle",
+        "text": "--primary-subtle-fg",
+        "border": "transparent"
+      }
+    },
+    "default/solid": {
+      "rest": {
+        "bg": "--text-heading",
+        "text": "--text-inverse",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--text-body",
+        "text": "--text-inverse",
+        "border": "transparent"
+      }
+    },
+    "default/soft": {
+      "rest": {
+        "bg": "--background-muted",
+        "text": "--text-heading",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--background-muted",
+        "text": "--text-heading",
+        "border": "transparent"
+      }
+    },
+    "default/outline": {
+      "rest": {
+        "bg": "transparent",
+        "text": "--text-body",
+        "border": "--border-default"
+      },
+      "hover": {
+        "bg": "--background-subtle",
+        "text": "--text-heading",
+        "border": "--border-strong"
+      }
+    },
+    "default/ghost": {
+      "rest": {
+        "bg": "transparent",
+        "text": "--text-body",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--background-subtle",
+        "text": "--text-heading",
+        "border": "transparent"
+      }
+    },
+    "danger/solid": {
+      "rest": {
+        "bg": "--danger-default",
+        "text": "--danger-on",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--danger-hover",
+        "text": "--danger-on",
+        "border": "transparent"
+      }
+    },
+    "danger/soft": {
+      "rest": {
+        "bg": "--danger-subtle",
+        "text": "--danger-subtle-fg",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--danger-subtle",
+        "text": "--danger-subtle-fg",
+        "border": "transparent"
+      }
+    },
+    "danger/outline": {
+      "rest": {
+        "bg": "transparent",
+        "text": "--danger-default",
+        "border": "--danger-default"
+      },
+      "hover": {
+        "bg": "--danger-subtle",
+        "text": "--danger-subtle-fg",
+        "border": "--danger-default"
+      }
+    },
+    "danger/ghost": {
+      "rest": {
+        "bg": "transparent",
+        "text": "--danger-default",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--danger-subtle",
+        "text": "--danger-subtle-fg",
+        "border": "transparent"
+      }
+    },
+    "success/solid": {
+      "rest": {
+        "bg": "--success-default",
+        "text": "--success-on",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--success-hover",
+        "text": "--success-on",
+        "border": "transparent"
+      }
+    },
+    "success/soft": {
+      "rest": {
+        "bg": "--success-subtle",
+        "text": "--success-subtle-fg",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--success-subtle",
+        "text": "--success-subtle-fg",
+        "border": "transparent"
+      }
+    },
+    "success/outline": {
+      "rest": {
+        "bg": "transparent",
+        "text": "--success-default",
+        "border": "--success-default"
+      },
+      "hover": {
+        "bg": "--success-subtle",
+        "text": "--success-subtle-fg",
+        "border": "--success-default"
+      }
+    },
+    "success/ghost": {
+      "rest": {
+        "bg": "transparent",
+        "text": "--success-default",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--success-subtle",
+        "text": "--success-subtle-fg",
+        "border": "transparent"
+      }
+    },
+    "warning/solid": {
+      "rest": {
+        "bg": "--warning-default",
+        "text": "--warning-on",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--warning-hover",
+        "text": "--warning-on",
+        "border": "transparent"
+      }
+    },
+    "warning/soft": {
+      "rest": {
+        "bg": "--warning-subtle",
+        "text": "--warning-subtle-fg",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--warning-subtle",
+        "text": "--warning-subtle-fg",
+        "border": "transparent"
+      }
+    },
+    "warning/outline": {
+      "rest": {
+        "bg": "transparent",
+        "text": "--warning-default",
+        "border": "--warning-default"
+      },
+      "hover": {
+        "bg": "--warning-subtle",
+        "text": "--warning-subtle-fg",
+        "border": "--warning-default"
+      }
+    },
+    "warning/ghost": {
+      "rest": {
+        "bg": "transparent",
+        "text": "--warning-default",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--warning-subtle",
+        "text": "--warning-subtle-fg",
+        "border": "transparent"
+      }
+    },
+    "info/solid": {
+      "rest": {
+        "bg": "--info-default",
+        "text": "--info-on",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--info-hover",
+        "text": "--info-on",
+        "border": "transparent"
+      }
+    },
+    "info/soft": {
+      "rest": {
+        "bg": "--info-subtle",
+        "text": "--info-subtle-fg",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--info-subtle",
+        "text": "--info-subtle-fg",
+        "border": "transparent"
+      }
+    },
+    "info/outline": {
+      "rest": {
+        "bg": "transparent",
+        "text": "--info-default",
+        "border": "--info-default"
+      },
+      "hover": {
+        "bg": "--info-subtle",
+        "text": "--info-subtle-fg",
+        "border": "--info-default"
+      }
+    },
+    "info/ghost": {
+      "rest": {
+        "bg": "transparent",
+        "text": "--info-default",
+        "border": "transparent"
+      },
+      "hover": {
+        "bg": "--info-subtle",
+        "text": "--info-subtle-fg",
+        "border": "transparent"
+      }
+    }
+  },
+  "sizing": {
+    "sm": {
+      "height": "--raw-spacing-8",
+      "padding-x": "--space-xs",
+      "gap": "--space-xs",
+      "font-size": "--font-size-sm",
+      "line-height": "--line-height-sm",
+      "radius": "--radius-md"
+    },
+    "md": {
+      "height": "--raw-spacing-10",
+      "padding-x": "--space-xs",
+      "gap": "--space-xs",
+      "font-size": "--font-size-md",
+      "line-height": "--line-height-md",
+      "radius": "--radius-md"
+    },
+    "lg": {
+      "height": "--raw-spacing-12",
+      "padding-x": "--space-xs",
+      "gap": "--space-xs",
+      "font-size": "--font-size-lg",
+      "line-height": "--line-height-lg",
+      "radius": "--radius-lg"
+    }
+  }
+}
