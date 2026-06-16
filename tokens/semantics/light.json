@@ -13,6 +13,18 @@
         "value": "{primitive.color.neutral.100}",
         "type": "color"
       },
+      "strong": {
+        "value": "{primitive.color.neutral.200}",
+        "type": "color"
+      },
+      "stronger": {
+        "value": "{primitive.color.neutral.400}",
+        "type": "color"
+      },
+      "inverse": {
+        "value": "{primitive.color.neutral.900}",
+        "type": "color"
+      },
       "disabled": {
         "value": "{primitive.color.neutral.400}",
         "type": "color"

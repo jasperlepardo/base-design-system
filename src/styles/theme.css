@@ -15,6 +15,9 @@
   --color-canvas: var(--background-default);
   --color-canvas-subtle: var(--background-subtle);
   --color-canvas-muted: var(--background-muted);
+  --color-canvas-strong: var(--background-strong);
+  --color-canvas-stronger: var(--background-stronger);
+  --color-canvas-inverse: var(--background-inverse);
   --color-surface: var(--surface-default);
   --color-surface-raised: var(--surface-raised);
   --color-surface-sunken: var(--surface-sunken);
