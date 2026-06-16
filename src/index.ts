@@ -109,6 +109,13 @@ export type { ImageProps, ImageRatio } from './components/Image/Image';
 export { OTP } from './components/OTP/OTP';
 export type { OTPProps } from './components/OTP/OTP';
 
+export { Dropdown, DropdownItem } from './components/Dropdown/Dropdown';
+export type { DropdownProps, DropdownItemProps } from './components/Dropdown/Dropdown';
+
+export { useDropdown } from './lib/useDropdown';
+export { useListbox } from './lib/useListbox';
+export type { UseListboxOptions, UseListboxResult } from './lib/useListbox';
+
 export { List, ListGroup, ListItem, listVariants } from './components/List/List';
 export type {
   ListProps,
