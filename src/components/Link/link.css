@@ -1,0 +1,60 @@
+/* Link — semantic <a> styled as the Figma "Link Button" (node 8919:1847).
+   Committed/co-located: the only tokens are the per-intent text colors (existing
+   semantic vars); the underline-on-hover + layout are structural. */
+
+.jspr-link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs); /* 4px — Figma Button/gap */
+  color: var(--link-text, var(--primary-default));
+  font-weight: var(--font-weight-heading);
+  font-size: var(--font-size-md);
+  line-height: var(--line-height-md);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Mono icons inherit currentColor, so they follow the link's intent color. */
+.jspr-link__icon {
+  display: inline-flex;
+  flex: none;
+}
+
+/* Underline the label (not the icons) on hover + keyboard focus. */
+.jspr-link:hover:not([data-state='disabled']) .jspr-link__label,
+.jspr-link:focus-visible:not([data-state='disabled']) .jspr-link__label {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.jspr-link:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+.jspr-link[data-state='disabled'] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Intent colors (mirror the Link Button Type axis). */
+.jspr-link[data-intent='default'] {
+  --link-text: var(--text-heading);
+}
+.jspr-link[data-intent='primary'] {
+  --link-text: var(--primary-default);
+}
+.jspr-link[data-intent='success'] {
+  --link-text: var(--success-default);
+}
+.jspr-link[data-intent='warning'] {
+  --link-text: var(--warning-default);
+}
+.jspr-link[data-intent='danger'] {
+  --link-text: var(--danger-default);
+}
+.jspr-link[data-intent='white'] {
+  --link-text: var(--text-inverse);
+}
+.jspr-link[data-intent='black'] {
+  --link-text: var(--text-heading);
+}

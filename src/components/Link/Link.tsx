@@ -1,41 +1,70 @@
 import type { AnchorHTMLAttributes, ReactNode } from 'react';
 import { cn } from '../../lib/cn';
+import './link.css';
 
-export const linkTones = ['primary', 'default'] as const;
-export type LinkTone = (typeof linkTones)[number];
+// Mirrors the Figma "Link Button" › Type axis (node 8919:1847).
+export const linkIntents = [
+  'default',
+  'primary',
+  'success',
+  'warning',
+  'danger',
+  'white',
+  'black',
+] as const;
+export type LinkIntent = (typeof linkIntents)[number];
 
-const TONE_CLASS: Record<LinkTone, string> = {
-  primary: 'text-link hover:text-primary-hover',
-  default: 'text-body hover:text-heading',
-};
-
-export interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
-  tone?: LinkTone;
-  /** Show the underline only on hover (default) or always. */
-  underline?: 'hover' | 'always';
+export interface LinkProps extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'style'> {
+  /** Color intent (maps to the Figma Link Button type). */
+  intent?: LinkIntent;
+  /** Leading icon — an `<Icon>` (or any node). */
+  leadingIcon?: ReactNode;
+  /** Trailing icon — an `<Icon>` (or any node). */
+  trailingIcon?: ReactNode;
+  /** Render as a non-interactive, muted link (no `href`, `aria-disabled`). */
+  disabled?: boolean;
   children?: ReactNode;
 }
 
-/** Link — themed anchor with focus-visible ring. */
+/**
+ * Link — a navigational `<a>` styled as the Figma Link Button: semibold,
+ * intent-colored text that underlines on hover/focus, with optional leading /
+ * trailing icons. Colors resolve through semantic CSS vars, so it re-themes.
+ * `white`/`black` intents are for placing links on dark/colored surfaces.
+ *
+ * When `disabled`, it renders without `href` (not focusable or navigable) and is
+ * marked `aria-disabled`. `target="_blank"` auto-adds `rel="noopener noreferrer"`.
+ */
 export function Link({
-  tone = 'primary',
-  underline = 'hover',
+  intent = 'primary',
+  leadingIcon,
+  trailingIcon,
+  disabled = false,
+  href,
+  target,
+  rel,
   className,
+  onClick,
   children,
   ...rest
 }: LinkProps) {
+  const resolvedRel = rel ?? (target === '_blank' ? 'noopener noreferrer' : undefined);
   return (
     <a
-      className={cn(
-        'rounded-sm underline-offset-2 transition-colors',
-        'focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus',
-        underline === 'always' ? 'underline' : 'no-underline hover:underline',
-        TONE_CLASS[tone],
-        className,
-      )}
+      className={cn('jspr-link', className)}
+      data-intent={intent}
+      data-state={disabled ? 'disabled' : undefined}
+      href={disabled ? undefined : href}
+      target={disabled ? undefined : target}
+      rel={resolvedRel}
+      aria-disabled={disabled || undefined}
+      tabIndex={disabled ? -1 : undefined}
+      onClick={disabled ? (e) => e.preventDefault() : onClick}
       {...rest}
     >
-      {children}
+      {leadingIcon ? <span className="jspr-link__icon">{leadingIcon}</span> : null}
+      <span className="jspr-link__label">{children}</span>
+      {trailingIcon ? <span className="jspr-link__icon">{trailingIcon}</span> : null}
     </a>
   );
 }
