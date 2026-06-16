@@ -70,16 +70,8 @@
   flex: none;
 }
 
-/* Actions render the themed <Link>; override its tone color with the Alert's
-   intent color (compound selector beats Link's single-class tone utility). */
-.jspr-alert .jspr-alert__action {
-  color: var(--alert-icon);
-  font-weight: var(--font-weight-emphasis);
-  cursor: pointer;
-}
-.jspr-alert .jspr-alert__action:hover {
-  color: var(--alert-icon);
-}
+/* Actions render the themed <Link>; it sets `--link-text` inline to the Alert's
+   --alert-icon (see Alert.Action), so no color override is needed here. */
 
 .jspr-alert__close {
   display: flex;

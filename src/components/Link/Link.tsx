@@ -14,7 +14,7 @@ export const linkIntents = [
 ] as const;
 export type LinkIntent = (typeof linkIntents)[number];
 
-export interface LinkProps extends Omit<AnchorHTMLAttributes<HTMLAnchorElement>, 'style'> {
+export interface LinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   /** Color intent (maps to the Figma Link Button type). */
   intent?: LinkIntent;
   /** Leading icon — an `<Icon>` (or any node). */

@@ -2,6 +2,7 @@ import {
   createContext,
   useContext,
   type AnchorHTMLAttributes,
+  type CSSProperties,
   type HTMLAttributes,
   type ReactNode,
 } from 'react';
@@ -162,12 +163,18 @@ export interface AlertActionProps extends AnchorHTMLAttributes<HTMLAnchorElement
 }
 
 /**
- * Default Alert action — the themed `Link` colored by the Alert's intent
- * (`--alert-icon`). Pass `href` for navigation or `onClick` for an action.
+ * Default Alert action — the themed `Link` colored by the Alert's intent. Sets
+ * the Link's `--link-text` to the Alert's `--alert-icon` (theme-aware), so it
+ * matches solid/outline/transparent in both light and dark. Pass `href` for
+ * navigation or `onClick` for an action.
  */
-function AlertAction({ className, children, ...rest }: AlertActionProps) {
+function AlertAction({ className, style, children, ...rest }: AlertActionProps) {
   return (
-    <Link className={cn('jspr-alert__action', className)} {...rest}>
+    <Link
+      className={cn('jspr-alert__action', className)}
+      style={{ '--link-text': 'var(--alert-icon)', ...style } as CSSProperties}
+      {...rest}
+    >
       {children}
     </Link>
   );
