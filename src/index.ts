@@ -21,6 +21,8 @@ export type { LinkProps, LinkIntent } from './components/Link/Link';
 
 export { Badge, badgeIntents, badgeStyles, badgeSizes } from './components/Badge/Badge';
 export type { BadgeProps, BadgeIntent, BadgeStyle, BadgeSize } from './components/Badge/Badge';
+export { BadgeCounter } from './components/Badge/BadgeCounter';
+export type { BadgeCounterProps } from './components/Badge/BadgeCounter';
 
 export { Card } from './components/Card/Card';
 export type { CardProps, CardSlotProps } from './components/Card/Card';

@@ -1,0 +1,88 @@
+/* Badge structure. Colors + sizing come from the generated component CSS
+   (src/styles/components/badge.css → --badge-* per [data-intent][data-style] and
+   [data-size], from tokens/components/badge.json). Mirrors the Figma Badge:
+   fully-rounded pill, 14/20 semibold label, the 1px stroke drawn INSIDE via an
+   inset shadow (so solid/outline/ghost share the exact same box at every size),
+   and the optional leading dot, leading/trailing icons, and dismiss button — all
+   tinted by the intent's --badge-icon color. Badge has no hover/disabled state. */
+.jspr-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  gap: var(--space-none);
+  padding: var(--badge-pad-y) var(--badge-pad-x);
+  box-shadow: inset 0 0 0 var(--border-width-default) var(--badge-border, transparent);
+  border-radius: var(--radius-full);
+  background-color: var(--badge-bg);
+  color: var(--badge-text);
+  font-family: var(--font-family-body), system-ui, sans-serif;
+  font-weight: var(--font-weight-heading);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-sm);
+  white-space: nowrap;
+}
+/* Content frame — groups the optional dot with the label (its own gap + padding). */
+.jspr-badge__content {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2xs);
+  padding: var(--space-none) var(--space-2xs);
+}
+/* Dot sits in a small padded slot so an 8px circle reads as a status dot. */
+.jspr-badge__dot-wrap {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-2xs);
+}
+.jspr-badge__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background-color: var(--badge-icon, currentColor);
+}
+/* Leading/trailing icon + dismiss glyph all follow the intent's icon color. */
+.jspr-badge__icon {
+  flex: none;
+  display: inline-flex;
+  color: var(--badge-icon, currentColor);
+}
+.jspr-badge__label {
+  display: inline-block;
+}
+.jspr-badge__dismiss {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2px;
+  border: 0;
+  background: transparent;
+  color: var(--badge-icon, currentColor);
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  transition: opacity 0.15s ease;
+}
+.jspr-badge__dismiss:hover {
+  opacity: 0.7;
+}
+.jspr-badge__dismiss:focus-visible {
+  outline: 2px solid var(--border-focus);
+  outline-offset: 1px;
+}
+
+/* Badge Counter — a fixed 20px circular count pill (e.g. unread notifications).
+   Reuses the Badge color matrix via the shared .jspr-badge[data-intent][data-style]
+   rules; this modifier just overrides the box to a 20px circle that grows for
+   multi-digit counts. */
+.jspr-badge--counter {
+  min-width: 20px;
+  height: 20px;
+  padding: var(--space-none) var(--space-2xs);
+  gap: var(--space-none);
+  font-size: var(--font-size-sm);
+  line-height: var(--line-height-sm);
+  text-align: center;
+}
