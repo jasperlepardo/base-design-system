@@ -1,6 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Alert, alertIntents, alertStyles } from './Alert';
-import { Button } from '../Button/Button';
 
 const meta = {
   title: 'Components/Alert',
@@ -72,7 +71,7 @@ export const WithActionsAndDismiss: Story = {
   ),
 };
 
-/** Compound parts for a custom layout (a Button action instead of the default link). */
+/** Compound parts for a custom layout; actions use the themed `Alert.Action` (Link). */
 export const Compound: Story = {
   render: () => (
     <div style={{ maxWidth: 560 }}>
@@ -84,9 +83,8 @@ export const Compound: Story = {
             <Alert.Body>Check your connection and try again.</Alert.Body>
           </Alert.Text>
           <Alert.Actions>
-            <Button intent="danger" variant="soft" size="sm">
-              Retry
-            </Button>
+            <Alert.Action onClick={() => {}}>Retry</Alert.Action>
+            <Alert.Action onClick={() => {}}>Dismiss</Alert.Action>
           </Alert.Actions>
         </Alert.Content>
         <Alert.Close onClick={() => {}} />
