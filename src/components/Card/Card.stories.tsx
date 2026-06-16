@@ -33,8 +33,8 @@ export const Default: Story = {
         </Text>
       </Card.Body>
       <Card.Footer>
-        <Button size="sm">Open</Button>
-        <Button size="sm" intent="default" variant="ghost">
+        <Button size="small">Open</Button>
+        <Button size="small" intent="default" variant="ghost">
           Dismiss
         </Button>
       </Card.Footer>

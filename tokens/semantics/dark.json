@@ -12,6 +12,10 @@
       "muted": {
         "value": "{primitive.color.neutral.800}",
         "type": "color"
+      },
+      "disabled": {
+        "value": "{primitive.color.neutral.800}",
+        "type": "color"
       }
     },
     "surface": {
@@ -48,6 +52,10 @@
       "link": {
         "value": "{primitive.color.primary.400}",
         "type": "color"
+      },
+      "disabled": {
+        "value": "{primitive.color.neutral.600}",
+        "type": "color"
       }
     },
     "border": {
@@ -65,6 +73,10 @@
       },
       "focus": {
         "value": "{primitive.color.primary.400}",
+        "type": "color"
+      },
+      "disabled": {
+        "value": "{primitive.color.neutral.700}",
         "type": "color"
       }
     },

@@ -122,13 +122,14 @@ function buildOne(name, file, valid) {
     ? declaredBase(cn, meta.base, meta.slots, meta.interactive)
     : builtinButtonBase(cn, px);
 
-  // Sizes → custom props on [data-<sizeAxis>="…"].
+  // Sizes → custom props on [data-<sizeAxis>="…"]. Every sizing key present is
+  // emitted as --<prefix>-<key> (verbatim), so components define their own model.
   for (const size of sizes) {
     const s = file.sizing[size];
-    css += `.${cn}[data-${meta.sizeAxis}="${size}"] {\n`;
-    css += `  --${px}-h: ${ref(s.height)};\n  --${px}-px: ${ref(s['padding-x'])};\n`;
-    css += `  --${px}-gap: ${ref(s.gap)};\n  --${px}-fs: ${ref(s['font-size'])};\n`;
-    css += `  --${px}-lh: ${ref(s['line-height'])};\n  --${px}-radius: ${ref(s.radius)};\n}\n\n`;
+    const decls = Object.entries(s)
+      .map(([k, v]) => `  --${px}-${k}: ${ref(v)};`)
+      .join('\n');
+    css += `.${cn}[data-${meta.sizeAxis}="${size}"] {\n${decls}\n}\n\n`;
   }
 
   // Color combos → color custom props per state.
