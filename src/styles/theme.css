@@ -40,27 +40,42 @@
   --color-primary-hover: var(--primary-hover);
   --color-primary-active: var(--primary-active);
   --color-primary-subtle: var(--primary-subtle);
+  --color-primary-subtle-hover: var(--primary-subtle-hover);
   --color-primary-subtle-fg: var(--primary-subtle-fg);
+  --color-primary-border: var(--primary-border);
+  --color-primary-border-subtle: var(--primary-border-subtle);
   --color-on-primary: var(--primary-on);
 
   --color-success: var(--success-default);
   --color-success-subtle: var(--success-subtle);
+  --color-success-subtle-hover: var(--success-subtle-hover);
   --color-success-subtle-fg: var(--success-subtle-fg);
+  --color-success-border: var(--success-border);
+  --color-success-border-subtle: var(--success-border-subtle);
   --color-on-success: var(--success-on);
 
   --color-warning: var(--warning-default);
   --color-warning-subtle: var(--warning-subtle);
+  --color-warning-subtle-hover: var(--warning-subtle-hover);
   --color-warning-subtle-fg: var(--warning-subtle-fg);
+  --color-warning-border: var(--warning-border);
+  --color-warning-border-subtle: var(--warning-border-subtle);
   --color-on-warning: var(--warning-on);
 
   --color-danger: var(--danger-default);
   --color-danger-subtle: var(--danger-subtle);
+  --color-danger-subtle-hover: var(--danger-subtle-hover);
   --color-danger-subtle-fg: var(--danger-subtle-fg);
+  --color-danger-border: var(--danger-border);
+  --color-danger-border-subtle: var(--danger-border-subtle);
   --color-on-danger: var(--danger-on);
 
   --color-info: var(--info-default);
   --color-info-subtle: var(--info-subtle);
+  --color-info-subtle-hover: var(--info-subtle-hover);
   --color-info-subtle-fg: var(--info-subtle-fg);
+  --color-info-border: var(--info-border);
+  --color-info-border-subtle: var(--info-border-subtle);
   --color-on-info: var(--info-on);
 
   /* Radius → rounded-* utilities */
