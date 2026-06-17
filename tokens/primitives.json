@@ -134,6 +134,10 @@
           "value": "{raw.color.green.700}",
           "type": "color"
         },
+        "800": {
+          "value": "{raw.color.green.800}",
+          "type": "color"
+        },
         "900": {
           "value": "{raw.color.green.900}",
           "type": "color"
@@ -176,6 +180,10 @@
           "value": "{raw.color.amber.700}",
           "type": "color"
         },
+        "800": {
+          "value": "{raw.color.amber.800}",
+          "type": "color"
+        },
         "900": {
           "value": "{raw.color.amber.900}",
           "type": "color"
@@ -216,6 +224,10 @@
         },
         "700": {
           "value": "{raw.color.red.700}",
+          "type": "color"
+        },
+        "800": {
+          "value": "{raw.color.red.800}",
           "type": "color"
         },
         "900": {
