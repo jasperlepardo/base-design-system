@@ -231,40 +231,6 @@
         "value": "{primitive.color.neutral.0}",
         "type": "color"
       }
-    },
-    "info": {
-      "default": {
-        "value": "{primitive.color.info.500}",
-        "type": "color"
-      },
-      "hover": {
-        "value": "{primitive.color.info.400}",
-        "type": "color"
-      },
-      "subtle": {
-        "value": "{primitive.color.info.950}",
-        "type": "color"
-      },
-      "subtle-hover": {
-        "value": "{primitive.color.info.900}",
-        "type": "color"
-      },
-      "subtle-fg": {
-        "value": "{primitive.color.info.100}",
-        "type": "color"
-      },
-      "border": {
-        "value": "{primitive.color.info.400}",
-        "type": "color"
-      },
-      "border-subtle": {
-        "value": "{primitive.color.info.700}",
-        "type": "color"
-      },
-      "on": {
-        "value": "{primitive.color.neutral.0}",
-        "type": "color"
-      }
     }
   }
 }

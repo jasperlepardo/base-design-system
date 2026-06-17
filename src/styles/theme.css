@@ -70,14 +70,6 @@
   --color-danger-border-subtle: var(--danger-border-subtle);
   --color-on-danger: var(--danger-on);
 
-  --color-info: var(--info-default);
-  --color-info-subtle: var(--info-subtle);
-  --color-info-subtle-hover: var(--info-subtle-hover);
-  --color-info-subtle-fg: var(--info-subtle-fg);
-  --color-info-border: var(--info-border);
-  --color-info-border-subtle: var(--info-border-subtle);
-  --color-on-info: var(--info-on);
-
   /* Radius → rounded-* utilities */
   --radius-sm: var(--radius-sm);
   --radius-md: var(--radius-md);

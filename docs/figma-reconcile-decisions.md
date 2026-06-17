@@ -44,9 +44,19 @@ regenerated/pushed from code.** Implementation is batched at the end (before pub
 - Figma's `Layout` is a **custom design-canvas grid** (screens 375–1920, column widths, 12-col grid/gutter) — **no CSS-token equivalent → leave Figma-only**.
 - Separate gap: Tailwind's `--breakpoint-*` + `--container-*` aren't in code's raw. **Decision: add them to code's raw** (be truly "raw = literally Tailwind"). impl in backlog.
 
+## PRIMITIVE tier — ✅ done
+- color role-ramps: lowercase, `neutral` (not `Default`), white/black via `neutral.0/1000`, alpha stays at raw only → **code wins, no change**.
+- **`info` removed** (primitive + semantic + `@theme`) — unused by components, absent in Figma.
+- **typography now 3-tier**: added `primitive.{font-family,font-size,font-weight,line-height}` passthrough; semantic re-points onto them (`--font-size-md → --p-font-size-base → raw`). Matches spacing/radius + the Figma's `Text/Font/Leading` primitives.
+- spacing/radius primitives already 3-tier — match.
+- Figma's `Layout` primitive = canvas grid → Figma-only (see raw/layout).
+
 ## Pending segments (to diff next)
-- **Primitive** tier — color role-ramps (compare), spacing/radius (already 3-tier, match), and Figma's extra `Text/Leading/Font/Layout` primitives (code's type is 2-tier; layout is Figma-only)
 - **Semantic** tier — the big one: `bg/fg/text/border` color families + the `fg/*` tier (partly in `figma-token-diff.md`), plus spacing/radius/type semantics (decided)
+
+## Figma alignment approach (decided)
+- Do **one full in-place alignment** of the existing collections (`01 Raw`/`02 Primitives`/`03 Semantics`) **after all tiers are reconciled** in code — NOT a parallel/duplicate collection.
+- In-place = rename/remap existing variables to match code + add code's new ones; **renaming preserves each variable ID so the linked Components file keeps its bindings.** Script it and review before running.
 
 ## Implementation backlog (batch before publish)
 - font-family brand fonts (raw source + Figma bare-name).
