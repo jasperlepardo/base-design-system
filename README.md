@@ -199,11 +199,23 @@ export default {
   // Optionally retarget which primitive shade a semantic uses, per theme.
   semantics: { dark: { danger: { default: 400 } } },
 
+  // Rescale the whole spacing system with one knob. The raw scale is numeric
+  // (Tailwind steps) and each value = step × multiplier; semantic t-shirt sizes
+  // (--space-2xs…3xl) alias the raw steps, so they rescale too. Accepts px or
+  // rem; default follows Tailwind's --spacing (0.25rem). `remRoot` (default 16)
+  // is the rem↔px root used to materialise px for Figma variables.
+  spacing: { multiplier: '5px', remRoot: 16 },
+
   // Override scale/raw, or point at your own component token files.
   radius: { md: 'lg' },
   components: { dir: 'tokens/components' },
 };
 ```
+
+> **Spacing in code vs Figma:** code keeps spacing in **rem** (scales with root
+> font-size); the Figma variables are materialised in **px** (Figma has no rem),
+> converted at `× remRoot`. So `multiplier: '5px'` → `--raw-spacing-1: 0.3125rem`
+> in CSS and `spacing/1 = 5` in Figma.
 
 ```bash
 npx jspr gen            # tokens + Figma (default: all)

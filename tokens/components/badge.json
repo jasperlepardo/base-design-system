@@ -25,10 +25,10 @@
     "black/solid":   { "rest": { "bg": "--p-color-neutral-1000", "icon": "--p-color-neutral-0", "text": "--p-color-neutral-0", "border": "transparent" } },
 
     "default/outline": { "rest": { "bg": "--background-subtle", "icon": "--text-heading", "text": "--text-heading", "border": "--border-default" } },
-    "primary/outline": { "rest": { "bg": "--primary-subtle", "icon": "--primary-default", "text": "--text-heading", "border": "--primary-default" } },
-    "success/outline": { "rest": { "bg": "--success-subtle", "icon": "--success-default", "text": "--text-heading", "border": "--success-default" } },
-    "warning/outline": { "rest": { "bg": "--warning-subtle", "icon": "--warning-default", "text": "--text-heading", "border": "--warning-default" } },
-    "danger/outline":  { "rest": { "bg": "--danger-subtle", "icon": "--danger-default", "text": "--text-heading", "border": "--danger-default" } },
+    "primary/outline": { "rest": { "bg": "--primary-subtle", "icon": "--primary-default", "text": "--text-heading", "border": "--primary-border" } },
+    "success/outline": { "rest": { "bg": "--success-subtle", "icon": "--success-default", "text": "--text-heading", "border": "--success-border" } },
+    "warning/outline": { "rest": { "bg": "--warning-subtle", "icon": "--warning-default", "text": "--text-heading", "border": "--warning-border" } },
+    "danger/outline":  { "rest": { "bg": "--danger-subtle", "icon": "--danger-default", "text": "--text-heading", "border": "--danger-border" } },
     "white/outline":   { "rest": { "bg": "transparent", "icon": "--p-color-neutral-0", "text": "--p-color-neutral-0", "border": "--p-color-neutral-0" } },
     "black/outline":   { "rest": { "bg": "transparent", "icon": "--p-color-neutral-1000", "text": "--p-color-neutral-1000", "border": "--p-color-neutral-1000" } },
 

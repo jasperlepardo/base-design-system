@@ -1,5 +1,24 @@
 # Figma ↔ base semantic-token diff
 
+> **Status — alignment landed (v0.8.0 → v0.9.2).** The audit below was the
+> starting point; the gaps it identified are now closed in code:
+> - **slate → true neutral** (one primitive re-point) — v0.8.0
+> - **shade re-points**: warning solid 500→600, `{intent}-subtle` 50→100,
+>   `{intent}-border` 100→**500**, `text-body`→800, `text-muted`→700,
+>   `*-disabled`→400 (light + dark) — v0.8.0
+> - **surfaces**: `background.strong` (bg/tertiary 200), `stronger`
+>   (quarternary 400), `inverse` (default-solid 900) — v0.9.0
+> - **intents**: `{intent}.subtle-hover` (200), `{intent}.border-subtle` (300),
+>   `primary.border` (500) — v0.9.2
+> - **spacing**: Tailwind `0.5` (2px) step + `--space-3xs`; settable
+>   `spacing.multiplier`; rem→px for Figma — v0.9.0–v0.9.2
+>
+> Still intentionally **not** ported (Tailwind-native decision): the per-property
+> `fg/*` tier and the `bg`/`text` duplicates — in code one `--color-*` role drives
+> every property utility, so Figma's per-binding duplication collapses to roles.
+> A few deep neutral "solid" darks (`bg/secondary-solid` etc.) and `text`
+> `caption`/`placeholder`/`*_on-primary` remain unported until a component needs them.
+
 Compares the **JSPR-Tokens** Figma library (`4A0TgVbwojrRl48lG0GeBu`, `03 Semantics`
 collection — 224 vars, 105 of them color) against base's semantic layer
 (`src/styles/tokens/theme-{light,dark}.css`, ~46 color semantics).
