@@ -49,7 +49,7 @@
       },
       "neutral": {
         "0": {
-          "value": "{raw.color.white}",
+          "value": "{raw.color.white.500}",
           "type": "color"
         },
         "50": {
@@ -97,7 +97,7 @@
           "type": "color"
         },
         "1000": {
-          "value": "{raw.color.black}",
+          "value": "{raw.color.black.500}",
           "type": "color"
         }
       },

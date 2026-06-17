@@ -65,6 +65,30 @@ export async function run(ctx) {
   if (familyCount === 0)
     throw new Error('Parsed 0 colors from Tailwind theme.css — the format may have changed.');
 
+  /* ---- alpha ramp — DERIVED from the Tailwind solids (Tailwind ships no alpha
+     colors). Each level is the solid at a clean opacity. Applied to white/black
+     (which become groups: 500 = the solid) and to each family's 500 shade, so
+     --raw-color-blue-a200 = blue-500 @ 20%. Names match the Figma's a050…a900. ---- */
+  const ALPHA = { a050: 0.05, a100: 0.1, a150: 0.15, a200: 0.2, a300: 0.3, a400: 0.4, a500: 0.5, a600: 0.6, a700: 0.7, a800: 0.8, a900: 0.9 };
+  const withAlpha = (val, a) => {
+    const s = val.trim();
+    if (s.startsWith('oklch(')) return s.replace(/\)\s*$/, ` / ${a})`);
+    let h = s.replace('#', '');
+    if (h.length === 3) h = h.split('').map((c) => c + c).join('');
+    const ch = (i) => parseInt(h.slice(i, i + 2), 16);
+    return `rgb(${ch(0)} ${ch(2)} ${ch(4)} / ${a})`;
+  };
+  for (const k of ['white', 'black']) {
+    const solid = color[k].value;
+    color[k] = { 500: node(solid, 'color') };
+    for (const [lvl, a] of Object.entries(ALPHA)) color[k][lvl] = node(withAlpha(solid, a), 'color');
+  }
+  for (const [fam, shades] of Object.entries(color)) {
+    if (fam === 'white' || fam === 'black' || !shades['500']) continue;
+    for (const [lvl, a] of Object.entries(ALPHA))
+      shades[lvl] = node(withAlpha(shades['500'].value, a), 'color');
+  }
+
   /* ---- spacing (v4 ships a single --spacing multiplier; materialise steps) ---- */
   const SPACING_STEPS = [
     0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16, 20, 24, 28, 32, 36, 40, 44,
