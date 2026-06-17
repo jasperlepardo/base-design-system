@@ -119,10 +119,21 @@ export async function run(ctx) {
   /* ---- border width (Tailwind has no theme vars — these are its utilities) ---- */
   const borderWidth = { 0: dim('0px'), 1: dim('1px'), 2: dim('2px'), 4: dim('4px'), 8: dim('8px') };
 
-  /* ---- typography ---- */
+  /* ---- breakpoints + containers (Tailwind ships --breakpoint-* / --container-*) ---- */
+  const breakpoint = Object.fromEntries(
+    Object.entries(collect('breakpoint')).map(([k, v]) => [k, dim(v)]),
+  );
+  const container = Object.fromEntries(
+    Object.entries(collect('container')).map(([k, v]) => [k, dim(v)]),
+  );
+
+  /* ---- typography. Font families default to Tailwind's generic stacks; a
+     jspr.config `fonts.{sans,serif,mono}` overrides with brand stacks. ---- */
   const fontFamily = Object.fromEntries(
     Object.entries(collect('font', 'sans|serif|mono')).map(([k, v]) => [k, node(v, 'fontFamily')]),
   );
+  for (const k of ['sans', 'serif', 'mono'])
+    if (ctx?.fonts?.[k]) fontFamily[k] = node(ctx.fonts[k], 'fontFamily');
   const fontWeight = Object.fromEntries(
     Object.entries(collect('font-weight', '[a-z]+')).map(([k, v]) => [k, node(v, 'fontWeight')]),
   );
@@ -151,6 +162,8 @@ export async function run(ctx) {
       spacing,
       radius,
       'border-width': borderWidth,
+      breakpoint,
+      container,
       'font-family': fontFamily,
       'font-size': fontSize,
       'font-weight': fontWeight,

@@ -65,11 +65,15 @@ function parseRgb(str) {
 /** Parse any supported CSS color string to Figma { r, g, b, a } floats. */
 export function cssColorToFigma(str) {
   const s = String(str).trim();
-  if (s.startsWith('oklch')) return parseOklch(s);
-  if (s.startsWith('#')) return parseHex(s);
-  if (s.startsWith('rgb')) return parseRgb(s);
-  if (s === 'white') return { r: 1, g: 1, b: 1, a: 1 };
-  if (s === 'black') return { r: 0, g: 0, b: 0, a: 1 };
-  if (s === 'transparent') return { r: 0, g: 0, b: 0, a: 0 };
-  return null;
+  let c = null;
+  if (s.startsWith('oklch')) c = parseOklch(s);
+  else if (s.startsWith('#')) c = parseHex(s);
+  else if (s.startsWith('rgb')) c = parseRgb(s);
+  else if (s === 'white') c = { r: 1, g: 1, b: 1, a: 1 };
+  else if (s === 'black') c = { r: 0, g: 0, b: 0, a: 1 };
+  else if (s === 'transparent') c = { r: 0, g: 0, b: 0, a: 0 };
+  if (!c) return null;
+  // 8-bit color needs ~3 decimals; 4 is ample. Keeps Figma payloads small.
+  const r4 = (n) => Math.round(n * 1e4) / 1e4;
+  return { r: r4(c.r), g: r4(c.g), b: r4(c.b), a: r4(c.a) };
 }

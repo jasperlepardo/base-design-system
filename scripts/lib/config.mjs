@@ -96,7 +96,15 @@ export async function loadConfig(opts = {}) {
     remRoot: config.spacing?.remRoot ?? 16,
   };
 
-  return { cwd, pkgRoot, config, overrides, paths, figmaFile, spacing };
+  // Brand fonts: jspr.config `fonts.{sans,serif,mono}` (full CSS stacks). null →
+  // gen-raw keeps Tailwind's default stacks. Not a token override (no tmp-dir).
+  const fonts = {
+    sans: config.fonts?.sans ?? null,
+    serif: config.fonts?.serif ?? null,
+    mono: config.fonts?.mono ?? null,
+  };
+
+  return { cwd, pkgRoot, config, overrides, paths, figmaFile, spacing, fonts };
 }
 
 /**
