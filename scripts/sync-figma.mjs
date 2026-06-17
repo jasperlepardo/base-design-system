@@ -18,6 +18,7 @@
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
 import { resolve, dirname, join } from 'node:path';
 import { cssColorToFigma } from './lib/color.mjs';
+import { dimToPx } from './lib/units.mjs';
 import { loadConfig, materializeTokens } from './lib/config.mjs';
 import { run as genRaw } from './gen-raw-from-tailwind.mjs';
 
@@ -45,28 +46,30 @@ function aliasOf(ref) {
   return { alias: { collection: TIER_OF[tier], name: rest.join('/') } };
 }
 
-function literal(type, value) {
+function literal(type, value, remRoot) {
   if (type === 'color') return { color: cssColorToFigma(value) };
   if (type === 'fontFamily') return { string: String(value) };
-  return { number: parseFloat(value) }; // dimension / fontWeight
+  // dimension / fontWeight → px NUMBER (rem×remRoot); Figma has no rem.
+  return { number: dimToPx(value, remRoot) };
 }
 
-const toFigmaValue = (type, value) => aliasOf(value) ?? literal(type, value);
+const toFigmaValue = (type, value, remRoot) => aliasOf(value) ?? literal(type, value, remRoot);
 
-function singleModeCollection(name, leaves) {
+function singleModeCollection(name, leaves, remRoot) {
   return {
     name,
     modes: ['Value'],
     variables: leaves.map((l) => ({
       name: l.name,
       type: figmaType(l.type),
-      valuesByMode: { Value: toFigmaValue(l.type, l.value) },
+      valuesByMode: { Value: toFigmaValue(l.type, l.value, remRoot) },
     })),
   };
 }
 
 export async function run(ctx) {
   const { tokensDir, outFigma } = ctx.paths;
+  const remRoot = ctx.spacing?.remRoot ?? 16;
   const read = (p) => JSON.parse(readFileSync(p, 'utf8'));
 
   const rawLeaves = flatten(read(join(tokensDir, 'raw.json')).raw, []);
@@ -84,7 +87,7 @@ export async function run(ctx) {
       byName
         .set(leaf.name, { name: leaf.name, type: figmaType(leaf.type), valuesByMode: {} })
         .get(leaf.name);
-    entry.valuesByMode[mode] = toFigmaValue(leaf.type, leaf.value);
+    entry.valuesByMode[mode] = toFigmaValue(leaf.type, leaf.value, remRoot);
   };
   for (const l of shared) {
     register(l, 'Light');
@@ -96,8 +99,8 @@ export async function run(ctx) {
   const manifest = {
     $schema: 'base-design-system/figma-variables@1',
     collections: [
-      singleModeCollection('Raw', rawLeaves),
-      singleModeCollection('Primitive', primitiveLeaves),
+      singleModeCollection('Raw', rawLeaves, remRoot),
+      singleModeCollection('Primitive', primitiveLeaves, remRoot),
       { name: 'Semantic', modes: ['Light', 'Dark'], variables: [...byName.values()] },
     ],
   };

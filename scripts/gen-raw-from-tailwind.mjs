@@ -14,6 +14,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';
 import { loadConfig } from './lib/config.mjs';
+import { toRem } from './lib/units.mjs';
 
 // Locate Tailwind's theme.css (where the default theme lives in v4), resolving
 // from the consumer cwd first so their installed Tailwind wins.
@@ -71,8 +72,11 @@ export async function run(ctx) {
   ];
   const spacing = { 0: dim('0px'), px: dim('1px') };
   {
+    // Multiplier precedence: jspr.config spacing.multiplier > Tailwind --spacing > 0.25rem.
     const baseMatch = css.match(/^\s*--spacing:\s*([^;]+);/m);
-    const baseRem = baseMatch ? parseFloat(baseMatch[1]) : 0.25;
+    const tailwindMult = baseMatch ? baseMatch[1] : '0.25rem';
+    const remRoot = ctx?.spacing?.remRoot ?? 16;
+    const baseRem = toRem(ctx?.spacing?.multiplier ?? tailwindMult, remRoot);
     // Tailwind's fractional steps (0.5/1.5/…) use a dot in the class name; keep
     // the token key CSS-safe by writing the dot as "_" (→ --raw-spacing-0_5).
     for (const step of SPACING_STEPS) {
