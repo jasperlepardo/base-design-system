@@ -2,6 +2,7 @@
   "semantic": {
     "space": {
       "none": { "value": "{raw.spacing.0}", "type": "dimension" },
+      "3xs": { "value": "{raw.spacing.0_5}", "type": "dimension" },
       "2xs": { "value": "{raw.spacing.1}", "type": "dimension" },
       "xs": { "value": "{raw.spacing.2}", "type": "dimension" },
       "sm": { "value": "{raw.spacing.3}", "type": "dimension" },

@@ -66,14 +66,19 @@ export async function run(ctx) {
 
   /* ---- spacing (v4 ships a single --spacing multiplier; materialise steps) ---- */
   const SPACING_STEPS = [
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16, 20, 24, 28, 32, 36, 40, 44, 48, 52, 56, 60, 64,
-    72, 80, 96,
+    0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16, 20, 24, 28, 32, 36, 40, 44,
+    48, 52, 56, 60, 64, 72, 80, 96,
   ];
   const spacing = { 0: dim('0px'), px: dim('1px') };
   {
     const baseMatch = css.match(/^\s*--spacing:\s*([^;]+);/m);
     const baseRem = baseMatch ? parseFloat(baseMatch[1]) : 0.25;
-    for (const step of SPACING_STEPS) spacing[step] = dim(`${+(step * baseRem).toFixed(4)}rem`);
+    // Tailwind's fractional steps (0.5/1.5/…) use a dot in the class name; keep
+    // the token key CSS-safe by writing the dot as "_" (→ --raw-spacing-0_5).
+    for (const step of SPACING_STEPS) {
+      const key = String(step).replace('.', '_');
+      spacing[key] = dim(`${+(step * baseRem).toFixed(4)}rem`);
+    }
   }
 
   /* ---- radius (+ none/full, which Tailwind expresses as utilities) ---- */

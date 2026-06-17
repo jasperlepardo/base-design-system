@@ -22,12 +22,15 @@
   line-height: var(--line-height-sm);
   white-space: nowrap;
 }
-/* Content frame — groups the optional dot with the label (its own gap + padding). */
+/* Content frame — groups the optional dot with the label. Mirrors the Figma
+   Badge > Content: 0 vertical padding, 4px horizontal padding, 2px gap.
+   (NB: Figma's Badge/Content/padding-x/-y variables are bound axis-swapped —
+   padding-x→vertical=0, padding-y→horizontal=4.) */
 .jspr-badge__content {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-2xs);
+  gap: var(--space-3xs);
   padding: var(--space-none) var(--space-2xs);
 }
 /* Dot sits in a small padded slot so an 8px circle reads as a status dot. */
@@ -57,7 +60,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 2px;
+  padding: var(--space-3xs);
   border: 0;
   background: transparent;
   color: var(--badge-icon, currentColor);
