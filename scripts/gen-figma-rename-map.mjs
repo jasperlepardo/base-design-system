@@ -392,8 +392,8 @@ p('   separate **"linked Components file"** consuming these vars, but no such fi
 p('   exists it must be scanned for remote `fg/*` bindings before deletion — otherwise #4 is settled.');
 p('5. **431 new-in-code CREATEs** — dominated by **294 raw colors** (alpha ramps on all 28 families + the 6 extra');
 p('   families Figma lacks). Confirm we want the full set created, or trim.');
-p('6. **Code bug to fix first:** `Raw/radius/full` resolves to **0px** in the manifest (Tailwind `radius-full` /');
-p('   `calc(infinity*1px)` not parsed by `dimToPx`). Fix before push so `radius/full` isn\'t pushed as 0.');
+p('6. **~~Code bug~~ RESOLVED:** `dimToPx` now evaluates `calc()` (commit fixing `units.mjs`), so `radius/full`→9999');
+p('   and `line-height/*` emit correct ratios instead of 0. No longer a blocker.');
 p('');
 writeFileSync(join(root, 'docs/figma-rename-map.md'), lines.join('\n'));
 console.log('summary:', JSON.stringify(summary, null, 2));

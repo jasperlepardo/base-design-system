@@ -9,8 +9,8 @@ IDs (and the linked Components file's bindings).
 
 | bucket | count |
 |---|---:|
-| ✅ renames (target exists in code) | 533 |
-| ⚠️ renames (target NOT found in code) | 0 |
+| ✅ renames (target exists in code) | 530 |
+| ⚠️ renames (target NOT found in code) | 3 |
 | 🗑️ deletes (dropped tiers / niche skips) | 123 |
 | 📌 keep Figma-only (canvas grid etc.) | 5 |
 | ❓ ambiguous (value matched >1 code var) | 0 |
@@ -408,7 +408,7 @@ IDs (and the linked Components file's bindings).
 | `Color/Primary/050` | `color/primary/50` | ✅ |
 | `Color/Success/950` | `color/success/950` | ✅ |
 | `Color/Success/900` | `color/success/900` | ✅ |
-| `Color/Success/800` | `color/success/800` | ✅ |
+| `Color/Success/800` | `color/success/800` | ⚠️ NO |
 | `Color/Success/700` | `color/success/700` | ✅ |
 | `Color/Success/600` | `color/success/600` | ✅ |
 | `Color/Success/500` | `color/success/500` | ✅ |
@@ -419,7 +419,7 @@ IDs (and the linked Components file's bindings).
 | `Color/Success/050` | `color/success/50` | ✅ |
 | `Color/Warning/950` | `color/warning/950` | ✅ |
 | `Color/Warning/900` | `color/warning/900` | ✅ |
-| `Color/Warning/800` | `color/warning/800` | ✅ |
+| `Color/Warning/800` | `color/warning/800` | ⚠️ NO |
 | `Color/Warning/700` | `color/warning/700` | ✅ |
 | `Color/Warning/600` | `color/warning/600` | ✅ |
 | `Color/Warning/500` | `color/warning/500` | ✅ |
@@ -430,7 +430,7 @@ IDs (and the linked Components file's bindings).
 | `Color/Warning/050` | `color/warning/50` | ✅ |
 | `Color/Danger/950` | `color/danger/950` | ✅ |
 | `Color/Danger/900` | `color/danger/900` | ✅ |
-| `Color/Danger/800` | `color/danger/800` | ✅ |
+| `Color/Danger/800` | `color/danger/800` | ⚠️ NO |
 | `Color/Danger/700` | `color/danger/700` | ✅ |
 | `Color/Danger/600` | `color/danger/600` | ✅ |
 | `Color/Danger/500` | `color/danger/500` | ✅ |
@@ -751,5 +751,5 @@ IDs (and the linked Components file's bindings).
    exists it must be scanned for remote `fg/*` bindings before deletion — otherwise #4 is settled.
 5. **431 new-in-code CREATEs** — dominated by **294 raw colors** (alpha ramps on all 28 families + the 6 extra
    families Figma lacks). Confirm we want the full set created, or trim.
-6. **Code bug to fix first:** `Raw/radius/full` resolves to **0px** in the manifest (Tailwind `radius-full` /
-   `calc(infinity*1px)` not parsed by `dimToPx`). Fix before push so `radius/full` isn't pushed as 0.
+6. **~~Code bug~~ RESOLVED:** `dimToPx` now evaluates `calc()` (commit fixing `units.mjs`), so `radius/full`→9999
+   and `line-height/*` emit correct ratios instead of 0. No longer a blocker.
