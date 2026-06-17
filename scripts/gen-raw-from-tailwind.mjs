@@ -85,15 +85,11 @@ export async function run(ctx) {
     }
   }
 
-  /* ---- radius — own numeric scale keyed by px value (independent of the
-     spacing multiplier; radius is shape, not spacing rhythm). Tailwind ships
-     named --radius-* (rem); we re-key by px (rem × 16) so radius mirrors the
-     numeric raw → primitive → semantic chain, e.g. raw.radius.6 = 0.375rem. ---- */
-  const radius = { 0: dim('0px') };
-  for (const [, v] of Object.entries(collect('radius'))) {
-    const px = Math.round(parseFloat(v) * 16);
-    radius[px] = dim(v);
-  }
+  /* ---- radius — Tailwind's named scale (--radius-xs…4xl), kept verbatim so raw
+     mirrors Tailwind in both CSS and Figma. Own scale (independent of the spacing
+     multiplier); none/full are Tailwind's rounded-none/full utilities. ---- */
+  const radius = { none: dim('0px') };
+  for (const [k, v] of Object.entries(collect('radius'))) radius[k] = dim(v);
   radius.full = dim('calc(infinity * 1px)');
 
   /* ---- border width (Tailwind has no theme vars — these are its utilities) ---- */

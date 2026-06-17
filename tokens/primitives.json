@@ -413,40 +413,40 @@
       }
     },
     "radius": {
-      "0": {
-        "value": "{raw.radius.0}",
+      "none": {
+        "value": "{raw.radius.none}",
         "type": "dimension"
       },
-      "2": {
-        "value": "{raw.radius.2}",
+      "xs": {
+        "value": "{raw.radius.xs}",
         "type": "dimension"
       },
-      "4": {
-        "value": "{raw.radius.4}",
+      "sm": {
+        "value": "{raw.radius.sm}",
         "type": "dimension"
       },
-      "6": {
-        "value": "{raw.radius.6}",
+      "md": {
+        "value": "{raw.radius.md}",
         "type": "dimension"
       },
-      "8": {
-        "value": "{raw.radius.8}",
+      "lg": {
+        "value": "{raw.radius.lg}",
         "type": "dimension"
       },
-      "12": {
-        "value": "{raw.radius.12}",
+      "xl": {
+        "value": "{raw.radius.xl}",
         "type": "dimension"
       },
-      "16": {
-        "value": "{raw.radius.16}",
+      "2xl": {
+        "value": "{raw.radius.2xl}",
         "type": "dimension"
       },
-      "24": {
-        "value": "{raw.radius.24}",
+      "3xl": {
+        "value": "{raw.radius.3xl}",
         "type": "dimension"
       },
-      "32": {
-        "value": "{raw.radius.32}",
+      "4xl": {
+        "value": "{raw.radius.4xl}",
         "type": "dimension"
       },
       "full": {
