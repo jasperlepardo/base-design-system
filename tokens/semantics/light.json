@@ -109,8 +109,20 @@
         "value": "{primitive.color.primary.100}",
         "type": "color"
       },
+      "subtle-hover": {
+        "value": "{primitive.color.primary.200}",
+        "type": "color"
+      },
       "subtle-fg": {
         "value": "{primitive.color.primary.700}",
+        "type": "color"
+      },
+      "border": {
+        "value": "{primitive.color.primary.500}",
+        "type": "color"
+      },
+      "border-subtle": {
+        "value": "{primitive.color.primary.300}",
         "type": "color"
       },
       "on": {
@@ -131,12 +143,20 @@
         "value": "{primitive.color.success.100}",
         "type": "color"
       },
+      "subtle-hover": {
+        "value": "{primitive.color.success.200}",
+        "type": "color"
+      },
       "subtle-fg": {
         "value": "{primitive.color.success.700}",
         "type": "color"
       },
       "border": {
         "value": "{primitive.color.success.500}",
+        "type": "color"
+      },
+      "border-subtle": {
+        "value": "{primitive.color.success.300}",
         "type": "color"
       },
       "on": {
@@ -157,12 +177,20 @@
         "value": "{primitive.color.warning.100}",
         "type": "color"
       },
+      "subtle-hover": {
+        "value": "{primitive.color.warning.200}",
+        "type": "color"
+      },
       "subtle-fg": {
         "value": "{primitive.color.warning.700}",
         "type": "color"
       },
       "border": {
         "value": "{primitive.color.warning.500}",
+        "type": "color"
+      },
+      "border-subtle": {
+        "value": "{primitive.color.warning.300}",
         "type": "color"
       },
       "on": {
@@ -183,12 +211,20 @@
         "value": "{primitive.color.danger.100}",
         "type": "color"
       },
+      "subtle-hover": {
+        "value": "{primitive.color.danger.200}",
+        "type": "color"
+      },
       "subtle-fg": {
         "value": "{primitive.color.danger.700}",
         "type": "color"
       },
       "border": {
         "value": "{primitive.color.danger.500}",
+        "type": "color"
+      },
+      "border-subtle": {
+        "value": "{primitive.color.danger.300}",
         "type": "color"
       },
       "on": {
@@ -209,12 +245,20 @@
         "value": "{primitive.color.info.100}",
         "type": "color"
       },
+      "subtle-hover": {
+        "value": "{primitive.color.info.200}",
+        "type": "color"
+      },
       "subtle-fg": {
         "value": "{primitive.color.info.700}",
         "type": "color"
       },
       "border": {
         "value": "{primitive.color.info.500}",
+        "type": "color"
+      },
+      "border-subtle": {
+        "value": "{primitive.color.info.300}",
         "type": "color"
       },
       "on": {
