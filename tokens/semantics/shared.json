@@ -13,11 +13,11 @@
       "3xl": { "value": "{primitive.spacing.16}", "type": "dimension" }
     },
     "radius": {
-      "none": { "value": "{primitive.radius.0}", "type": "dimension" },
-      "sm": { "value": "{primitive.radius.4}", "type": "dimension" },
-      "md": { "value": "{primitive.radius.6}", "type": "dimension" },
-      "lg": { "value": "{primitive.radius.8}", "type": "dimension" },
-      "xl": { "value": "{primitive.radius.12}", "type": "dimension" },
+      "none": { "value": "{primitive.radius.none}", "type": "dimension" },
+      "sm": { "value": "{primitive.radius.sm}", "type": "dimension" },
+      "md": { "value": "{primitive.radius.md}", "type": "dimension" },
+      "lg": { "value": "{primitive.radius.lg}", "type": "dimension" },
+      "xl": { "value": "{primitive.radius.xl}", "type": "dimension" },
       "full": { "value": "{primitive.radius.full}", "type": "dimension" }
     },
     "border-width": {
