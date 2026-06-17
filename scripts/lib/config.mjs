@@ -50,7 +50,7 @@ async function discoverConfig(cwd, explicit) {
 }
 
 const hasTokenOverrides = (c) =>
-  !!(c.roles || c.semantics || c.scale || c.raw || c.components?.dir);
+  !!(c.roles || c.semantics || c.scale || c.raw || c.components?.dir || c.spacing?.multiplier);
 
 /**
  * @param {{ configPath?: string, cwd?: string, out?: string, figmaFile?: string }} opts
@@ -88,7 +88,15 @@ export async function loadConfig(opts = {}) {
 
   const figmaFile = opts.figmaFile || config.figma?.fileKey || process.env.FIGMA_FILE_KEY || null;
 
-  return { cwd, pkgRoot, config, overrides, paths, figmaFile };
+  // Spacing multiplier knob: `spacing.multiplier` (px or rem) drives the raw
+  // scale; null → gen-raw falls back to Tailwind's --spacing. `remRoot` (default
+  // 16) is the rem↔px root used to materialise px for Figma.
+  const spacing = {
+    multiplier: config.spacing?.multiplier ?? null,
+    remRoot: config.spacing?.remRoot ?? 16,
+  };
+
+  return { cwd, pkgRoot, config, overrides, paths, figmaFile, spacing };
 }
 
 /**
