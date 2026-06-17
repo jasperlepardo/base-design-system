@@ -14,6 +14,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 import { dirname, join } from 'node:path';
 import { loadConfig } from './lib/config.mjs';
+import { rawShadowTree } from './lib/shadow.mjs';
 import { toRem } from './lib/units.mjs';
 
 // Locate Tailwind's theme.css (where the default theme lives in v4), resolving
@@ -151,10 +152,8 @@ export async function run(ctx) {
     Object.entries(collect('tracking', '[a-z]+')).map(([k, v]) => [k, dim(v)]),
   );
 
-  /* ---- shadows ---- */
-  const shadow = Object.fromEntries(
-    Object.entries(collect('shadow')).map(([k, v]) => [k, node(v, 'shadow')]),
-  );
+  /* ---- shadows — decomposed into 3-tier parts (composite kept as `box`) ---- */
+  const shadow = rawShadowTree(collect('shadow'));
 
   const out = {
     raw: {
