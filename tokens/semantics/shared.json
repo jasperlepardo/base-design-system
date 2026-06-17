@@ -1,16 +1,16 @@
 {
   "semantic": {
     "space": {
-      "none": { "value": "{raw.spacing.0}", "type": "dimension" },
-      "3xs": { "value": "{raw.spacing.0_5}", "type": "dimension" },
-      "2xs": { "value": "{raw.spacing.1}", "type": "dimension" },
-      "xs": { "value": "{raw.spacing.2}", "type": "dimension" },
-      "sm": { "value": "{raw.spacing.3}", "type": "dimension" },
-      "md": { "value": "{raw.spacing.4}", "type": "dimension" },
-      "lg": { "value": "{raw.spacing.6}", "type": "dimension" },
-      "xl": { "value": "{raw.spacing.8}", "type": "dimension" },
-      "2xl": { "value": "{raw.spacing.12}", "type": "dimension" },
-      "3xl": { "value": "{raw.spacing.16}", "type": "dimension" }
+      "none": { "value": "{primitive.spacing.0}", "type": "dimension" },
+      "3xs": { "value": "{primitive.spacing.0_5}", "type": "dimension" },
+      "2xs": { "value": "{primitive.spacing.1}", "type": "dimension" },
+      "xs": { "value": "{primitive.spacing.2}", "type": "dimension" },
+      "sm": { "value": "{primitive.spacing.3}", "type": "dimension" },
+      "md": { "value": "{primitive.spacing.4}", "type": "dimension" },
+      "lg": { "value": "{primitive.spacing.6}", "type": "dimension" },
+      "xl": { "value": "{primitive.spacing.8}", "type": "dimension" },
+      "2xl": { "value": "{primitive.spacing.12}", "type": "dimension" },
+      "3xl": { "value": "{primitive.spacing.16}", "type": "dimension" }
     },
     "radius": {
       "none": { "value": "{raw.radius.none}", "type": "dimension" },
