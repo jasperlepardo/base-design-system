@@ -742,8 +742,13 @@ IDs (and the linked Components file's bindings).
    Figma has ~28 leading vars, code has 13. Confirm consolidation.
 3. **`S Font Family|Weight|Size|Line Height/*` → code semantic type roles.** Drop the `S ` prefix and map to
    `font-family/*`, `font-weight/*`, `font-size/*`, `line-height/*`. Confirm naming.
-4. **`Color/fg/*` (32) deletion requires rebinding first.** Any component bound to an `fg/*` var must be
-   re-pointed to its `text`/intent equivalent BEFORE the var is deleted, or the binding breaks.
+4. **`Color/fg/*` (32) deletion — SCANNED, low risk in this file.** Full scan of all content pages
+   (Colors 1120, Typography 219, Effect Styles 3, Cover 25 nodes) found the `fg/*` tier used by exactly
+   **one node**: a doc rectangle "Box" (`6658:952`) on the Effect Styles page whose **fill binds `fg/default`**.
+   This file has **no components** — just variables + foundation docs. So deleting `fg/*` only orphans that one
+   rectangle (trivial rebind → `text/heading` or `background/default`). ⚠️ **Open:** the decisions doc assumes a
+   separate **"linked Components file"** consuming these vars, but no such file key exists in the repo. If one
+   exists it must be scanned for remote `fg/*` bindings before deletion — otherwise #4 is settled.
 5. **431 new-in-code CREATEs** — dominated by **294 raw colors** (alpha ramps on all 28 families + the 6 extra
    families Figma lacks). Confirm we want the full set created, or trim.
 6. **Code bug to fix first:** `Raw/radius/full` resolves to **0px** in the manifest (Tailwind `radius-full` /

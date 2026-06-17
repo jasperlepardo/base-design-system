@@ -383,8 +383,13 @@ p('2. **Primitive `Leading/*` (3..32 + named) → code `line-height/*` (named xs
 p('   Figma has ~28 leading vars, code has 13. Confirm consolidation.');
 p('3. **`S Font Family|Weight|Size|Line Height/*` → code semantic type roles.** Drop the `S ` prefix and map to');
 p('   `font-family/*`, `font-weight/*`, `font-size/*`, `line-height/*`. Confirm naming.');
-p('4. **`Color/fg/*` (32) deletion requires rebinding first.** Any component bound to an `fg/*` var must be');
-p('   re-pointed to its `text`/intent equivalent BEFORE the var is deleted, or the binding breaks.');
+p('4. **`Color/fg/*` (32) deletion — SCANNED, low risk in this file.** Full scan of all content pages');
+p('   (Colors 1120, Typography 219, Effect Styles 3, Cover 25 nodes) found the `fg/*` tier used by exactly');
+p('   **one node**: a doc rectangle "Box" (`6658:952`) on the Effect Styles page whose **fill binds `fg/default`**.');
+p('   This file has **no components** — just variables + foundation docs. So deleting `fg/*` only orphans that one');
+p('   rectangle (trivial rebind → `text/heading` or `background/default`). ⚠️ **Open:** the decisions doc assumes a');
+p('   separate **"linked Components file"** consuming these vars, but no such file key exists in the repo. If one');
+p('   exists it must be scanned for remote `fg/*` bindings before deletion — otherwise #4 is settled.');
 p('5. **431 new-in-code CREATEs** — dominated by **294 raw colors** (alpha ramps on all 28 families + the 6 extra');
 p('   families Figma lacks). Confirm we want the full set created, or trim.');
 p('6. **Code bug to fix first:** `Raw/radius/full` resolves to **0px** in the manifest (Tailwind `radius-full` /');
