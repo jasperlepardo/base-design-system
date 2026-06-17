@@ -411,6 +411,48 @@
         "value": "{raw.spacing.3_5}",
         "type": "dimension"
       }
+    },
+    "radius": {
+      "0": {
+        "value": "{raw.radius.0}",
+        "type": "dimension"
+      },
+      "2": {
+        "value": "{raw.radius.2}",
+        "type": "dimension"
+      },
+      "4": {
+        "value": "{raw.radius.4}",
+        "type": "dimension"
+      },
+      "6": {
+        "value": "{raw.radius.6}",
+        "type": "dimension"
+      },
+      "8": {
+        "value": "{raw.radius.8}",
+        "type": "dimension"
+      },
+      "12": {
+        "value": "{raw.radius.12}",
+        "type": "dimension"
+      },
+      "16": {
+        "value": "{raw.radius.16}",
+        "type": "dimension"
+      },
+      "24": {
+        "value": "{raw.radius.24}",
+        "type": "dimension"
+      },
+      "32": {
+        "value": "{raw.radius.32}",
+        "type": "dimension"
+      },
+      "full": {
+        "value": "{raw.radius.full}",
+        "type": "dimension"
+      }
     }
   }
 }
