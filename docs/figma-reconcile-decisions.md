@@ -51,8 +51,15 @@ regenerated/pushed from code.** Implementation is batched at the end (before pub
 - spacing/radius primitives already 3-tier — match.
 - Figma's `Layout` primitive = canvas grid → Figma-only (see raw/layout).
 
-## Pending segments (to diff next)
-- **Semantic** tier — the big one: `bg/fg/text/border` color families + the `fg/*` tier (partly in `figma-token-diff.md`), plus spacing/radius/type semantics (decided)
+## SEMANTIC tier — ✅ done
+- **`fg`/icon tier** → keep code's **no-fg** approach (icons use `text`/intent + `currentColor`); **remove `Color/fg/*` from Figma** on alignment. ⚠️ Components bind icon colors to `fg/*` → the alignment script must **rebind those to the text/intent equivalent before deleting** the fg vars.
+- **text** → added `caption` (neutral-600/400), `placeholder` (=caption), `on-primary-muted` (white α80), `on-primary-subtle` (white α60). Solid on-primary = existing `--color-on-primary`. Skipped per-intent text (use intent tokens) + `heading_brand` (niche). 
+- **bg** → added inverse elevation ramp `inverse-secondary/tertiary/quaternary` (800/700/600 ↔ dark 200/300/400) + `white-subtle`/`black-subtle` (white/black α30). Prior: strong/stronger/inverse (PR-2), intent subtle-hover/border-subtle (PR-3).
+- **intents** → `info` removed; default/primary/success/warning/danger + white/black via raw.
+- spacing / radius / type semantics → t-shirt roles (code). 
+- Niche skips: `bg/neutral_hover`, black text family — add only if a component needs them.
+
+## All tiers reconciled — next: the single in-place Figma alignment + publish.
 
 ## Figma alignment approach (decided)
 - Do **one full in-place alignment** of the existing collections (`01 Raw`/`02 Primitives`/`03 Semantics`) **after all tiers are reconciled** in code — NOT a parallel/duplicate collection.
