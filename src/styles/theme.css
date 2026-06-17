@@ -18,6 +18,11 @@
   --color-canvas-strong: var(--background-strong);
   --color-canvas-stronger: var(--background-stronger);
   --color-canvas-inverse: var(--background-inverse);
+  --color-canvas-inverse-secondary: var(--background-inverse-secondary);
+  --color-canvas-inverse-tertiary: var(--background-inverse-tertiary);
+  --color-canvas-inverse-quaternary: var(--background-inverse-quaternary);
+  --color-canvas-white-subtle: var(--background-white-subtle);
+  --color-canvas-black-subtle: var(--background-black-subtle);
   --color-surface: var(--surface-default);
   --color-surface-raised: var(--surface-raised);
   --color-surface-sunken: var(--surface-sunken);
@@ -26,8 +31,13 @@
   --color-heading: var(--text-heading);
   --color-body: var(--text-body);
   --color-muted: var(--text-muted);
+  --color-caption: var(--text-caption);
+  --color-placeholder: var(--text-placeholder);
   --color-inverse: var(--text-inverse);
   --color-link: var(--text-link);
+  /* text on a colored (primary) surface — solid white = --color-on-primary */
+  --color-on-primary-muted: var(--text-on-primary-muted);
+  --color-on-primary-subtle: var(--text-on-primary-subtle);
 
   /* Borders → border-* utilities */
   --color-line: var(--border-default);
@@ -69,14 +79,6 @@
   --color-danger-border: var(--danger-border);
   --color-danger-border-subtle: var(--danger-border-subtle);
   --color-on-danger: var(--danger-on);
-
-  --color-info: var(--info-default);
-  --color-info-subtle: var(--info-subtle);
-  --color-info-subtle-hover: var(--info-subtle-hover);
-  --color-info-subtle-fg: var(--info-subtle-fg);
-  --color-info-border: var(--info-border);
-  --color-info-border-subtle: var(--info-border-subtle);
-  --color-on-info: var(--info-on);
 
   /* Radius → rounded-* utilities */
   --radius-sm: var(--radius-sm);

@@ -25,34 +25,34 @@
       "strong": { "value": "{raw.border-width.2}", "type": "dimension" }
     },
     "font-family": {
-      "body": { "value": "{raw.font-family.sans}", "type": "fontFamily" },
-      "heading": { "value": "{raw.font-family.sans}", "type": "fontFamily" },
-      "mono": { "value": "{raw.font-family.mono}", "type": "fontFamily" }
+      "body": { "value": "{primitive.font-family.sans}", "type": "fontFamily" },
+      "heading": { "value": "{primitive.font-family.sans}", "type": "fontFamily" },
+      "mono": { "value": "{primitive.font-family.mono}", "type": "fontFamily" }
     },
     "font-weight": {
-      "body": { "value": "{raw.font-weight.normal}", "type": "fontWeight" },
-      "emphasis": { "value": "{raw.font-weight.medium}", "type": "fontWeight" },
-      "heading": { "value": "{raw.font-weight.semibold}", "type": "fontWeight" }
+      "body": { "value": "{primitive.font-weight.normal}", "type": "fontWeight" },
+      "emphasis": { "value": "{primitive.font-weight.medium}", "type": "fontWeight" },
+      "heading": { "value": "{primitive.font-weight.semibold}", "type": "fontWeight" }
     },
     "font-size": {
-      "xs": { "value": "{raw.font-size.xs}", "type": "dimension" },
-      "sm": { "value": "{raw.font-size.sm}", "type": "dimension" },
-      "md": { "value": "{raw.font-size.base}", "type": "dimension" },
-      "lg": { "value": "{raw.font-size.lg}", "type": "dimension" },
-      "xl": { "value": "{raw.font-size.xl}", "type": "dimension" },
-      "2xl": { "value": "{raw.font-size.2xl}", "type": "dimension" },
-      "3xl": { "value": "{raw.font-size.3xl}", "type": "dimension" },
-      "4xl": { "value": "{raw.font-size.4xl}", "type": "dimension" }
+      "xs": { "value": "{primitive.font-size.xs}", "type": "dimension" },
+      "sm": { "value": "{primitive.font-size.sm}", "type": "dimension" },
+      "md": { "value": "{primitive.font-size.base}", "type": "dimension" },
+      "lg": { "value": "{primitive.font-size.lg}", "type": "dimension" },
+      "xl": { "value": "{primitive.font-size.xl}", "type": "dimension" },
+      "2xl": { "value": "{primitive.font-size.2xl}", "type": "dimension" },
+      "3xl": { "value": "{primitive.font-size.3xl}", "type": "dimension" },
+      "4xl": { "value": "{primitive.font-size.4xl}", "type": "dimension" }
     },
     "line-height": {
-      "xs": { "value": "{raw.line-height.xs}", "type": "dimension" },
-      "sm": { "value": "{raw.line-height.sm}", "type": "dimension" },
-      "md": { "value": "{raw.line-height.base}", "type": "dimension" },
-      "lg": { "value": "{raw.line-height.lg}", "type": "dimension" },
-      "xl": { "value": "{raw.line-height.xl}", "type": "dimension" },
-      "2xl": { "value": "{raw.line-height.2xl}", "type": "dimension" },
-      "3xl": { "value": "{raw.line-height.3xl}", "type": "dimension" },
-      "4xl": { "value": "{raw.line-height.4xl}", "type": "dimension" }
+      "xs": { "value": "{primitive.line-height.xs}", "type": "dimension" },
+      "sm": { "value": "{primitive.line-height.sm}", "type": "dimension" },
+      "md": { "value": "{primitive.line-height.base}", "type": "dimension" },
+      "lg": { "value": "{primitive.line-height.lg}", "type": "dimension" },
+      "xl": { "value": "{primitive.line-height.xl}", "type": "dimension" },
+      "2xl": { "value": "{primitive.line-height.2xl}", "type": "dimension" },
+      "3xl": { "value": "{primitive.line-height.3xl}", "type": "dimension" },
+      "4xl": { "value": "{primitive.line-height.4xl}", "type": "dimension" }
     }
   }
 }

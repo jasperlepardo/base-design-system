@@ -48,7 +48,10 @@ function aliasOf(ref) {
 
 function literal(type, value, remRoot) {
   if (type === 'color') return { color: cssColorToFigma(value) };
-  if (type === 'fontFamily') return { string: String(value) };
+  // Figma font variables hold ONE real family — use the first of the CSS stack
+  // (quotes stripped), e.g. "'Inter', ui-sans-serif, …" → "Inter".
+  if (type === 'fontFamily')
+    return { string: String(value).split(',')[0].trim().replace(/^['"]|['"]$/g, '') };
   // dimension / fontWeight → px NUMBER (rem×remRoot); Figma has no rem.
   return { number: dimToPx(value, remRoot) };
 }
