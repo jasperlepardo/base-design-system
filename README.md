@@ -3,7 +3,7 @@
 A personal React + TypeScript component library and design-token pipeline.
 Tokens are authored **in code** with **Tailwind's color palette as the raw
 tier**, flow through a four-tier reference graph
-(**raw → primitives → semantics**) into runtime-themeable CSS via **Style
+(**raw → primitives → semantics → components**) into runtime-themeable CSS via **Style
 Dictionary** + **Tailwind CSS v4**, are documented in **Storybook**, and are
 **mirrored into Figma** as variables (code is the source of truth).
 
@@ -20,7 +20,7 @@ tokens/components/button.json ──build-components──▶ src/styles/compone
 | Tier          | File(s)                         | Role                                                                                                      |
 | ------------- | ------------------------------- | --------------------------------------------------------------------------------------------------------- |
 | **Raw**       | `tokens/raw.json` (generated)   | All of Tailwind's theme: palette (oklch) plus spacing, radius, type, and shadows.                         |
-| **Primitive** | `tokens/primitives.json`        | Named scales (`brand`, `neutral`, `success`, …) that alias Raw.                                           |
+| **Primitive** | `tokens/primitives.json`        | Brand color families (`neutral`, `primary`, `success`, `warning`, `danger`, `white`, `black`) plus curated scales (spacing, radius, border-width, container, type, shadow, blur, …), all aliasing Raw. |
 | **Semantic**  | `tokens/semantics/*.json`       | Purpose tokens (`background-default`, `text-heading`, …) that alias Primitives and **resolve per theme**. |
 | **Component** | `tokens/components/button.json` | Per-component values keyed by `intent/style/size`, aliasing semantics.                                    |
 
