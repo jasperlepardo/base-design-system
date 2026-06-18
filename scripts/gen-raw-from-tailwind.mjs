@@ -178,6 +178,9 @@ export async function run(ctx) {
     Object.entries(collect('tracking', '[a-z]+')).map(([k, v]) => [k, dim(v)]),
   );
 
+  /* ---- blur — Tailwind's --blur-* (px → Figma effect blur radius) ---- */
+  const blur = Object.fromEntries(Object.entries(collect('blur')).map(([k, v]) => [k, dim(v)]));
+
   /* ---- shadows — decomposed into Figma-mappable parts (offset/blur/spread/color) ---- */
   const shadow = rawShadowTree(collect('shadow'));
 
@@ -196,6 +199,7 @@ export async function run(ctx) {
       leading,
       tracking,
       shadow,
+      blur,
     },
   };
 
