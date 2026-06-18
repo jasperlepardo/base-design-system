@@ -4,16 +4,9 @@
     "className": "jspr-btn",
     "prefix": "btn",
     "element": "button",
-    "colorAxes": [
-      "intent",
-      "style"
-    ],
+    "colorAxes": ["intent", "style"],
     "sizeAxis": "size",
-    "states": [
-      "rest",
-      "hover",
-      "disabled"
-    ],
+    "states": ["rest", "hover", "disabled"],
     "stateSelectors": {
       "rest": "",
       "hover": ":hover:not(:disabled):not([aria-disabled=\"true\"])",

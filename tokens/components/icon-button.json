@@ -4,15 +4,9 @@
     "className": "jspr-icon-btn",
     "prefix": "icon-btn",
     "element": "button",
-    "colorAxes": [
-      "intent",
-      "style"
-    ],
+    "colorAxes": ["intent", "style"],
     "sizeAxis": "size",
-    "states": [
-      "rest",
-      "hover"
-    ],
+    "states": ["rest", "hover"],
     "interactive": true,
     "slots": {},
     "base": {
