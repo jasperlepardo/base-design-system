@@ -70,11 +70,11 @@
     },
     "border-width": {
       "default": {
-        "value": "{raw.border-width.1}",
+        "value": "{primitive.border-width.1}",
         "type": "dimension"
       },
       "strong": {
-        "value": "{raw.border-width.2}",
+        "value": "{primitive.border-width.2}",
         "type": "dimension"
       }
     },
