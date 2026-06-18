@@ -6,7 +6,7 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-2xs); /* 4px — Figma Button/gap */
-  color: var(--link-text, var(--primary-default));
+  color: var(--link-text, var(--color-bg-primary));
   font-weight: var(--font-weight-heading);
   font-size: var(--font-size-md);
   line-height: var(--line-height-md);
@@ -27,7 +27,7 @@
   text-underline-offset: 2px;
 }
 .jspr-link:focus-visible {
-  outline: 2px solid var(--border-focus);
+  outline: 2px solid var(--color-border-primary);
   outline-offset: 2px;
   border-radius: var(--radius-sm);
 }
@@ -38,23 +38,23 @@
 
 /* Intent colors (mirror the Link Button Type axis). */
 .jspr-link[data-intent='default'] {
-  --link-text: var(--text-heading);
+  --link-text: var(--color-text-heading);
 }
 .jspr-link[data-intent='primary'] {
-  --link-text: var(--primary-default);
+  --link-text: var(--color-bg-primary);
 }
 .jspr-link[data-intent='success'] {
-  --link-text: var(--success-default);
+  --link-text: var(--color-bg-success);
 }
 .jspr-link[data-intent='warning'] {
-  --link-text: var(--warning-default);
+  --link-text: var(--color-bg-warning);
 }
 .jspr-link[data-intent='danger'] {
-  --link-text: var(--danger-default);
+  --link-text: var(--color-bg-danger);
 }
 .jspr-link[data-intent='white'] {
-  --link-text: var(--text-inverse);
+  --link-text: var(--color-text-white);
 }
 .jspr-link[data-intent='black'] {
-  --link-text: var(--text-heading);
+  --link-text: var(--color-text-heading);
 }

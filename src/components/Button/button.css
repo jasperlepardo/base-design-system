@@ -27,7 +27,7 @@
     color 120ms ease;
 }
 .jspr-btn:focus-visible {
-  outline: 2px solid var(--border-focus);
+  outline: 2px solid var(--color-border-primary);
   outline-offset: 2px;
 }
 .jspr-btn:disabled,

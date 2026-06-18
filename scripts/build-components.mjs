@@ -55,7 +55,7 @@ export function metaOf(name, file) {
 
 // Shared focus-visible + disabled rules (Button-style interactivity).
 const interactiveRules = (cn) =>
-  `.${cn}:focus-visible {\n  outline: 2px solid var(--border-focus);\n  outline-offset: 2px;\n}\n\n` +
+  `.${cn}:focus-visible {\n  outline: 2px solid var(--color-border-primary);\n  outline-offset: 2px;\n}\n\n` +
   `.${cn}:disabled,\n.${cn}[aria-disabled="true"] {\n  opacity: 0.5;\n  cursor: not-allowed;\n}\n\n`;
 
 // The built-in Button base/focus/disabled/icon rules — used when a component
@@ -189,7 +189,7 @@ export async function run(ctx) {
   const valid = new Set();
   for (const f of readdirSync(outTokensCss).filter((f) => f.endsWith('.css'))) {
     const css = readFileSync(resolve(outTokensCss, f), 'utf8');
-    for (const m of css.matchAll(/^\s*(--[a-z0-9-]+):/gim)) valid.add(m[1]);
+    for (const m of css.matchAll(/^\s*(--[a-z0-9_-]+):/gim)) valid.add(m[1]);
   }
 
   mkdirSync(outComponentsCss, { recursive: true });

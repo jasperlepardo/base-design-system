@@ -13,137 +13,137 @@
   "colors": {
     "default/solid": {
       "rest": {
-        "bg": "--background-muted",
+        "bg": "--color-bg-neutral-subtle",
         "border": "transparent",
-        "icon": "--text-heading",
-        "heading": "--text-heading",
-        "body": "--text-body"
+        "icon": "--color-text-heading",
+        "heading": "--color-text-heading",
+        "body": "--color-text-body"
       }
     },
     "default/outline": {
       "rest": {
-        "bg": "--background-subtle",
-        "border": "--border-strong",
-        "icon": "--text-heading",
-        "heading": "--text-heading",
-        "body": "--text-body"
+        "bg": "--color-bg-secondary",
+        "border": "--color-border-default",
+        "icon": "--color-text-heading",
+        "heading": "--color-text-heading",
+        "body": "--color-text-body"
       }
     },
     "default/transparent": {
       "rest": {
-        "bg": "--background-subtle",
+        "bg": "--color-bg-secondary",
         "border": "transparent",
-        "icon": "--text-heading",
-        "heading": "--text-heading",
-        "body": "--text-body"
+        "icon": "--color-text-heading",
+        "heading": "--color-text-heading",
+        "body": "--color-text-body"
       }
     },
     "primary/solid": {
       "rest": {
-        "bg": "--primary-default",
+        "bg": "--color-bg-primary",
         "border": "transparent",
-        "icon": "--primary-on",
-        "heading": "--primary-on",
-        "body": "--primary-on"
+        "icon": "--color-fg-white",
+        "heading": "--color-fg-white",
+        "body": "--color-fg-white"
       }
     },
     "primary/outline": {
       "rest": {
-        "bg": "--primary-subtle",
-        "border": "--primary-default",
-        "icon": "--primary-default",
-        "heading": "--text-heading",
-        "body": "--text-body"
+        "bg": "--color-bg-primary-subtle",
+        "border": "--color-bg-primary",
+        "icon": "--color-bg-primary",
+        "heading": "--color-text-heading",
+        "body": "--color-text-body"
       }
     },
     "primary/transparent": {
       "rest": {
-        "bg": "--primary-subtle",
+        "bg": "--color-bg-primary-subtle",
         "border": "transparent",
-        "icon": "--primary-default",
-        "heading": "--text-heading",
-        "body": "--text-body"
+        "icon": "--color-bg-primary",
+        "heading": "--color-text-heading",
+        "body": "--color-text-body"
       }
     },
     "success/solid": {
       "rest": {
-        "bg": "--success-default",
+        "bg": "--color-bg-success",
         "border": "transparent",
-        "icon": "--success-on",
-        "heading": "--success-on",
-        "body": "--success-on"
+        "icon": "--color-fg-white",
+        "heading": "--color-fg-white",
+        "body": "--color-fg-white"
       }
     },
     "success/outline": {
       "rest": {
-        "bg": "--success-subtle",
-        "border": "--success-default",
-        "icon": "--success-default",
-        "heading": "--text-heading",
-        "body": "--text-body"
+        "bg": "--color-bg-success-subtle",
+        "border": "--color-bg-success",
+        "icon": "--color-bg-success",
+        "heading": "--color-text-heading",
+        "body": "--color-text-body"
       }
     },
     "success/transparent": {
       "rest": {
-        "bg": "--success-subtle",
+        "bg": "--color-bg-success-subtle",
         "border": "transparent",
-        "icon": "--success-default",
-        "heading": "--text-heading",
-        "body": "--text-body"
+        "icon": "--color-bg-success",
+        "heading": "--color-text-heading",
+        "body": "--color-text-body"
       }
     },
     "warning/solid": {
       "rest": {
-        "bg": "--warning-default",
+        "bg": "--color-bg-warning",
         "border": "transparent",
-        "icon": "--warning-on",
-        "heading": "--warning-on",
-        "body": "--warning-on"
+        "icon": "--color-fg-white",
+        "heading": "--color-fg-white",
+        "body": "--color-fg-white"
       }
     },
     "warning/outline": {
       "rest": {
-        "bg": "--warning-subtle",
-        "border": "--warning-default",
-        "icon": "--warning-default",
-        "heading": "--text-heading",
-        "body": "--text-body"
+        "bg": "--color-bg-warning-subtle",
+        "border": "--color-bg-warning",
+        "icon": "--color-bg-warning",
+        "heading": "--color-text-heading",
+        "body": "--color-text-body"
       }
     },
     "warning/transparent": {
       "rest": {
-        "bg": "--warning-subtle",
+        "bg": "--color-bg-warning-subtle",
         "border": "transparent",
-        "icon": "--warning-default",
-        "heading": "--text-heading",
-        "body": "--text-body"
+        "icon": "--color-bg-warning",
+        "heading": "--color-text-heading",
+        "body": "--color-text-body"
       }
     },
     "danger/solid": {
       "rest": {
-        "bg": "--danger-default",
+        "bg": "--color-bg-danger",
         "border": "transparent",
-        "icon": "--danger-on",
-        "heading": "--danger-on",
-        "body": "--danger-on"
+        "icon": "--color-fg-white",
+        "heading": "--color-fg-white",
+        "body": "--color-fg-white"
       }
     },
     "danger/outline": {
       "rest": {
-        "bg": "--danger-subtle",
-        "border": "--danger-default",
-        "icon": "--danger-default",
-        "heading": "--text-heading",
-        "body": "--text-body"
+        "bg": "--color-bg-danger-subtle",
+        "border": "--color-bg-danger",
+        "icon": "--color-bg-danger",
+        "heading": "--color-text-heading",
+        "body": "--color-text-body"
       }
     },
     "danger/transparent": {
       "rest": {
-        "bg": "--danger-subtle",
+        "bg": "--color-bg-danger-subtle",
         "border": "transparent",
-        "icon": "--danger-default",
-        "heading": "--text-heading",
-        "body": "--text-body"
+        "icon": "--color-bg-danger",
+        "heading": "--color-text-heading",
+        "body": "--color-text-body"
       }
     }
   }

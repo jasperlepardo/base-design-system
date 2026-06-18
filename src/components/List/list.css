@@ -21,11 +21,11 @@
   gap: var(--space-2xs);
 }
 .jspr-list__heading {
-  color: var(--text-heading);
+  color: var(--color-text-heading);
   font-weight: var(--font-weight-heading);
 }
 .jspr-list__subheading {
-  color: var(--text-muted);
+  color: var(--color-text-muted);
 }
 
 /* Group = the <ul> of rows. */
@@ -63,10 +63,10 @@
   transition: background-color 120ms ease;
 }
 .jspr-list__row[data-interactive]:hover {
-  background-color: var(--background-subtle);
+  background-color: var(--color-bg-secondary);
 }
 .jspr-list__row[data-interactive]:focus-visible {
-  outline: 2px solid var(--border-focus);
+  outline: 2px solid var(--color-border-primary);
   outline-offset: 2px;
 }
 
@@ -75,7 +75,7 @@
   display: inline-flex;
   flex: none;
   align-items: center;
-  color: var(--text-body);
+  color: var(--color-text-body);
 }
 .jspr-list__content {
   display: flex;
@@ -94,10 +94,10 @@
   gap: var(--space-2xs);
 }
 .jspr-list__title {
-  color: var(--text-heading);
+  color: var(--color-text-heading);
 }
 .jspr-list__value {
-  color: var(--text-body);
+  color: var(--color-text-body);
 }
 .jspr-list__content[data-variant='inline'] .jspr-list__value,
 .jspr-list__content[data-variant='stacked-value'] .jspr-list__value {
