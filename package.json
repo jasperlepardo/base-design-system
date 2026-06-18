@@ -36,6 +36,7 @@
   },
   "scripts": {
     "tokens:raw": "node scripts/gen-raw-from-tailwind.mjs",
+    "tokens:primitives": "node scripts/gen-primitives.mjs",
     "tokens:build": "node scripts/build-tokens.mjs",
     "components:build": "node scripts/build-components.mjs",
     "tokens": "npm run tokens:raw && npm run tokens:build && npm run components:build",
