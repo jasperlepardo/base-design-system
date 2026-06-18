@@ -1,150 +1,41 @@
 {
-  "$component": {
-    "name": "Alert",
-    "className": "jspr-alert",
-    "prefix": "alert",
-    "element": "div",
-    "colorAxes": ["intent", "style"],
-    "sizeAxis": "size",
-    "states": ["rest"],
-    "slots": {},
-    "base": {}
-  },
+  "$component": { "name": "Alert", "className": "jspr-alert", "prefix": "alert", "element": "div", "colorAxes": ["intent", "style"], "sizeAxis": "size", "states": ["rest"], "slots": {}, "base": {} },
   "colors": {
-    "default/solid": {
-      "rest": {
-        "bg": "--color-bg-neutral-subtle",
-        "border": "transparent",
-        "icon": "--color-text-heading",
-        "heading": "--color-text-heading",
-        "body": "--color-text-body"
-      }
-    },
-    "default/outline": {
-      "rest": {
-        "bg": "--color-bg-secondary",
-        "border": "--color-border-default",
-        "icon": "--color-text-heading",
-        "heading": "--color-text-heading",
-        "body": "--color-text-body"
-      }
-    },
-    "default/transparent": {
-      "rest": {
-        "bg": "--color-bg-secondary",
-        "border": "transparent",
-        "icon": "--color-text-heading",
-        "heading": "--color-text-heading",
-        "body": "--color-text-body"
-      }
-    },
-    "primary/solid": {
-      "rest": {
-        "bg": "--color-bg-primary",
-        "border": "transparent",
-        "icon": "--color-fg-white",
-        "heading": "--color-fg-white",
-        "body": "--color-fg-white"
-      }
-    },
-    "primary/outline": {
-      "rest": {
-        "bg": "--color-bg-primary-subtle",
-        "border": "--color-bg-primary",
-        "icon": "--color-bg-primary",
-        "heading": "--color-text-heading",
-        "body": "--color-text-body"
-      }
-    },
-    "primary/transparent": {
-      "rest": {
-        "bg": "--color-bg-primary-subtle",
-        "border": "transparent",
-        "icon": "--color-bg-primary",
-        "heading": "--color-text-heading",
-        "body": "--color-text-body"
-      }
-    },
-    "success/solid": {
-      "rest": {
-        "bg": "--color-bg-success",
-        "border": "transparent",
-        "icon": "--color-fg-white",
-        "heading": "--color-fg-white",
-        "body": "--color-fg-white"
-      }
-    },
-    "success/outline": {
-      "rest": {
-        "bg": "--color-bg-success-subtle",
-        "border": "--color-bg-success",
-        "icon": "--color-bg-success",
-        "heading": "--color-text-heading",
-        "body": "--color-text-body"
-      }
-    },
-    "success/transparent": {
-      "rest": {
-        "bg": "--color-bg-success-subtle",
-        "border": "transparent",
-        "icon": "--color-bg-success",
-        "heading": "--color-text-heading",
-        "body": "--color-text-body"
-      }
-    },
-    "warning/solid": {
-      "rest": {
-        "bg": "--color-bg-warning",
-        "border": "transparent",
-        "icon": "--color-fg-white",
-        "heading": "--color-fg-white",
-        "body": "--color-fg-white"
-      }
-    },
-    "warning/outline": {
-      "rest": {
-        "bg": "--color-bg-warning-subtle",
-        "border": "--color-bg-warning",
-        "icon": "--color-bg-warning",
-        "heading": "--color-text-heading",
-        "body": "--color-text-body"
-      }
-    },
-    "warning/transparent": {
-      "rest": {
-        "bg": "--color-bg-warning-subtle",
-        "border": "transparent",
-        "icon": "--color-bg-warning",
-        "heading": "--color-text-heading",
-        "body": "--color-text-body"
-      }
-    },
-    "danger/solid": {
-      "rest": {
-        "bg": "--color-bg-danger",
-        "border": "transparent",
-        "icon": "--color-fg-white",
-        "heading": "--color-fg-white",
-        "body": "--color-fg-white"
-      }
-    },
-    "danger/outline": {
-      "rest": {
-        "bg": "--color-bg-danger-subtle",
-        "border": "--color-bg-danger",
-        "icon": "--color-bg-danger",
-        "heading": "--color-text-heading",
-        "body": "--color-text-body"
-      }
-    },
-    "danger/transparent": {
-      "rest": {
-        "bg": "--color-bg-danger-subtle",
-        "border": "transparent",
-        "icon": "--color-bg-danger",
-        "heading": "--color-text-heading",
-        "body": "--color-text-body"
-      }
-    }
+    "default/solid": { "rest": { "bg": "--color-bg-neutral", "icon": "--color-fg-default-solid", "heading": "--color-text-heading", "body": "--color-text-body", "border": "--color-border-transparent" } },
+    "default/outline": { "rest": { "bg": "--color-bg-neutral-subtle", "icon": "--color-fg-default-solid", "heading": "--color-text-heading", "body": "--color-text-body", "border": "--color-border-transparent" } },
+    "default/ghost": { "rest": { "bg": "--color-bg-neutral-subtle", "icon": "--color-fg-default-solid", "heading": "--color-text-heading", "body": "--color-text-body", "border": "--color-border-default" } },
+    "default/link": { "rest": { "bg": "--color-bg-transparent", "icon": "--color-fg-default-solid", "heading": "--color-text-heading", "body": "--color-text-body", "border": "--color-border-transparent" } },
+    "primary/solid": { "rest": { "bg": "--color-bg-primary", "icon": "--color-fg-white", "heading": "--color-text-heading_on-primary", "body": "--color-text-body_on-primary", "border": "--color-border-transparent" } },
+    "primary/outline": { "rest": { "bg": "--color-bg-primary-subtle", "icon": "--color-fg-primary", "heading": "--color-text-heading", "body": "--color-text-body", "border": "--color-border-transparent" } },
+    "primary/ghost": { "rest": { "bg": "--color-bg-primary-subtle", "icon": "--color-fg-primary", "heading": "--color-text-heading", "body": "--color-text-body", "border": "--color-border-primary" } },
+    "primary/link": { "rest": { "bg": "--color-bg-transparent", "icon": "--color-fg-primary", "heading": "--color-text-heading", "body": "--color-text-body", "border": "--color-border-transparent" } },
+    "success/solid": { "rest": { "bg": "--color-bg-success", "icon": "--color-fg-white", "heading": "--color-text-heading_on-primary", "body": "--color-text-body_on-primary", "border": "--color-border-transparent" } },
+    "success/outline": { "rest": { "bg": "--color-bg-success-subtle", "icon": "--color-fg-success", "heading": "--color-text-heading", "body": "--color-text-body", "border": "--color-border-transparent" } },
+    "success/ghost": { "rest": { "bg": "--color-bg-success-subtle", "icon": "--color-fg-success", "heading": "--color-text-heading", "body": "--color-text-body", "border": "--color-border-success" } },
+    "success/link": { "rest": { "bg": "--color-bg-transparent", "icon": "--color-fg-success", "heading": "--color-text-heading", "body": "--color-text-body", "border": "--color-border-transparent" } },
+    "warning/solid": { "rest": { "bg": "--color-bg-warning", "icon": "--color-fg-white", "heading": "--color-text-heading_on-primary", "body": "--color-text-body_on-primary", "border": "--color-border-transparent" } },
+    "warning/outline": { "rest": { "bg": "--color-bg-warning-subtle", "icon": "--color-fg-warning", "heading": "--color-text-heading", "body": "--color-text-body", "border": "--color-border-transparent" } },
+    "warning/ghost": { "rest": { "bg": "--color-bg-warning-subtle", "icon": "--color-fg-warning", "heading": "--color-text-heading", "body": "--color-text-body", "border": "--color-border-warning" } },
+    "warning/link": { "rest": { "bg": "--color-bg-transparent", "icon": "--color-fg-warning", "heading": "--color-text-heading", "body": "--color-text-body", "border": "--color-border-transparent" } },
+    "danger/solid": { "rest": { "bg": "--color-bg-danger", "icon": "--color-fg-white", "heading": "--color-text-heading_on-primary", "body": "--color-text-body_on-primary", "border": "--color-border-transparent" } },
+    "danger/outline": { "rest": { "bg": "--color-bg-danger-subtle", "icon": "--color-fg-danger", "heading": "--color-text-heading", "body": "--color-text-body", "border": "--color-border-transparent" } },
+    "danger/ghost": { "rest": { "bg": "--color-bg-danger-subtle", "icon": "--color-fg-danger", "heading": "--color-text-heading", "body": "--color-text-body", "border": "--color-border-danger" } },
+    "danger/link": { "rest": { "bg": "--color-bg-transparent", "icon": "--color-fg-danger", "heading": "--color-text-heading", "body": "--color-text-body", "border": "--color-border-transparent" } },
+    "white/solid": { "rest": { "bg": "--color-bg-white", "icon": "--color-fg-black", "heading": "--color-text-heading", "body": "--color-text-body", "border": "--color-border-transparent" } },
+    "white/outline": { "rest": { "bg": "--color-bg-white_subtle", "icon": "--color-fg-black", "heading": "--color-text-heading", "body": "--color-text-body", "border": "--color-border-transparent" } },
+    "white/ghost": { "rest": { "bg": "--color-bg-white_subtle", "icon": "--color-fg-black", "heading": "--color-text-heading", "body": "--color-text-body", "border": "--color-border-white" } },
+    "white/link": { "rest": { "bg": "--color-bg-white_subtle", "icon": "--color-fg-black", "heading": "--color-text-heading", "body": "--color-text-body", "border": "--color-border-transparent" } },
+    "black/solid": { "rest": { "bg": "--color-bg-black", "icon": "--color-fg-white", "heading": "--color-text-heading_on-primary", "body": "--color-text-body_on-primary", "border": "--color-border-transparent" } },
+    "black/outline": { "rest": { "bg": "--color-bg-black_subtle", "icon": "--color-fg-white", "heading": "--color-text-heading_on-primary", "body": "--color-text-body_on-primary", "border": "--color-border-transparent" } },
+    "black/ghost": { "rest": { "bg": "--color-bg-black_subtle", "icon": "--color-fg-white", "heading": "--color-text-heading_on-primary", "body": "--color-text-body_on-primary", "border": "--color-border-black" } },
+    "black/link": { "rest": { "bg": "--color-bg-black_subtle", "icon": "--color-fg-white", "heading": "--color-text-heading_on-primary", "body": "--color-text-body_on-primary", "border": "--color-border-transparent" } }
+  },
+  "sizing": {
+    "none": { "gap": "--space-none", "padding-x": "--space-none", "padding-y": "--space-none" },
+    "xs": { "gap": "--space-3xs", "padding-x": "--space-3xs", "padding-y": "--space-3xs" },
+    "sm": { "gap": "--space-2xs", "padding-x": "--space-2xs", "padding-y": "--space-2xs" },
+    "md": { "gap": "--space-xs", "padding-x": "--space-xs", "padding-y": "--space-xs" },
+    "lg": { "gap": "--space-sm", "padding-x": "--space-md", "padding-y": "--space-md" },
+    "xl": { "gap": "--space-md", "padding-x": "--space-md", "padding-y": "--space-md" }
   }
 }
