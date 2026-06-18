@@ -90,6 +90,32 @@ export async function run(ctx) {
       shades[lvl] = node(withAlpha(shades['500'].value, a), 'color');
   }
 
+  /* ---- arrange: white/black first, then spectrum, grays, brand extras; each
+     family's shades sorted solids (50…950) then alpha (a050…a900). ---- */
+  {
+    const FAMILY_ORDER = [
+      'white', 'black',
+      'red', 'orange', 'amber', 'yellow', 'lime', 'green', 'emerald', 'teal', 'cyan', 'sky',
+      'blue', 'indigo', 'violet', 'purple', 'fuchsia', 'pink', 'rose',
+      'slate', 'gray', 'zinc', 'neutral', 'stone',
+      'mauve', 'olive', 'mist', 'taupe',
+    ];
+    const SHADE_ORDER = [
+      '50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950',
+      'a050', 'a100', 'a150', 'a200', 'a300', 'a400', 'a500', 'a600', 'a700', 'a800', 'a900',
+    ];
+    const ordered = {};
+    for (const fam of [...FAMILY_ORDER, ...Object.keys(color)]) {
+      if (!color[fam] || ordered[fam]) continue;
+      const src = color[fam], dst = {};
+      for (const s of SHADE_ORDER) if (s in src) dst[s] = src[s];
+      for (const s in src) if (!(s in dst)) dst[s] = src[s];
+      ordered[fam] = dst;
+    }
+    for (const k of Object.keys(color)) delete color[k];
+    Object.assign(color, ordered);
+  }
+
   /* ---- spacing (v4 ships a single --spacing multiplier; materialise steps) ---- */
   const SPACING_STEPS = [
     0.5, 1, 1.5, 2, 2.5, 3, 3.5, 4, 5, 6, 7, 8, 9, 10, 11, 12, 14, 16, 20, 24, 28, 32, 36, 40, 44,
@@ -152,7 +178,7 @@ export async function run(ctx) {
     Object.entries(collect('tracking', '[a-z]+')).map(([k, v]) => [k, dim(v)]),
   );
 
-  /* ---- shadows — decomposed into 3-tier parts (composite kept as `box`) ---- */
+  /* ---- shadows — decomposed into Figma-mappable parts (offset/blur/spread/color) ---- */
   const shadow = rawShadowTree(collect('shadow'));
 
   const out = {

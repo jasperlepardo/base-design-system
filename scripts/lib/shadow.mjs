@@ -50,7 +50,9 @@ const dim = (v) => ({ value: v, type: 'dimension' });
 export function rawShadowTree(composites) {
   const tree = {};
   for (const [size, composite] of Object.entries(composites)) {
-    const node = { box: { value: composite, type: 'shadow' } };
+    // Figma-mappable parts only — the composite box-shadow string isn't a Figma
+    // variable type, so it's not emitted; the decomposed parts carry it.
+    const node = {};
     splitLayers(composite).forEach((layerStr, i) => {
       const L = parseLayer(layerStr);
       const ramp = RAMP[L.alpha];
