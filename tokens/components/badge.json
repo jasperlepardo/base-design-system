@@ -238,10 +238,10 @@
     }
   },
   "sizing": {
-    "extra-small": { "pad-x": "--space-3xs", "pad-y": "--space-2xs" },
-    "small": { "pad-x": "--space-2xs", "pad-y": "--space-xs" },
-    "medium": { "pad-x": "--space-xs", "pad-y": "--space-sm" },
-    "large": { "pad-x": "--space-sm", "pad-y": "--space-md" },
-    "extra-large": { "pad-x": "--space-md", "pad-y": "--space-lg" }
+    "extra-small": { "pad-x": "--spacing-0_5", "pad-y": "--spacing-1" },
+    "small": { "pad-x": "--spacing-1", "pad-y": "--spacing-2" },
+    "medium": { "pad-x": "--spacing-2", "pad-y": "--spacing-3" },
+    "large": { "pad-x": "--spacing-3", "pad-y": "--spacing-4" },
+    "extra-large": { "pad-x": "--spacing-4", "pad-y": "--spacing-6" }
   }
 }

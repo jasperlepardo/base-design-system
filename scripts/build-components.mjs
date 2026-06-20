@@ -63,7 +63,7 @@ const interactiveRules = (cn) =>
 function builtinButtonBase(cn, px) {
   let css = `.${cn} {\n`;
   css += `  display: inline-flex;\n  align-items: center;\n  justify-content: center;\n`;
-  css += `  box-sizing: border-box;\n  border: var(--border-width-default) solid var(--${px}-border);\n`;
+  css += `  box-sizing: border-box;\n  border: var(--border-width-1) solid var(--${px}-border);\n`;
   css += `  border-radius: var(--${px}-radius);\n  height: var(--${px}-h);\n`;
   css += `  padding-inline: var(--${px}-px);\n  gap: var(--${px}-gap);\n`;
   css += `  font-family: var(--font-family-body), system-ui, sans-serif;\n`;

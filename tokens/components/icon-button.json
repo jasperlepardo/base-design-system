@@ -421,19 +421,19 @@
   "sizing": {
     "default": {
       "box": "--raw-spacing-12",
-      "radius": "--radius-sm"
+      "radius": "--rounded-sm"
     },
     "medium": {
       "box": "--raw-spacing-10",
-      "radius": "--radius-sm"
+      "radius": "--rounded-sm"
     },
     "small": {
       "box": "--raw-spacing-8",
-      "radius": "--radius-sm"
+      "radius": "--rounded-sm"
     },
     "extra-small": {
       "box": "--raw-spacing-6",
-      "radius": "--radius-sm"
+      "radius": "--rounded-sm"
     }
   }
 }
