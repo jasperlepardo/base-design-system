@@ -83,6 +83,9 @@ export async function run(ctx) {
     const solid = color[k].value;
     color[k] = { 500: node(solid, 'color') };
     for (const [lvl, a] of Object.entries(ALPHA)) color[k][lvl] = node(withAlpha(solid, a), 'color');
+    // transparent (alpha 0) — Figma needs an explicit token (no `transparent` keyword);
+    // in CSS this still resolves to a fully-transparent white/black.
+    color[k].transparent = node(withAlpha(solid, 0), 'color');
   }
   for (const [fam, shades] of Object.entries(color)) {
     if (fam === 'white' || fam === 'black' || !shades['500']) continue;
@@ -103,6 +106,7 @@ export async function run(ctx) {
     const SHADE_ORDER = [
       '50', '100', '200', '300', '400', '500', '600', '700', '800', '900', '950',
       'a050', 'a100', 'a150', 'a200', 'a300', 'a400', 'a500', 'a600', 'a700', 'a800', 'a900',
+      'transparent',
     ];
     const ordered = {};
     for (const fam of [...FAMILY_ORDER, ...Object.keys(color)]) {
@@ -154,6 +158,23 @@ export async function run(ctx) {
     Object.entries(collect('container')).map(([k, v]) => [k, dim(v)]),
   );
 
+  /* ---- layout — custom responsive grid (NOT from Tailwind): screen sizes, column
+     widths, grid count + gutter. Base values keyed by value, mirroring the Figma
+     raw `layout/*` tree; primitives/semantics name them (Web/iOS/Android, 1…12). ---- */
+  const layout = {
+    Screen: Object.fromEntries(
+      ['360', '375', '800', '812', '1024', '1440', '1920'].map((v) => [v, dim(`${v}px`)]),
+    ),
+    Column: Object.fromEntries(
+      ['70', '74', '84', '156', '164', '192', '242', '253', '300', '328', '343', '408', '516',
+        '624', '732', '840', '948', '1056', '1164', '1272'].map((v) => [v, dim(`${v}px`)]),
+    ),
+    Grid: {
+      count: { 4: node(4, 'number'), 12: node(12, 'number') },
+      gutter: { 16: dim('16px'), 24: dim('24px') },
+    },
+  };
+
   /* ---- typography. Font families default to Tailwind's generic stacks; a
      jspr.config `fonts.{sans,serif,mono}` overrides with brand stacks. ---- */
   const fontFamily = Object.fromEntries(
@@ -192,6 +213,7 @@ export async function run(ctx) {
       'border-width': borderWidth,
       breakpoint,
       container,
+      layout,
       'font-family': fontFamily,
       'font-size': fontSize,
       'font-weight': fontWeight,
