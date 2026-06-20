@@ -6,11 +6,12 @@
  * non-color scales straight through as aliases. Everything aliases raw 1:1, so
  * the only real content here is the brand color mapping + the arrangement.
  *
- * Arrangement mirrors raw's section order, with two primitive-only additions:
+ * Arrangement mirrors raw's section order:
  *   color families: neutral, primary, success, warning, danger, white, black
- *   groups: color, spacing, radius, border-width, breakpoint, container,
+ *   groups: color, spacing, radius, border-width, breakpoint, container, layout,
  *           font-family, font-size, font-weight, line-height, leading, tracking,
- *           text (composite size/line-height), shadow, blur
+ *           shadow, blur
+ * (The text composite lives at the semantic tier, not here.)
  *
  * Run: node scripts/gen-primitives.mjs
  */
@@ -51,6 +52,8 @@ const alphaOnly = (fam) => {
   const out = {};
   for (const s of SHADE_ORDER)
     if (s.startsWith('a') && s in raw.color[fam]) out[s] = { value: `{raw.color.${fam}.${s}}`, type: 'color' };
+  if ('transparent' in raw.color[fam])
+    out.transparent = { value: `{raw.color.${fam}.transparent}`, type: 'color' };
   return out;
 };
 
@@ -72,15 +75,25 @@ const passthrough = (group) => {
   return out;
 };
 
-// text — primitive-only composite coupling font-size + line-height per size.
-const text = {};
-for (const size of Object.keys(raw['font-size'])) {
-  if (!(size in raw['line-height'])) continue;
-  text[size] = {
-    'font-size': { value: `{raw.font-size.${size}}`, type: 'dimension' },
-    'line-height': { value: `{raw.line-height.${size}}`, type: 'dimension' },
-  };
-}
+// layout — Screen/Column pass through raw 1:1; Grid maps each platform
+// (Web/iOS/Android) onto raw column widths + grid count/gutter, mirroring Figma's
+// primitive layout. (The text composite lives at the SEMANTIC tier, not here.)
+const passLayout = (sub) =>
+  Object.fromEntries(
+    Object.keys(raw.layout[sub]).map((k) => [k, { value: `{raw.layout.${sub}.${k}}`, type: 'dimension' }]),
+  );
+const gridCount = (k) => ({ value: `{raw.layout.Grid.count.${k}}`, type: 'number' });
+const gridWidth = (k) => ({ value: `{raw.layout.Column.${k}}`, type: 'dimension' });
+const gridGutter = (k) => ({ value: `{raw.layout.Grid.gutter.${k}}`, type: 'dimension' });
+const layout = {
+  Screen: passLayout('Screen'),
+  Column: passLayout('Column'),
+  Grid: {
+    Web: { count: gridCount(12), width: gridWidth(84), gutter: gridGutter(24) },
+    iOS: { count: gridCount(4), width: gridWidth(74), gutter: gridGutter(16) },
+    Android: { count: gridCount(4), width: gridWidth(70), gutter: gridGutter(16) },
+  },
+};
 
 const out = {
   primitive: {
@@ -90,13 +103,13 @@ const out = {
     'border-width': passthrough('border-width'),
     breakpoint: passthrough('breakpoint'),
     container: passthrough('container'),
+    layout,
     'font-family': passthrough('font-family'),
     'font-size': passthrough('font-size'),
     'font-weight': passthrough('font-weight'),
     'line-height': passthrough('line-height'),
     leading: passthrough('leading'),
     tracking: passthrough('tracking'),
-    text,
     shadow: aliasShadowTree(raw.shadow, 'raw', 'primitive'),
     blur: passthrough('blur'),
   },
