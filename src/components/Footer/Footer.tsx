@@ -12,7 +12,7 @@ export type FooterProps = HTMLAttributes<HTMLElement>;
 export function Footer({ className, children, ...rest }: FooterProps) {
   return (
     <footer
-      className={cn('w-full border-t border-line py-6 text-sm text-muted', className)}
+      className={cn('w-full border-t border-default py-6 text-sm text-muted', className)}
       {...rest}
     >
       {children}

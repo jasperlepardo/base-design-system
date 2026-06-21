@@ -116,11 +116,11 @@ export function Combobox({
         placeholder={placeholder}
         value={display}
         className={cn(
-          'block w-full rounded-md border bg-surface pr-9 pl-3 text-body placeholder:text-muted',
+          'block w-full rounded-md border bg-default pr-9 pl-3 text-body placeholder:text-muted',
           'outline-none transition-colors',
-          'focus-visible:border-focus focus-visible:ring-2 focus-visible:ring-focus/40',
+          'focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-[var(--color-border-primary)]/40',
           'disabled:cursor-not-allowed disabled:opacity-50',
-          invalid ? 'border-danger' : 'border-line',
+          invalid ? 'border-danger' : 'border-default',
           SIZE[size],
         )}
         onChange={(e) => {

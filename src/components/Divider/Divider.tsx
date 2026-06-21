@@ -6,8 +6,8 @@ export type DividerProps = HTMLAttributes<HTMLHRElement>;
 /**
  * Divider — a 1px horizontal rule in the default border color. Full-width and
  * margin-free; the surrounding layout owns the spacing. Styled with the semantic
- * `bg-line` utility, so it re-themes across light/dark.
+ * `bg-[var(--color-border-default)]` utility, so it re-themes across light/dark.
  */
 export function Divider({ className, ...rest }: DividerProps) {
-  return <hr className={cn('h-px w-full border-0 bg-line', className)} {...rest} />;
+  return <hr className={cn('h-px w-full border-0 bg-[var(--color-border-default)]', className)} {...rest} />;
 }
