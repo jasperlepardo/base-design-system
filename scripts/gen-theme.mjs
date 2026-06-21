@@ -1,17 +1,19 @@
 /**
- * gen-theme.mjs — generate src/styles/theme.css (Tailwind v4 @theme).
+ * gen-theme.mjs — generate src/styles/theme.css (Tailwind v4).
  *
- * Two layers, both following Figma's naming:
- *   1. BRAND RAMP — the primitive families, Figma-named (primary/success/warning/
- *      danger/neutral/white/black) × shades (50…950, a050…a900). Generates the
- *      numbered utilities: bg-primary-900, text-success-500, border-danger-300,
- *      bg-primary-a200, … Rebrandable via the --p-color-* primitive overrides.
- *   2. SEMANTIC ROLES — the themed bg/fg/text/border split, exposed as flat role
- *      utilities: bg-primary, bg-canvas, text-heading, text-on-primary, border-line.
- *      Values are var() refs to the split semantic vars, so they re-theme on
- *      data-theme. (Tailwind v4 unifies colors under --color-*, so the split is
- *      surfaced flat; the exact split vars remain available as raw CSS vars.)
+ * Approach: mirror Figma's per-property semantic split exactly, with no flat
+ * collapse and no invented names.
+ *   1. Reset Tailwind's default color palette (--color-*: initial) → brand-only.
+ *   2. Emit one custom @utility per semantic color token, mapped to its property:
+ *        bg-*     ← color/bg/*     (background-color)
+ *        text-*   ← color/text/*   (color)
+ *        border-* ← color/border/* (border-color)
+ *      So bg-default and border-default are SEPARATE utilities reading their own
+ *      split vars — no collision, exact Figma names, themed via the vars.
+ *      (color/fg/* is component-internal — stays a --color-fg-* var, no utility.)
+ *   3. radius (rounded) + fonts stay as @theme namespaces.
  *
+ * No numbered ramp (primitives stay internal, like Figma).
  * Run: node scripts/gen-theme.mjs
  */
 import { readFileSync, writeFileSync } from 'node:fs';
@@ -19,119 +21,55 @@ import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
+const color = JSON.parse(readFileSync(join(root, 'tokens/semantics/light.json'), 'utf8')).semantic.color;
 const prim = JSON.parse(readFileSync(join(root, 'tokens/primitives.json'), 'utf8')).primitive;
 
-// ── 1. Brand ramp — Figma primitive family/shade names → primitive vars ──
-const RAMP_FAMILIES = ['neutral', 'primary', 'success', 'warning', 'danger', 'white', 'black'];
-let ramp = '';
-for (const fam of RAMP_FAMILIES) {
-  for (const shade of Object.keys(prim.color[fam])) {
-    ramp += `  --color-${fam}-${shade}: var(--p-color-${fam}-${shade});\n`;
+// semantic group → [css property, utility prefix]. fg is intentionally NOT exposed
+// as a utility: it's a component-internal foreground/icon concept (and shares role
+// names with `text`, so it can't map to text-*). It stays a --color-fg-* var.
+const PROPS = {
+  bg: ['background-color', 'bg'],
+  text: ['color', 'text'],
+  border: ['border-color', 'border'],
+};
+
+let utils = '';
+let count = 0;
+for (const [group, [cssProp, prefix]] of Object.entries(PROPS)) {
+  for (const role of Object.keys(color[group] || {})) {
+    utils += `@utility ${prefix}-${role} {\n  ${cssProp}: var(--color-${group}-${role});\n}\n`;
+    count++;
   }
 }
 
-// ── 2. Semantic roles — [flat utility name, split semantic var] ──
-// Surfaces & intent fills come from bg; content from text; lines from border.
-const ROLES = [
-  ['// Surfaces → bg-*'],
-  ['canvas', 'color-bg-default'],
-  ['canvas-secondary', 'color-bg-secondary'],
-  ['canvas-tertiary', 'color-bg-tertiary'],
-  ['canvas-quaternary', 'color-bg-quarternary'],
-  ['canvas-inverse', 'color-bg-default-solid'],
-  ['canvas-inverse-secondary', 'color-bg-secondary-solid'],
-  ['canvas-inverse-tertiary', 'color-bg-tertiary-solid'],
-  ['canvas-inverse-quaternary', 'color-bg-quarternary-solid'],
-  ['neutral', 'color-bg-neutral'],
-  ['neutral-hover', 'color-bg-neutral_hover'],
-  ['neutral-subtle', 'color-bg-neutral-subtle'],
-  ['neutral-subtle-hover', 'color-bg-neutral-subtle_hover'],
-  ['disabled', 'color-bg-disabled'],
-
-  ['// Intent fills → bg-* (also serve text-* — bg & text share the intent value)'],
-  ['primary', 'color-bg-primary'],
-  ['primary-hover', 'color-bg-primary_hover'],
-  ['primary-subtle', 'color-bg-primary-subtle'],
-  ['primary-subtle-hover', 'color-bg-primary-subtle_hover'],
-  ['success', 'color-bg-success'],
-  ['success-hover', 'color-bg-success_hover'],
-  ['success-subtle', 'color-bg-success-subtle'],
-  ['success-subtle-hover', 'color-bg-success-subtle_hover'],
-  ['warning', 'color-bg-warning'],
-  ['warning-hover', 'color-bg-warning_hover'],
-  ['warning-subtle', 'color-bg-warning-subtle'],
-  ['warning-subtle-hover', 'color-bg-warning-subtle_hover'],
-  ['danger', 'color-bg-danger'],
-  ['danger-hover', 'color-bg-danger_hover'],
-  ['danger-subtle', 'color-bg-danger-subtle'],
-  ['danger-subtle-hover', 'color-bg-danger-subtle_hover'],
-
-  ['// White / black overlays → bg-*'],
-  ['white', 'color-bg-white'],
-  ['white-hover', 'color-bg-white_hover'],
-  ['white-subtle', 'color-bg-white_subtle'],
-  ['black', 'color-bg-black'],
-  ['black-hover', 'color-bg-black_hover'],
-  ['black-subtle', 'color-bg-black_subtle'],
-
-  ['// Text → text-*'],
-  ['heading', 'color-text-heading'],
-  ['heading-brand', 'color-text-heading_brand'],
-  ['body', 'color-text-body'],
-  ['muted', 'color-text-muted'],
-  ['caption', 'color-text-caption'],
-  ['placeholder', 'color-text-placeholder'],
-  ['on-primary', 'color-text-heading_on-primary'],
-  ['on-primary-body', 'color-text-body_on-primary'],
-  ['on-primary-muted', 'color-text-muted_on-primary'],
-
-  ['// Borders → border-* (line = the neutral default border)'],
-  ['line', 'color-border-default'],
-  ['line-primary', 'color-border-primary'],
-  ['line-primary-subtle', 'color-border-primary_subtle'],
-  ['line-success', 'color-border-success'],
-  ['line-warning', 'color-border-warning'],
-  ['line-danger', 'color-border-danger'],
-  ['focus', 'color-border-primary'],
-];
-let roles = '';
-for (const r of ROLES) {
-  if (r.length === 1) roles += `\n  /* ${r[0].replace('// ', '')} */\n`;
-  else roles += `  --color-${r[0]}: var(--${r[1]});\n`;
-}
-
-// ── 3. Radius (rounded) + fonts ──
 const radius = Object.keys(prim.radius)
   .map((k) => `  --radius-${k}: var(--rounded-${k});`)
   .join('\n');
 
-const header = `/**
- * theme.css — Tailwind v4 @theme (GENERATED by scripts/gen-theme.mjs — do not edit).
+const css = `/**
+ * theme.css — Tailwind v4 (GENERATED by scripts/gen-theme.mjs — do not edit).
  *
- * Layer 1: brand ramp (Figma primitive names) → bg-primary-900, text-success-500, …
- * Layer 2: semantic roles (themed bg/fg/text/border, flat) → bg-primary, bg-canvas,
- *          text-heading, text-on-primary, border-line, …
- *
- * Both re-theme on data-theme (values are var() refs to the themed semantic vars).
+ * Mirrors Figma's semantic split per-property: bg- / text- / border- / fill-
+ * each read their own split var (no flat collapse, no invented names, exact roles).
+ * Tailwind default color palette is reset so only brand tokens exist.
  * Exported as "@jasperlepardo/base-design-system/theme".
- */`;
-
-const css = `${header}
+ */
 @theme {
-  /* ════ BRAND RAMP — bg-primary-900, text-success-500, bg-primary-a200, … ════ */
-${ramp}
-  /* ════ SEMANTIC ROLES — themed, flat ════ */
-${roles}
-  /* Radius → rounded-* */
+  /* brand-only: drop Tailwind's default color palette (keep transparent/current) */
+  --color-*: initial;
+}
+
+/* ════ Semantic role utilities — per property, Figma-named, themed ════ */
+${utils}
+@theme {
+  /* radius → rounded-* */
 ${radius}
 
-  /* Fonts → font-* */
+  /* fonts → font-* */
   --font-sans: var(--font-family-body);
   --font-mono: var(--font-family-mono);
 }
 `;
 
 writeFileSync(join(root, 'src/styles/theme.css'), css);
-const rampN = ramp.trim().split('\n').length;
-const roleN = roles.trim().split('\n').filter((l) => l.startsWith('--color')).length;
-console.log(`✓ theme.css — ${rampN} ramp + ${roleN} role colors + radius + fonts`);
+console.log(`✓ theme.css — ${count} per-property semantic utilities + radius/fonts (palette reset)`);
