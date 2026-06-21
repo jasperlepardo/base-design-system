@@ -21,7 +21,7 @@ tokens/components/button.json ──build-components──▶ src/styles/compone
 | ------------- | ------------------------------- | --------------------------------------------------------------------------------------------------------- |
 | **Raw**       | `tokens/raw.json` (generated)   | All of Tailwind's theme: palette (oklch) plus spacing, radius, type, and shadows.                         |
 | **Primitive** | `tokens/primitives.json`        | Brand color families (`neutral`, `primary`, `success`, `warning`, `danger`, `white`, `black`) plus curated scales (spacing, radius, border-width, container, type, shadow, blur, …), all aliasing Raw. |
-| **Semantic**  | `tokens/semantics/*.json`       | Purpose tokens (`background-default`, `text-heading`, …) that alias Primitives and **resolve per theme**. |
+| **Semantic**  | `tokens/semantics/*.json`       | Purpose tokens split by property — `color/{bg,fg,text,border}/*` (themed per light/dark) plus `spacing`, `rounded`, `border-width`, `container`, `blur`, `layout`, the `text` ramp, and `shadow` — aliasing Primitives. |
 | **Component** | `tokens/components/button.json` | Per-component values keyed by `intent/style/size`, aliasing semantics.                                    |
 
 `tokens/raw.json` is **generated** from the installed `tailwindcss` package by
@@ -33,8 +33,8 @@ It is git-ignored and rebuilt by `npm run tokens`.
 | Tier      | Prefix       | Example                              |
 | --------- | ------------ | ------------------------------------ |
 | Raw       | `--raw-*`    | `--raw-color-blue-500`               |
-| Primitive | `--p-*`      | `--p-color-brand-600`                |
-| Semantic  | _unprefixed_ | `--background-default`, `--space-md` |
+| Primitive | `--p-*`      | `--p-color-primary-600`              |
+| Semantic  | `--color-*` / unprefixed | `--color-bg-default`, `--spacing-4`, `--rounded-md` |
 
 Semantic vars are emitted with `outputReferences`, so they resolve as
 `var(--p-…) → var(--raw-…)`. The raw/primitive vars live in `:root`
@@ -118,8 +118,11 @@ export function Example() {
 }
 ```
 
-Tailwind users can also import just the theme to get the semantic utility scale
-(`bg-canvas`, `text-heading`, `border-line`, `bg-brand`, …):
+Tailwind users can also import just the theme to get per-property semantic
+utilities (`bg-default`, `bg-primary`, `text-heading`, `border-default`,
+`fg-primary`, …) plus token-driven scales (`p-4`, `rounded-md`, `shadow-md`).
+The theme resets Tailwind's default palette, so utilities come from these tokens
+(overridable via `jspr`):
 
 ```css
 @import '@jasperlepardo/base-design-system/theme';
@@ -193,15 +196,15 @@ export default {
   // Remap color roles to any Tailwind family — the whole 50–950 ramp follows.
   roles: {
     danger: 'pink', // shorthand: the danger ramp now follows pink
-    brand: { base: 'violet', 600: '{indigo.600}' }, // ramp + per-shade override
+    primary: { base: 'violet', 600: '{indigo.600}' }, // ramp + per-shade override
   },
 
   // Optionally retarget which primitive shade a semantic uses, per theme.
   semantics: { dark: { danger: { default: 400 } } },
 
   // Rescale the whole spacing system with one knob. The raw scale is numeric
-  // (Tailwind steps) and each value = step × multiplier; semantic t-shirt sizes
-  // (--space-2xs…3xl) alias the raw steps, so they rescale too. Accepts px or
+  // (Tailwind steps) and each value = step × multiplier; semantic spacing
+  // (--spacing-*) aliases the raw steps, so it rescales too. Accepts px or
   // rem; default follows Tailwind's --spacing (0.25rem). `remRoot` (default 16)
   // is the rem↔px root used to materialise px for Figma variables.
   spacing: { multiplier: '5px', remRoot: 16 },

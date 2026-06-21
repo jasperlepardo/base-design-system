@@ -10,14 +10,14 @@
   box-sizing: border-box;
   gap: var(--btn-gap);
   padding: var(--btn-padding);
-  border: var(--border-width-default) solid var(--btn-border);
-  border-radius: var(--radius-sm);
+  border: var(--border-width-1) solid var(--btn-border);
+  border-radius: var(--rounded-sm);
   background-color: var(--btn-bg);
   color: var(--btn-text);
   font-family: var(--font-family-body), system-ui, sans-serif;
   font-weight: var(--font-weight-heading);
-  font-size: var(--font-size-md);
-  line-height: var(--line-height-md);
+  font-size: var(--text-base-font-size);
+  line-height: var(--text-base-line-height);
   cursor: pointer;
   white-space: nowrap;
   text-decoration: none;
