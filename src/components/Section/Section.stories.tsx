@@ -11,7 +11,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const Cell = ({ children }: { children: React.ReactNode }) => (
-  <div className="rounded-md bg-canvas-muted p-4 text-center text-sm text-body">{children}</div>
+  <div className="rounded-md bg-secondary p-4 text-center text-sm text-body">{children}</div>
 );
 
 export const Grid: Story = {

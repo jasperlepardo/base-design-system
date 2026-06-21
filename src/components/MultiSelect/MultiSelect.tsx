@@ -112,10 +112,10 @@ export function MultiSelect({
     <div ref={rootRef} className={cn('relative', className)}>
       <div
         className={cn(
-          'flex w-full flex-wrap items-center gap-1.5 rounded-md border bg-surface px-2 py-1',
-          'transition-colors focus-within:border-focus focus-within:ring-2 focus-within:ring-focus/40',
+          'flex w-full flex-wrap items-center gap-1.5 rounded-md border bg-default px-2 py-1',
+          'transition-colors focus-within:border-primary focus-within:ring-2 focus-within:ring-[var(--color-border-primary)]/40',
           disabled && 'cursor-not-allowed opacity-50',
-          invalid ? 'border-danger' : 'border-line',
+          invalid ? 'border-danger' : 'border-default',
           SIZE[size],
         )}
         onClick={() => {
@@ -128,7 +128,7 @@ export function MultiSelect({
         {selectedOptions.map((o) => (
           <span
             key={o.value}
-            className="inline-flex items-center gap-1 rounded bg-canvas-muted px-2 py-0.5 text-sm text-heading"
+            className="inline-flex items-center gap-1 rounded bg-secondary px-2 py-0.5 text-sm text-heading"
           >
             {o.label ?? optText(o)}
             <button

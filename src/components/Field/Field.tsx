@@ -26,11 +26,11 @@ export function TextField({ size = 'md', invalid, className, ...rest }: TextFiel
   return (
     <input
       className={cn(
-        'block w-full rounded-md border bg-surface text-body placeholder:text-muted',
+        'block w-full rounded-md border bg-default text-body placeholder:text-muted',
         'transition-colors outline-none',
-        'focus-visible:border-focus focus-visible:ring-2 focus-visible:ring-focus/40',
+        'focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-[var(--color-border-primary)]/40',
         'disabled:opacity-50 disabled:cursor-not-allowed',
-        invalid ? 'border-danger' : 'border-line',
+        invalid ? 'border-danger' : 'border-default',
         FIELD_SIZE[size],
         className,
       )}
@@ -121,11 +121,11 @@ export function Textarea({ invalid, className, rows = 4, ...rest }: TextareaProp
     <textarea
       rows={rows}
       className={cn(
-        'block w-full rounded-md border bg-surface px-3 py-2 text-base text-body placeholder:text-muted',
+        'block w-full rounded-md border bg-default px-3 py-2 text-base text-body placeholder:text-muted',
         'transition-colors outline-none',
-        'focus-visible:border-focus focus-visible:ring-2 focus-visible:ring-focus/40',
+        'focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-[var(--color-border-primary)]/40',
         'disabled:cursor-not-allowed disabled:opacity-50',
-        invalid ? 'border-danger' : 'border-line',
+        invalid ? 'border-danger' : 'border-default',
         className,
       )}
       aria-invalid={invalid || undefined}
@@ -146,11 +146,11 @@ export function Select({ size = 'md', invalid, className, children, ...rest }: S
   return (
     <select
       className={cn(
-        'block w-full rounded-md border bg-surface text-body',
+        'block w-full rounded-md border bg-default text-body',
         'transition-colors outline-none',
-        'focus-visible:border-focus focus-visible:ring-2 focus-visible:ring-focus/40',
+        'focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-[var(--color-border-primary)]/40',
         'disabled:cursor-not-allowed disabled:opacity-50',
-        invalid ? 'border-danger' : 'border-line',
+        invalid ? 'border-danger' : 'border-default',
         FIELD_SIZE[size],
         className,
       )}

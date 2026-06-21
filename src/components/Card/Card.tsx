@@ -12,7 +12,7 @@ export function Card({ variant = 'outline', className, children, ...rest }: Card
   return (
     <div
       className={cn(
-        'bg-surface text-body rounded-lg border border-line overflow-hidden',
+        'bg-default text-body rounded-lg border border-default overflow-hidden',
         variant === 'raised' && 'shadow-md',
         className,
       )}
@@ -46,7 +46,7 @@ function CardBody({ className, children, ...rest }: CardSlotProps) {
 function CardFooter({ className, children, ...rest }: CardSlotProps) {
   return (
     <div
-      className={cn('px-5 pt-3 pb-5 flex items-center gap-2 border-t border-line-subtle', className)}
+      className={cn('px-5 pt-3 pb-5 flex items-center gap-2 border-t border-default', className)}
       {...rest}
     >
       {children}

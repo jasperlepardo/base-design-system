@@ -5,11 +5,11 @@
 .jspr-link {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2xs); /* 4px — Figma Button/gap */
+  gap: var(--spacing-1); /* 4px — Figma Button/gap */
   color: var(--link-text, var(--color-bg-primary));
   font-weight: var(--font-weight-heading);
-  font-size: var(--font-size-md);
-  line-height: var(--line-height-md);
+  font-size: var(--text-base-font-size);
+  line-height: var(--text-base-line-height);
   text-decoration: none;
   cursor: pointer;
 }
@@ -29,7 +29,7 @@
 .jspr-link:focus-visible {
   outline: 2px solid var(--color-border-primary);
   outline-offset: 2px;
-  border-radius: var(--radius-sm);
+  border-radius: var(--rounded-sm);
 }
 .jspr-link[data-state='disabled'] {
   opacity: 0.5;

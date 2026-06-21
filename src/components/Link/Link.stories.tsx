@@ -55,7 +55,7 @@ export const Intents: Story = {
             {intent}
           </Link>
         ))}
-      <div className="mt-2 rounded-md bg-heading p-3">
+      <div className="mt-2 rounded-md bg-[var(--color-text-heading)] p-3">
         <Link href="#" intent="white">
           white (on dark)
         </Link>

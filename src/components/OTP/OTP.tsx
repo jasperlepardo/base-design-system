@@ -105,11 +105,11 @@ export function OTP({
             refs.current[i] = el;
           }}
           className={cn(
-            'size-12 rounded-md border bg-surface text-center text-lg text-body',
+            'size-12 rounded-md border bg-default text-center text-lg text-body',
             'outline-none transition-colors',
-            'focus-visible:border-focus focus-visible:ring-2 focus-visible:ring-focus/40',
+            'focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-[var(--color-border-primary)]/40',
             'disabled:cursor-not-allowed disabled:opacity-50',
-            invalid ? 'border-danger' : 'border-line',
+            invalid ? 'border-danger' : 'border-default',
           )}
           value={c}
           maxLength={1}

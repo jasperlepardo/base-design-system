@@ -23,9 +23,9 @@ function groupByCategory(tokens: DesignToken[]) {
 
 function Swatch({ token }: { token: DesignToken }) {
   return (
-    <div className="flex items-center gap-3 rounded-md border border-line p-2">
+    <div className="flex items-center gap-3 rounded-md border border-default p-2">
       <span
-        className="h-9 w-9 flex-none rounded-md border border-line-subtle"
+        className="h-9 w-9 flex-none rounded-md border border-default"
         style={{ backgroundColor: `var(${token.cssVar})` }}
       />
       <span className="flex flex-col">
@@ -40,7 +40,7 @@ export const Semantic: Story = {
   render: () => {
     const groups = groupByCategory(colorTokens);
     return (
-      <div className="bg-canvas p-6">
+      <div className="bg-default p-6">
         <h1 className="mb-1 text-2xl font-semibold text-heading">Semantic color tokens</h1>
         <p className="mb-6 text-sm text-muted">
           Each swatch resolves through the cascade: semantic → primitive → raw (Tailwind). Toggle

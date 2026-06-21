@@ -136,11 +136,11 @@ export function DatePicker({
         placeholder={placeholder}
         value={formatDisplayDate(selectedIso)}
         className={cn(
-          'block w-full cursor-pointer rounded-md border bg-surface pr-9 pl-3 text-body placeholder:text-muted',
+          'block w-full cursor-pointer rounded-md border bg-default pr-9 pl-3 text-body placeholder:text-muted',
           'outline-none transition-colors',
-          'focus-visible:border-focus focus-visible:ring-2 focus-visible:ring-focus/40',
+          'focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-[var(--color-border-primary)]/40',
           'disabled:cursor-not-allowed disabled:opacity-50',
-          invalid ? 'border-danger' : 'border-line',
+          invalid ? 'border-danger' : 'border-default',
           SIZE[size],
         )}
         onClick={() => !disabled && toggle()}
@@ -166,13 +166,13 @@ export function DatePicker({
         <div
           role="dialog"
           aria-label="Choose date"
-          className="absolute z-20 mt-1 rounded-md border border-line bg-surface p-3 shadow-lg"
+          className="absolute z-20 mt-1 rounded-md border border-default bg-default p-3 shadow-lg"
         >
           <div className="mb-2 flex items-center justify-between gap-2">
             <button
               type="button"
               aria-label="Previous month"
-              className="flex size-8 items-center justify-center rounded-md text-body hover:bg-canvas-muted"
+              className="flex size-8 items-center justify-center rounded-md text-body hover:bg-secondary"
               onClick={() => setView((v) => ({ ...addMonthView(v, -1) }))}
             >
               <Icon size={16}>
@@ -185,7 +185,7 @@ export function DatePicker({
             <button
               type="button"
               aria-label="Next month"
-              className="flex size-8 items-center justify-center rounded-md text-body hover:bg-canvas-muted"
+              className="flex size-8 items-center justify-center rounded-md text-body hover:bg-secondary"
               onClick={() => setView((v) => ({ ...addMonthView(v, 1) }))}
             >
               <Icon size={16}>
@@ -221,11 +221,11 @@ export function DatePicker({
                   aria-current={isToday ? 'date' : undefined}
                   className={cn(
                     'flex size-9 items-center justify-center rounded-md text-sm outline-none',
-                    'focus-visible:ring-2 focus-visible:ring-focus/40',
+                    'focus-visible:ring-2 focus-visible:ring-[var(--color-border-primary)]/40',
                     !d.inMonth && 'text-muted',
                     isSelected
-                      ? 'bg-primary text-on-primary'
-                      : cn(isToday && 'border border-line', 'hover:bg-canvas-muted'),
+                      ? 'bg-primary text-heading_on-primary'
+                      : cn(isToday && 'border border-default', 'hover:bg-secondary'),
                   )}
                   onClick={() => commit(d.date)}
                 >

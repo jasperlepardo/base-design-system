@@ -2,7 +2,7 @@
    switch, alignment, and equal-width fill are selected by data-attributes. */
 .jspr-button-group {
   display: flex;
-  gap: var(--space-md);
+  gap: var(--spacing-4);
 }
 .jspr-button-group[data-orientation='horizontal'] {
   flex-direction: row;
