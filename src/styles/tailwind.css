@@ -15,8 +15,8 @@
 
 /* Sensible page defaults driven by tokens. */
 body {
-  background-color: var(--background-default);
-  color: var(--text-body);
+  background-color: var(--color-bg-default);
+  color: var(--color-text-body);
   font-family: var(--font-family-body), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
