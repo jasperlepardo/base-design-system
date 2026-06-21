@@ -27,6 +27,9 @@ function flatten(node, path = []) {
   const out = [];
   for (const [k, v] of Object.entries(node)) {
     if (v && typeof v === 'object' && 'value' in v && 'type' in v) {
+      // Composite box-shadow (`shadow.{size}.box`) is CSS-only — it can't be a
+      // Figma variable; the decomposed parts carry it instead. Skip it.
+      if (v.type === 'shadow') continue;
       out.push({ name: [...path, k].join('/'), type: v.type, value: v.value, path: [...path, k] });
     } else if (v && typeof v === 'object') {
       out.push(...flatten(v, [...path, k]));
