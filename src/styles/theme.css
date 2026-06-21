@@ -231,6 +231,102 @@
 @utility border-disabled {
   border-color: var(--color-border-disabled);
 }
+@utility fg-default {
+  color: var(--color-fg-default);
+}
+@utility fg-default-solid {
+  color: var(--color-fg-default-solid);
+}
+@utility fg-secondary {
+  color: var(--color-fg-secondary);
+}
+@utility fg-secondary-solid {
+  color: var(--color-fg-secondary-solid);
+}
+@utility fg-tertiary {
+  color: var(--color-fg-tertiary);
+}
+@utility fg-tertiary-solid {
+  color: var(--color-fg-tertiary-solid);
+}
+@utility fg-quarternary {
+  color: var(--color-fg-quarternary);
+}
+@utility fg-quarternary-solid {
+  color: var(--color-fg-quarternary-solid);
+}
+@utility fg-primary {
+  color: var(--color-fg-primary);
+}
+@utility fg-primary_hover {
+  color: var(--color-fg-primary_hover);
+}
+@utility fg-primary-subtle {
+  color: var(--color-fg-primary-subtle);
+}
+@utility fg-primary-subtle_hover {
+  color: var(--color-fg-primary-subtle_hover);
+}
+@utility fg-success {
+  color: var(--color-fg-success);
+}
+@utility fg-success_hover {
+  color: var(--color-fg-success_hover);
+}
+@utility fg-success-subtle {
+  color: var(--color-fg-success-subtle);
+}
+@utility fg-success-subtle_hover {
+  color: var(--color-fg-success-subtle_hover);
+}
+@utility fg-warning {
+  color: var(--color-fg-warning);
+}
+@utility fg-warning_hover {
+  color: var(--color-fg-warning_hover);
+}
+@utility fg-warning-subtle {
+  color: var(--color-fg-warning-subtle);
+}
+@utility fg-warning-subtle_hover {
+  color: var(--color-fg-warning-subtle_hover);
+}
+@utility fg-danger {
+  color: var(--color-fg-danger);
+}
+@utility fg-danger_hover {
+  color: var(--color-fg-danger_hover);
+}
+@utility fg-danger-subtle {
+  color: var(--color-fg-danger-subtle);
+}
+@utility fg-danger-subtle_hover {
+  color: var(--color-fg-danger-subtle_hover);
+}
+@utility fg-white {
+  color: var(--color-fg-white);
+}
+@utility fg-white_hover {
+  color: var(--color-fg-white_hover);
+}
+@utility fg-white_subtle {
+  color: var(--color-fg-white_subtle);
+}
+@utility fg-black {
+  color: var(--color-fg-black);
+}
+@utility fg-black_hover {
+  color: var(--color-fg-black_hover);
+}
+@utility fg-black_subtle {
+  color: var(--color-fg-black_subtle);
+}
+@utility fg-disabled {
+  color: var(--color-fg-disabled);
+}
+@utility fg-transparent {
+  color: var(--color-fg-transparent);
+}
 
 @theme {
   /* radius → rounded-* */

@@ -8,9 +8,9 @@
  *        bg-*     ← color/bg/*     (background-color)
  *        text-*   ← color/text/*   (color)
  *        border-* ← color/border/* (border-color)
+ *        fg-*     ← color/fg/*     (color — foreground/icons via currentColor)
  *      So bg-default and border-default are SEPARATE utilities reading their own
  *      split vars — no collision, exact Figma names, themed via the vars.
- *      (color/fg/* is component-internal — stays a --color-fg-* var, no utility.)
  *   3. radius (rounded) + fonts stay as @theme namespaces.
  *
  * No numbered ramp (primitives stay internal, like Figma).
@@ -24,13 +24,14 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const color = JSON.parse(readFileSync(join(root, 'tokens/semantics/light.json'), 'utf8')).semantic.color;
 const prim = JSON.parse(readFileSync(join(root, 'tokens/primitives.json'), 'utf8')).primitive;
 
-// semantic group → [css property, utility prefix]. fg is intentionally NOT exposed
-// as a utility: it's a component-internal foreground/icon concept (and shares role
-// names with `text`, so it can't map to text-*). It stays a --color-fg-* var.
+// semantic group → [css property, utility prefix]. fg keeps Figma's name (fg-*)
+// and sets `color` — the foreground color, which drives text and currentColor
+// icons. (It can't be text-* because fg and text share role names.)
 const PROPS = {
   bg: ['background-color', 'bg'],
   text: ['color', 'text'],
   border: ['border-color', 'border'],
+  fg: ['color', 'fg'],
 };
 
 let utils = '';
