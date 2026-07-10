@@ -1,0 +1,75 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Foundations/Introduction" />
+
+# Base Design System
+
+A token-driven design system: a single source of design decisions flows from
+Tailwind's palette all the way to React components and a mirrored Figma library.
+Built with **Style Dictionary**, **Tailwind v4**, and **Storybook**.
+
+## Token tiers
+
+Every visual value resolves through a four-tier cascade — each tier references the
+one above, so a change at any level ripples down predictably:
+
+<table>
+  <thead>
+    <tr><th>Tier</th><th>CSS var prefix</th><th>What it is</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><strong>Raw</strong></td>
+      <td><code>{'--raw-*'}</code></td>
+      <td>Tailwind&rsquo;s own theme (colors, spacing, radius, type, shadow), generated — not edited by hand.</td>
+    </tr>
+    <tr>
+      <td><strong>Primitive</strong></td>
+      <td><code>{'--p-*'}</code></td>
+      <td>The raw values renamed to brand-neutral primitives (e.g. <code>{'--p-color-primary-600'}</code>).</td>
+    </tr>
+    <tr>
+      <td><strong>Semantic</strong></td>
+      <td><code>{'--color-bg/fg/text/border-*, --spacing-*, --rounded-*, --text-*'}</code>, …</td>
+      <td>Role-based decisions you actually consume. The only tier that re-points per theme.</td>
+    </tr>
+    <tr>
+      <td><strong>Components</strong></td>
+      <td>component-scoped vars</td>
+      <td>Per-component recipes composed from semantic tokens.</td>
+    </tr>
+  </tbody>
+</table>
+
+See **Colors**, **Typography**, and **Spacing** for the live semantic token galleries.
+
+## Theming
+
+Semantic tokens are the single theme switch. Set `data-theme="light"` (default) or
+`data-theme="dark"` on any ancestor and everything below re-skins — no per-component
+work. Toggle the **theme** control in the Storybook toolbar to see it.
+
+```html
+<html data-theme="dark"> … </html>
+```
+
+## Utilities
+
+`theme.css` resets Tailwind's defaults and re-defines every namespace from our
+tokens, so the utilities you use map exactly to semantic roles:
+
+- **Color** — per-property utilities named after the role: `bg-default`,
+  `bg-secondary`, `text-heading`, `text-muted`, `border-default`, `border-danger`,
+  `fg-primary`, …
+- **Scales** — `p-*`/`m-*`/`gap-*` (spacing), `rounded-*` (radius), `text-*`
+  (the bundled type ramp), `shadow-*`, `blur-*` — all routed through the tokens.
+
+## Consuming the package
+
+```ts
+import '@jasperlepardo/base-design-system/styles'; // tokens + utilities + base
+import { Button, Card, Field } from '@jasperlepardo/base-design-system';
+```
+
+Browse **Components** and **Layout** in the sidebar — each page documents props
+(via autodocs) and interactive examples.

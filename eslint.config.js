@@ -23,6 +23,12 @@ export default tseslint.config(
   },
   ...storybook.configs['flat/recommended'],
   {
+    files: ['**/*.stories.@(ts|tsx)', '**/*.stories.@(js|jsx)'],
+    rules: {
+      'storybook/no-renderer-packages': 'off',
+    },
+  },
+  {
     files: ['scripts/**/*.mjs'],
     languageOptions: { globals: globals.node },
   },

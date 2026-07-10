@@ -38,6 +38,9 @@ for (const [group, [cssProp, prefix]] of Object.entries(PROPS))
   for (const role of Object.keys(color[group] || {}))
     utils += `@utility ${prefix}-${role} {\n  ${cssProp}: var(--color-${group}-${role});\n}\n`;
 
+// accent-color for native form controls (checkbox/radio) — themed via primary.
+utils += `@utility accent-primary {\n  accent-color: var(--color-bg-primary);\n}\n`;
+
 /* ── scales: route a Tailwind namespace through primitive vars ── */
 const route = (twNs, primGroup) =>
   Object.keys(prim[primGroup]).map((k) => `  --${twNs}-${k}: var(--p-${primGroup}-${k});`).join('\n');

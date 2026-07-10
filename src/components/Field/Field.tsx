@@ -7,33 +7,26 @@ import {
   type SelectHTMLAttributes,
 } from 'react';
 import { cn } from '../../lib/cn';
+import { fieldSizes, type FieldSize } from '../../tokens/generated/field.manifest';
+import '../../styles/components/field.css'; // generated colors + sizing vars
+import './field.css'; // structure
+
+export { fieldSizes };
+export type { FieldSize };
 
 /* ---------------------------------------------------------------- TextField */
 
 export interface TextFieldProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
-  size?: 'sm' | 'md' | 'lg';
+  size?: FieldSize;
   invalid?: boolean;
 }
-
-const FIELD_SIZE: Record<NonNullable<TextFieldProps['size']>, string> = {
-  sm: 'h-8 px-2.5 text-sm',
-  md: 'h-10 px-3 text-base',
-  lg: 'h-12 px-3.5 text-lg',
-};
 
 /** TextField — a themed text input. Use standalone or inside <FormField>. */
 export function TextField({ size = 'md', invalid, className, ...rest }: TextFieldProps) {
   return (
     <input
-      className={cn(
-        'block w-full rounded-md border bg-default text-body placeholder:text-muted',
-        'transition-colors outline-none',
-        'focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-[var(--color-border-primary)]/40',
-        'disabled:opacity-50 disabled:cursor-not-allowed',
-        invalid ? 'border-danger' : 'border-default',
-        FIELD_SIZE[size],
-        className,
-      )}
+      className={cn('jspr-field', className)}
+      data-size={size}
       aria-invalid={invalid || undefined}
       {...rest}
     />
@@ -49,9 +42,9 @@ export interface FormLabelProps extends LabelHTMLAttributes<HTMLLabelElement> {
 
 export function FormLabel({ required, className, children, ...rest }: FormLabelProps) {
   return (
-    <label className={cn('text-sm font-medium text-heading', className)} {...rest}>
+    <label className={cn('jspr-field__label', className)} {...rest}>
       {children}
-      {required ? <span className="text-danger"> *</span> : null}
+      {required ? <span className="jspr-field__required"> *</span> : null}
     </label>
   );
 }
@@ -84,7 +77,7 @@ export function FormField({ label, hint, error, required, className, children }:
   const describedBy = cn(hint ? hintId : undefined, error ? errorId : undefined) || undefined;
 
   return (
-    <div className={cn('flex flex-col gap-1.5', className)}>
+    <div className={cn('jspr-field-group', className)}>
       {label ? (
         <FormLabel htmlFor={id} required={required}>
           {label}
@@ -97,11 +90,11 @@ export function FormField({ label, hint, error, required, className, children }:
         invalid: !!error,
       })}
       {error ? (
-        <p id={errorId} className="text-sm text-danger">
+        <p id={errorId} className="jspr-field__error">
           {error}
         </p>
       ) : hint ? (
-        <p id={hintId} className="text-sm text-muted">
+        <p id={hintId} className="jspr-field__hint">
           {hint}
         </p>
       ) : null}
@@ -120,14 +113,8 @@ export function Textarea({ invalid, className, rows = 4, ...rest }: TextareaProp
   return (
     <textarea
       rows={rows}
-      className={cn(
-        'block w-full rounded-md border bg-default px-3 py-2 text-base text-body placeholder:text-muted',
-        'transition-colors outline-none',
-        'focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-[var(--color-border-primary)]/40',
-        'disabled:cursor-not-allowed disabled:opacity-50',
-        invalid ? 'border-danger' : 'border-default',
-        className,
-      )}
+      className={cn('jspr-field jspr-field--multiline', className)}
+      data-size="md"
       aria-invalid={invalid || undefined}
       {...rest}
     />
@@ -137,7 +124,7 @@ export function Textarea({ invalid, className, rows = 4, ...rest }: TextareaProp
 /* ------------------------------------------------------------------- Select */
 
 export interface SelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement>, 'size'> {
-  size?: 'sm' | 'md' | 'lg';
+  size?: FieldSize;
   invalid?: boolean;
 }
 
@@ -145,15 +132,8 @@ export interface SelectProps extends Omit<SelectHTMLAttributes<HTMLSelectElement
 export function Select({ size = 'md', invalid, className, children, ...rest }: SelectProps) {
   return (
     <select
-      className={cn(
-        'block w-full rounded-md border bg-default text-body',
-        'transition-colors outline-none',
-        'focus-visible:border-primary focus-visible:ring-2 focus-visible:ring-[var(--color-border-primary)]/40',
-        'disabled:cursor-not-allowed disabled:opacity-50',
-        invalid ? 'border-danger' : 'border-default',
-        FIELD_SIZE[size],
-        className,
-      )}
+      className={cn('jspr-field', className)}
+      data-size={size}
       aria-invalid={invalid || undefined}
       {...rest}
     >

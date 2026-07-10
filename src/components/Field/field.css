@@ -1,0 +1,73 @@
+/* Field structure. Colors + sizing come from the generated component CSS
+   (src/styles/components/field.css → --field-* per [data-size] and per state via
+   :hover / :focus-visible / [aria-invalid] / :read-only / :disabled, from
+   tokens/components/field.json). Mirrors the Figma Input/Field, Input/Label and
+   Input/Helper. The control is shared by TextField, Textarea (--multiline) and
+   Select. */
+.jspr-field {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  height: var(--field-h);
+  padding-inline: var(--field-px);
+  border: var(--border-width-1) solid var(--field-border);
+  border-radius: var(--field-radius);
+  background-color: var(--field-bg);
+  color: var(--field-text);
+  font-family: var(--font-family-body), system-ui, sans-serif;
+  font-size: var(--field-fs);
+  line-height: var(--field-lh);
+  outline: none;
+  transition:
+    border-color 120ms ease,
+    background-color 120ms ease,
+    color 120ms ease,
+    box-shadow 120ms ease;
+}
+.jspr-field::placeholder {
+  color: var(--field-placeholder);
+}
+/* Focus ring (the border color itself is switched to primary by the generated
+   :focus-visible state). */
+.jspr-field:focus-visible {
+  box-shadow: 0 0 0 2px color-mix(in oklch, var(--color-border-primary) 40%, transparent);
+}
+.jspr-field:disabled {
+  cursor: not-allowed;
+}
+.jspr-field:read-only {
+  cursor: default;
+}
+
+/* Multi-line (textarea): hug the row count instead of a fixed height. */
+.jspr-field--multiline {
+  height: auto;
+  padding-block: var(--spacing-3);
+}
+
+/* ── Composed field: label + control + helper (Input/Label, Input/Helper) ── */
+.jspr-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-1);
+}
+.jspr-field__label {
+  font-family: var(--font-family-heading), system-ui, sans-serif;
+  font-size: var(--text-base-font-size);
+  line-height: var(--text-base-line-height);
+  font-weight: var(--font-weight-heading);
+  color: var(--color-text-heading);
+}
+.jspr-field__required {
+  color: var(--color-text-danger);
+}
+.jspr-field__hint {
+  font-size: var(--text-sm-font-size);
+  line-height: var(--text-sm-line-height);
+  color: var(--color-text-caption);
+}
+.jspr-field__error {
+  font-size: var(--text-sm-font-size);
+  line-height: var(--text-sm-line-height);
+  color: var(--color-text-danger);
+}

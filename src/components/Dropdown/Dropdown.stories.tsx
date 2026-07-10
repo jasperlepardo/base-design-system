@@ -64,7 +64,7 @@ function SelectMenu() {
 }
 
 const meta = {
-  title: 'Foundations/Dropdown',
+  title: 'Components/Dropdown',
   component: Dropdown,
   tags: ['autodocs'],
   args: { children: null },

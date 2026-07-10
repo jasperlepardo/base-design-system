@@ -1,0 +1,72 @@
+{
+  "$component": {
+    "name": "TextField",
+    "className": "jspr-field",
+    "prefix": "field",
+    "element": "input",
+    "colorAxes": [],
+    "sizeAxis": "size",
+    "states": ["rest", "hover", "focus", "read-only", "invalid", "disabled"],
+    "stateSelectors": {
+      "rest": "",
+      "hover": ":hover:not(:disabled):not(:read-only):not([aria-invalid=\"true\"])",
+      "focus": ":focus-visible:not([aria-invalid=\"true\"])",
+      "read-only": ":read-only:not(:disabled)",
+      "invalid": "[aria-invalid=\"true\"]:not(:disabled)",
+      "disabled": ":disabled"
+    },
+    "slots": {},
+    "base": {}
+  },
+  "colors": {
+    "": {
+      "rest": {
+        "bg": "--color-bg-default",
+        "border": "--color-border-default",
+        "text": "--color-text-body",
+        "placeholder": "--color-text-placeholder"
+      },
+      "hover": {
+        "border": "--color-border-primary"
+      },
+      "focus": {
+        "border": "--color-border-primary"
+      },
+      "read-only": {
+        "border": "--color-border-disabled",
+        "text": "--color-text-muted"
+      },
+      "invalid": {
+        "border": "--color-border-danger"
+      },
+      "disabled": {
+        "bg": "--color-bg-secondary",
+        "border": "--color-border-disabled",
+        "text": "--color-text-disabled"
+      }
+    }
+  },
+  "sizing": {
+    "sm": {
+      "h": "--spacing-10",
+      "px": "--spacing-3",
+      "fs": "--text-sm-font-size",
+      "lh": "--text-sm-line-height",
+      "radius": "--rounded-sm"
+    },
+    "md": {
+      "h": "--spacing-12",
+      "px": "--spacing-4",
+      "fs": "--text-base-font-size",
+      "lh": "--text-base-line-height",
+      "radius": "--rounded-sm"
+    },
+    "lg": {
+      "h": "--spacing-14",
+      "px": "--spacing-5",
+      "fs": "--text-lg-font-size",
+      "lh": "--text-lg-line-height",
+      "radius": "--rounded-sm"
+    }
+  }
+}
