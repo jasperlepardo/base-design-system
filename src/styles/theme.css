@@ -447,3 +447,6 @@
 @utility fg-transparent {
   color: var(--color-fg-transparent);
 }
+@utility accent-primary {
+  accent-color: var(--color-bg-primary);
+}

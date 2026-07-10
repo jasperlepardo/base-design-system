@@ -11,7 +11,10 @@
   justify-content: center;
   box-sizing: border-box;
   gap: var(--spacing-0);
-  padding: var(--badge-pad-y) var(--badge-pad-x);
+  /* Figma binds Badge/padding-x/-y axis-swapped (padding-x→vertical, padding-y→
+     horizontal), so apply pad-x vertically and pad-y horizontally (same as the
+     Content frame below). e.g. medium → 8px top/bottom, 12px left/right. */
+  padding: var(--badge-pad-x) var(--badge-pad-y);
   box-shadow: inset 0 0 0 var(--border-width-1) var(--badge-border, transparent);
   border-radius: var(--rounded-full);
   background-color: var(--badge-bg);

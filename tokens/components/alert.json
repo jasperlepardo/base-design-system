@@ -4,9 +4,14 @@
     "className": "jspr-alert",
     "prefix": "alert",
     "element": "div",
-    "colorAxes": ["intent", "style"],
+    "colorAxes": [
+      "intent",
+      "style"
+    ],
     "sizeAxis": "size",
-    "states": ["rest"],
+    "states": [
+      "rest"
+    ],
     "slots": {},
     "base": {}
   },
@@ -26,21 +31,12 @@
         "icon": "--color-fg-default-solid",
         "heading": "--color-text-heading",
         "body": "--color-text-body",
-        "border": "--color-border-transparent"
-      }
-    },
-    "default/ghost": {
-      "rest": {
-        "bg": "--color-bg-neutral-subtle",
-        "icon": "--color-fg-default-solid",
-        "heading": "--color-text-heading",
-        "body": "--color-text-body",
         "border": "--color-border-default"
       }
     },
-    "default/link": {
+    "default/transparent": {
       "rest": {
-        "bg": "--color-bg-transparent",
+        "bg": "--color-bg-neutral-subtle",
         "icon": "--color-fg-default-solid",
         "heading": "--color-text-heading",
         "body": "--color-text-body",
@@ -62,21 +58,12 @@
         "icon": "--color-fg-primary",
         "heading": "--color-text-heading",
         "body": "--color-text-body",
-        "border": "--color-border-transparent"
-      }
-    },
-    "primary/ghost": {
-      "rest": {
-        "bg": "--color-bg-primary-subtle",
-        "icon": "--color-fg-primary",
-        "heading": "--color-text-heading",
-        "body": "--color-text-body",
         "border": "--color-border-primary"
       }
     },
-    "primary/link": {
+    "primary/transparent": {
       "rest": {
-        "bg": "--color-bg-transparent",
+        "bg": "--color-bg-primary-subtle",
         "icon": "--color-fg-primary",
         "heading": "--color-text-heading",
         "body": "--color-text-body",
@@ -98,21 +85,12 @@
         "icon": "--color-fg-success",
         "heading": "--color-text-heading",
         "body": "--color-text-body",
-        "border": "--color-border-transparent"
-      }
-    },
-    "success/ghost": {
-      "rest": {
-        "bg": "--color-bg-success-subtle",
-        "icon": "--color-fg-success",
-        "heading": "--color-text-heading",
-        "body": "--color-text-body",
         "border": "--color-border-success"
       }
     },
-    "success/link": {
+    "success/transparent": {
       "rest": {
-        "bg": "--color-bg-transparent",
+        "bg": "--color-bg-success-subtle",
         "icon": "--color-fg-success",
         "heading": "--color-text-heading",
         "body": "--color-text-body",
@@ -134,21 +112,12 @@
         "icon": "--color-fg-warning",
         "heading": "--color-text-heading",
         "body": "--color-text-body",
-        "border": "--color-border-transparent"
-      }
-    },
-    "warning/ghost": {
-      "rest": {
-        "bg": "--color-bg-warning-subtle",
-        "icon": "--color-fg-warning",
-        "heading": "--color-text-heading",
-        "body": "--color-text-body",
         "border": "--color-border-warning"
       }
     },
-    "warning/link": {
+    "warning/transparent": {
       "rest": {
-        "bg": "--color-bg-transparent",
+        "bg": "--color-bg-warning-subtle",
         "icon": "--color-fg-warning",
         "heading": "--color-text-heading",
         "body": "--color-text-body",
@@ -170,21 +139,12 @@
         "icon": "--color-fg-danger",
         "heading": "--color-text-heading",
         "body": "--color-text-body",
-        "border": "--color-border-transparent"
-      }
-    },
-    "danger/ghost": {
-      "rest": {
-        "bg": "--color-bg-danger-subtle",
-        "icon": "--color-fg-danger",
-        "heading": "--color-text-heading",
-        "body": "--color-text-body",
         "border": "--color-border-danger"
       }
     },
-    "danger/link": {
+    "danger/transparent": {
       "rest": {
-        "bg": "--color-bg-transparent",
+        "bg": "--color-bg-danger-subtle",
         "icon": "--color-fg-danger",
         "heading": "--color-text-heading",
         "body": "--color-text-body",
@@ -206,19 +166,10 @@
         "icon": "--color-fg-black",
         "heading": "--color-text-heading",
         "body": "--color-text-body",
-        "border": "--color-border-transparent"
-      }
-    },
-    "white/ghost": {
-      "rest": {
-        "bg": "--color-bg-white_subtle",
-        "icon": "--color-fg-black",
-        "heading": "--color-text-heading",
-        "body": "--color-text-body",
         "border": "--color-border-white"
       }
     },
-    "white/link": {
+    "white/transparent": {
       "rest": {
         "bg": "--color-bg-white_subtle",
         "icon": "--color-fg-black",
@@ -242,19 +193,10 @@
         "icon": "--color-fg-white",
         "heading": "--color-text-heading_on-primary",
         "body": "--color-text-body_on-primary",
-        "border": "--color-border-transparent"
-      }
-    },
-    "black/ghost": {
-      "rest": {
-        "bg": "--color-bg-black_subtle",
-        "icon": "--color-fg-white",
-        "heading": "--color-text-heading_on-primary",
-        "body": "--color-text-body_on-primary",
         "border": "--color-border-black"
       }
     },
-    "black/link": {
+    "black/transparent": {
       "rest": {
         "bg": "--color-bg-black_subtle",
         "icon": "--color-fg-white",
@@ -265,11 +207,35 @@
     }
   },
   "sizing": {
-    "none": { "gap": "--spacing-0", "padding-x": "--spacing-0", "padding-y": "--spacing-0" },
-    "xs": { "gap": "--spacing-0_5", "padding-x": "--spacing-0_5", "padding-y": "--spacing-0_5" },
-    "sm": { "gap": "--spacing-1", "padding-x": "--spacing-1", "padding-y": "--spacing-1" },
-    "md": { "gap": "--spacing-2", "padding-x": "--spacing-2", "padding-y": "--spacing-2" },
-    "lg": { "gap": "--spacing-3", "padding-x": "--spacing-4", "padding-y": "--spacing-4" },
-    "xl": { "gap": "--spacing-4", "padding-x": "--spacing-4", "padding-y": "--spacing-4" }
+    "none": {
+      "gap": "--spacing-0",
+      "padding-x": "--spacing-0",
+      "padding-y": "--spacing-0"
+    },
+    "xs": {
+      "gap": "--spacing-0_5",
+      "padding-x": "--spacing-0_5",
+      "padding-y": "--spacing-0_5"
+    },
+    "sm": {
+      "gap": "--spacing-1",
+      "padding-x": "--spacing-1",
+      "padding-y": "--spacing-1"
+    },
+    "md": {
+      "gap": "--spacing-2",
+      "padding-x": "--spacing-2",
+      "padding-y": "--spacing-2"
+    },
+    "lg": {
+      "gap": "--spacing-3",
+      "padding-x": "--spacing-4",
+      "padding-y": "--spacing-4"
+    },
+    "xl": {
+      "gap": "--spacing-4",
+      "padding-x": "--spacing-4",
+      "padding-y": "--spacing-4"
+    }
   }
 }
