@@ -67,7 +67,11 @@ const meta = {
   title: 'Components/Dropdown',
   component: Dropdown,
   tags: ['autodocs'],
-  args: { children: null },
+  args: { children: null, role: 'listbox' },
+  argTypes: {
+    role: { control: 'inline-radio', options: ['listbox', 'menu'] },
+    multiselectable: { control: 'boolean' },
+  },
 } satisfies Meta<typeof Dropdown>;
 
 export default meta;

@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { expect, fn, userEvent, within } from 'storybook/test';
 import { Badge, badgeIntents, badgeStyles, badgeSizes } from './Badge';
 import { Icon } from '../Icon/Icon';
 
@@ -35,7 +36,13 @@ export const WithIcon: Story = {
 };
 
 export const Dismissible: Story = {
-  args: { intent: 'danger', children: 'Error', onDismiss: () => {} },
+  args: { intent: 'danger', children: 'Error', onDismiss: fn() },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    const btn = canvas.getByRole('button', { name: /dismiss/i });
+    await userEvent.click(btn);
+    await expect(args.onDismiss).toHaveBeenCalledOnce();
+  },
 };
 
 export const Matrix: Story = {

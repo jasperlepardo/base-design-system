@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { expect, fn, userEvent, within } from 'storybook/test';
 import { Button, buttonIntents, buttonStyles, buttonSizes } from './Button';
 import { Icon } from '../Icon/Icon';
 
@@ -12,7 +13,7 @@ const meta = {
   title: 'Components/Button',
   component: Button,
   tags: ['autodocs'],
-  args: { children: 'Button', intent: 'primary', variant: 'solid', size: 'default' },
+  args: { children: 'Button', intent: 'primary', variant: 'solid', size: 'default', onClick: fn() },
   argTypes: {
     intent: { control: 'inline-radio', options: buttonIntents },
     variant: { control: 'inline-radio', options: buttonStyles },
@@ -24,7 +25,15 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {};
+export const Playground: Story = {
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    const button = canvas.getByRole('button', { name: /button/i });
+    await expect(button).toBeInTheDocument();
+    await userEvent.click(button);
+    await expect(args.onClick).toHaveBeenCalledOnce();
+  },
+};
 
 export const WithIcon: Story = {
   args: { children: 'Continue', trailingIcon: ArrowRight },

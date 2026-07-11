@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { expect, fn, userEvent, within } from 'storybook/test';
 import { Alert, alertIntents, alertStyles } from './Alert';
 
 const meta = {
@@ -22,7 +23,29 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {};
+export const Playground: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    await expect(canvas.getByText('Heads up')).toBeInTheDocument();
+    await expect(canvas.getByText('This is an informational message driven by semantic tokens.')).toBeInTheDocument();
+  },
+};
+
+export const WithActionsAndDismissInteraction: Story = {
+  args: {
+    intent: 'warning',
+    variant: 'outline',
+    title: 'Unsaved changes',
+    children: 'You have unsaved changes.',
+    onClose: fn(),
+  },
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    const closeBtn = canvas.getByRole('button', { name: /dismiss/i });
+    await userEvent.click(closeBtn);
+    await expect(args.onClose).toHaveBeenCalledOnce();
+  },
+};
 
 export const Matrix: Story = {
   render: () => (

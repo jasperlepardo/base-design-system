@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { expect, within } from 'storybook/test';
 import { Link, linkIntents } from './Link';
 import { Icon } from '../Icon/Icon';
 
@@ -27,7 +28,24 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {};
+export const Playground: Story = {
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const link = canvas.getByRole('link', { name: /read the docs/i });
+    await expect(link).toBeInTheDocument();
+    await expect(link).toHaveAttribute('href', '#');
+  },
+};
+
+export const DisabledLink: Story = {
+  args: { disabled: true, children: 'Unavailable', href: '#' },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const anchor = canvas.getByText('Unavailable').closest('a')!;
+    await expect(anchor).toHaveAttribute('aria-disabled', 'true');
+    await expect(anchor).not.toHaveAttribute('href');
+  },
+};
 
 export const WithIcons: Story = {
   render: () => (

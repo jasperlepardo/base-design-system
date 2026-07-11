@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from '@storybook/react';
+import { expect, fn, userEvent, within } from 'storybook/test';
 import { IconButton, iconButtonIntents, iconButtonStyles, iconButtonSizes } from './IconButton';
 import { Icon } from '../Icon/Icon';
 
@@ -18,6 +19,7 @@ const meta = {
     variant: 'solid',
     size: 'default',
     children: CloseGlyph,
+    onClick: fn(),
   },
   argTypes: {
     intent: { control: 'inline-radio', options: iconButtonIntents },
@@ -29,7 +31,15 @@ const meta = {
 export default meta;
 type Story = StoryObj<typeof meta>;
 
-export const Playground: Story = {};
+export const Playground: Story = {
+  play: async ({ args, canvasElement }) => {
+    const canvas = within(canvasElement);
+    const btn = canvas.getByRole('button', { name: /close/i });
+    await expect(btn).toBeInTheDocument();
+    await userEvent.click(btn);
+    await expect(args.onClick).toHaveBeenCalledOnce();
+  },
+};
 
 export const Matrix: Story = {
   render: () => (
