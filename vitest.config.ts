@@ -25,6 +25,10 @@ export default defineConfig({
         resolve: {
           conditions: ['browser', 'import', 'module', 'default'],
         },
+        optimizeDeps: {
+          // Pre-bundle so Vite doesn't reload mid-test when these are first discovered
+          include: ['react/jsx-dev-runtime', 'react/jsx-runtime'],
+        },
         test: {
           name: 'storybook',
           browser: {
