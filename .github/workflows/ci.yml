@@ -19,3 +19,21 @@ jobs:
       - run: npm run lint
       - run: npm run typecheck
       - run: npm run build
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run tokens
+      - name: Install Playwright browsers
+        run: npx playwright install chromium --with-deps
+      - name: Start Storybook
+        run: npm run storybook -- --no-open &
+      - name: Wait for Storybook
+        run: npx wait-on http://localhost:6006 --timeout 120000
+      - name: Run component tests
+        run: npx vitest --project storybook --reporter=verbose

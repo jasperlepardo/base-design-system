@@ -1,14 +1,35 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { FormField, TextField, Textarea, Select, Checkbox, Radio } from './Field';
+import { expect, userEvent, within } from 'storybook/test';
+import { FormField, TextField, Textarea, Select, Checkbox, Radio, fieldSizes } from './Field';
 
 const meta = {
   title: 'Components/Field',
   component: TextField,
   tags: ['autodocs'],
+  args: { placeholder: 'Enter text…', size: 'md' },
+  argTypes: {
+    size: { control: 'inline-radio', options: fieldSizes },
+    invalid: { control: 'boolean' },
+  },
 } satisfies Meta<typeof TextField>;
 
 export default meta;
 type Story = StoryObj<typeof meta>;
+
+export const Playground: Story = {
+  render: (args) => (
+    <div style={{ maxWidth: 360 }}>
+      <TextField {...args} />
+    </div>
+  ),
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const input = canvas.getByRole('textbox');
+    await expect(input).toBeInTheDocument();
+    await userEvent.type(input, 'hello');
+    await expect(input).toHaveValue('hello');
+  },
+};
 
 export const WithLabelAndHint: Story = {
   render: () => (
